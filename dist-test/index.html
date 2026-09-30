@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="./favicon.svg" rel="icon" type="image/svg+xml" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+      name="viewport"
+    />
+    <script>
+      // Defeat Safari "Request Desktop Website" before CSS/media queries evaluate.
+      // Must stay synchronous in <head>, ahead of the stylesheet bundle.
+      {
+        const sw = window.screen?.width ?? 0;
+        const sh = window.screen?.height ?? 0;
+        if (!sw || !sh) {
+          // noop
+        } else {
+          const shortEdge = Math.min(sw, sh);
+          const longEdge = Math.max(sw, sh);
+          const isTouch =
+            window.matchMedia?.('(pointer: coarse)').matches || navigator.maxTouchPoints > 0;
+          const desktopSiteMode = isTouch && window.innerWidth > shortEdge + 80;
+          const isPhone = isTouch && (shortEdge < 700 || desktopSiteMode);
+
+          if (isPhone) {
+            const portrait = window.matchMedia?.('(orientation: portrait)').matches ?? sh >= sw;
+            const targetW = portrait ? shortEdge : longEdge;
+
+            document.querySelector('meta[name="viewport"]')?.remove();
+            const meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = `width=${targetW}, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover`;
+            document.head.appendChild(meta);
+          }
+        }
+      }
+    </script>
+    <title>Rich Bitch Reels</title>
+    <script type="module" crossorigin src="./assets/index-DQDG18QL.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-QTnfLwEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/vendor-DBdsSFa8.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-nxmA1Tgc.js">
+    <link rel="stylesheet" crossorigin href="./assets/style-BY1jRCQ6.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,0 +1,248 @@
+.smp-asm-modal .smp-modal-dialog {
+  padding-top: 18px;
+}
+
+.smp-asm-modal .smp-modal-title {
+  margin-bottom: 18px;
+}
+
+.smp-asm-section {
+  margin-bottom: 18px;
+}
+
+.smp-asm-section-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Spin count grid */
+.smp-asm-spins-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.smp-asm-spin-option {
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 4px;
+  border: 1px solid rgba(180, 140, 60, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #f5d27a;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.14s ease, border-color 0.14s ease;
+}
+
+.smp-asm-spin-option:hover:not(.smp-asm-spin-option--selected) {
+  background: rgba(232, 184, 64, 0.14);
+  border-color: #e8b840;
+}
+
+.smp-asm-spin-option--selected {
+  background: var(--modal-action-bg);
+  color: var(--modal-action-text);
+}
+
+.smp-asm-spin-option:focus-visible {
+  outline: 2px solid #fff6d4;
+  outline-offset: 2px;
+}
+
+/* Stop-condition rows */
+.smp-asm-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.smp-asm-row-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.smp-asm-row-label {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Toggle switch */
+.smp-asm-switch {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.18s ease;
+}
+
+.smp-asm-switch--on {
+  background: var(--modal-action-bg);
+}
+
+.smp-asm-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.18s ease;
+}
+
+.smp-asm-switch--on .smp-asm-switch-thumb {
+  transform: translateX(24px);
+}
+
+/* Counter */
+.smp-asm-counter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+}
+
+.smp-asm-counter-btn {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.14s ease,
+    border-color 0.14s ease,
+    transform 0.1s ease;
+}
+
+.smp-asm-counter-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(232, 184, 64, 0.45);
+}
+
+.smp-asm-counter-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.smp-asm-counter-btn:disabled {
+  cursor: default;
+}
+
+.smp-asm-counter-value {
+  min-width: 64px;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.01em;
+}
+
+/* Compact layout on narrow screens */
+@media (max-width: 440px) {
+  .smp-asm-spins-grid {
+    gap: 6px;
+  }
+  .smp-asm-row {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .smp-asm-row-main {
+    gap: 8px;
+  }
+  .smp-asm-row-label {
+    font-size: 0.88rem;
+  }
+  .smp-asm-counter-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+  .smp-asm-counter-value {
+    min-width: 52px;
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-height: 640px) and (orientation: landscape) {
+  .smp-asm-section {
+    margin-bottom: 10px;
+  }
+  .smp-asm-section-label {
+    margin-bottom: 6px;
+  }
+  .smp-asm-row {
+    padding: 6px 12px;
+    margin-bottom: 6px;
+  }
+}
+
+@media (max-height: 300px) {
+  .smp-asm-modal { padding: 6px 10px; overflow: hidden; align-items: center; }
+  .smp-asm-modal .smp-modal-dialog {
+    display: flex;
+    flex-direction: column;
+    width: min(480px, 100%);
+    max-height: calc(100dvh - 12px);
+    padding: 9px 12px;
+    overflow: hidden;
+  }
+  .smp-asm-modal .smp-modal-title { font-size: 0.85rem; margin-bottom: 6px; flex-shrink: 0; }
+  .smp-asm-modal .smp-modal-close { width: 24px; height: 24px; top: 6px; right: 8px; font-size: 0.8rem; }
+  .smp-asm-section { margin-bottom: 5px; flex-shrink: 0; }
+  .smp-asm-section:last-of-type { min-height: 0; flex-shrink: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+  .smp-asm-section-label { font-size: 0.55rem; margin-bottom: 3px; letter-spacing: 0.05em; }
+  .smp-asm-row { padding: 3px 5px; gap: 5px; margin-bottom: 3px; border-radius: 6px; }
+  .smp-asm-row-main { padding: 0; min-width: 0; }
+  .smp-asm-row-label { font-size: 0.62rem; line-height: 1.2; }
+  .smp-asm-counter { gap: 3px; }
+  .smp-asm-counter-btn { width: 22px; height: 22px; border-radius: 5px; font-size: 0.8rem; }
+  .smp-asm-counter-value { min-width: 40px; font-size: 0.6rem; }
+  .smp-asm-switch { width: 30px; height: 18px; }
+  .smp-asm-switch-thumb { top: 2px; left: 2px; width: 14px; height: 14px; }
+  .smp-asm-switch--on .smp-asm-switch-thumb { transform: translateX(12px); }
+  .smp-asm-modal .smp-modal-action { flex-shrink: 0; min-height: 28px; padding: 5px 8px; font-size: 0.65rem; }
+  .smp-asm-spin-option {
+    min-height: 28px;
+    padding: 4px 2px;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+}

@@ -1,0 +1,47 @@
+.smp-logo {
+  display: block;
+  width: min(82%, 520px);
+  height: var(--smp-title-height);
+  flex-shrink: 0;
+  object-fit: contain;
+  margin: 0 auto var(--smp-title-gap);
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center;
+  animation: lost-idol-logo-idle 6s ease-in-out infinite;
+}
+
+.smp-logo-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: calc(var(--smp-title-height) + var(--smp-title-gap));
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .smp-stage-grid > .smp-logo-col {
+    display: none;
+  }
+
+  .smp-wrapper:not(.smp-wrapper--bonus) .smp-reels-col {
+    margin-top: auto;
+  }
+}
+
+@keyframes lost-idol-logo-idle {
+  0%, 100% {
+    transform: translateY(0) rotate(-0.35deg);
+    filter: drop-shadow(0 2px 3px rgb(5 25 12 / 45%));
+  }
+  50% {
+    transform: translateY(-3px) rotate(0.35deg);
+    filter: drop-shadow(0 2px 6px rgb(240 195 77 / 55%));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smp-logo {
+    animation: none;
+  }
+}

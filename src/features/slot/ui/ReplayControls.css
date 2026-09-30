@@ -1,0 +1,93 @@
+/* Replay dialog reuses the shared <Modal> styling. */
+
+/* Replay is the whole screen in replay mode — no game underneath to close to. */
+.replay-modal .smp-modal-close { display: none; }
+
+.replay-modal__card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.replay-modal__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.replay-modal__row--highlight {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.replay-modal__divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.replay-modal__label {
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.02em;
+}
+
+.replay-modal__value {
+  font-weight: 700;
+  color: #fff;
+  text-align: right;
+}
+
+.replay-modal__value--accent { color: #f5b942; }
+.replay-modal__value--win { color: #4ade80; }
+
+.replay-modal__status {
+  margin: 0 0 12px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+}
+
+.replay-modal__status--error { color: #ff8080; }
+
+.replay-modal__disclaimer {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+/* Compact "Play Again" pill shown after the replay round finishes so it
+ * doesn't cover the reels, winlines or the win amount. */
+.replay-again-bar {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(16px, 3vh, 32px);
+  transform: translateX(-50%);
+  z-index: 60;
+  pointer-events: auto;
+}
+
+.replay-again-bar__btn {
+  width: auto;
+  min-width: 180px;
+  padding: 10px 22px;
+  font-size: 0.85rem;
+}
+
+@media (max-height: 480px) {
+  .replay-again-bar { bottom: 8px; }
+  .replay-again-bar__btn { min-width: 140px; padding: 8px 16px; font-size: 0.75rem; }
+}

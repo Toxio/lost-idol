@@ -1,0 +1,8 @@
+logo_land.webp
+size:744,212
+filter:Linear,Linear
+logo_land
+bounds:2,2,677,208
+up_blik_2
+bounds:681,149,61,61
+offsets:2,2,65,67

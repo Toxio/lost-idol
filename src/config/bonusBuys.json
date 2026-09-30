@@ -1,0 +1,26 @@
+[
+  {
+    "mode": "bonus_5",
+    "spins": 5,
+    "cost": 25,
+    "kind": "free_spins"
+  },
+  {
+    "mode": "bonus_10",
+    "spins": 10,
+    "cost": 45,
+    "kind": "free_spins"
+  },
+  {
+    "mode": "bonus_15",
+    "spins": 15,
+    "cost": 65,
+    "kind": "free_spins"
+  },
+  {
+    "mode": "wild_spin",
+    "kind": "wild_spin",
+    "spins": 1,
+    "cost": 10
+  }
+]

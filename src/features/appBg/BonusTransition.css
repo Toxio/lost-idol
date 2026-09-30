@@ -1,0 +1,11 @@
+.bonus-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  overflow: hidden;
+  outline: none;
+  touch-action: none;
+}
+.bonus-transition canvas { display: block; width: 100%; height: 100%; }
+
+.bonus-transition--hidden { visibility: hidden; pointer-events: none; }

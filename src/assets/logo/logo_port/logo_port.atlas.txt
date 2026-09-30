@@ -1,0 +1,8 @@
+logo_port.webp
+size:245,436
+filter:Linear,Linear
+logo_port
+bounds:2,65,241,369
+up_blik_2
+bounds:2,2,61,61
+offsets:2,2,65,67

@@ -1,0 +1,129 @@
+.smp-sound {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 520px;
+}
+
+.smp-sound-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.smp-sound-label {
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  color: #fff;
+}
+
+.smp-sound-control {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.smp-sound-value {
+  flex: 0 0 48px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e8b840;
+  text-align: right;
+}
+
+.smp-sound-slider {
+  flex: 1;
+  height: 6px;
+  appearance: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+  cursor: pointer;
+}
+
+.smp-sound-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #1a0d00;
+  background: linear-gradient(135deg, #b87d20, #e8b840, #b87d20);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.smp-sound-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #1a0d00;
+  background: linear-gradient(135deg, #b87d20, #e8b840, #b87d20);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.smp-sound-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Muted banner ──────────────────────────────────────────────────────────── */
+
+.smp-sound-muted-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border: 1px solid rgba(180, 140, 60, 0.35);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #e8b840;
+  font-size: clamp(0.82rem, 1.8vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+}
+
+.smp-sound-muted-banner:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(232, 184, 64, 0.55);
+  color: #ffe9a8;
+}
+
+.smp-sound-muted-banner:active {
+  transform: scale(0.98);
+}
+
+.smp-sound-muted-banner:focus-visible {
+  outline: 2px solid rgba(232, 184, 64, 0.85);
+  outline-offset: 2px;
+}
+
+/* ── Disabled slider state (while muted) ───────────────────────────────────── */
+
+.smp-sound-row:has(.smp-sound-slider:disabled) {
+  opacity: 0.45;
+}
+
+.smp-sound-slider:disabled {
+  cursor: not-allowed;
+}
+
+.smp-sound-slider:disabled::-webkit-slider-thumb {
+  background: linear-gradient(135deg, #555, #888, #555);
+  box-shadow: none;
+}
+
+.smp-sound-slider:disabled::-moz-range-thumb {
+  background: linear-gradient(135deg, #555, #888, #555);
+  box-shadow: none;
+}

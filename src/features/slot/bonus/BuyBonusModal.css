@@ -1,0 +1,359 @@
+.buy-bonus-modal .smp-modal-dialog {
+  --buy-bonus-step-width: 44px;
+  --buy-bonus-controls-width: calc(150px + 2 * var(--buy-bonus-step-width) + 16px);
+  width: min(900px, 100%);
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  background: var(--modal-surface);
+  border: 0;
+  border-radius: 24px;
+  font-family: var(--game-font);
+}
+.buy-bonus-modal .smp-modal-title {
+  padding-inline: 32px;
+  margin-bottom: 16px;
+  color: var(--modal-title-text);
+  text-shadow: var(--modal-title-shadow);
+}
+.buy-bonus-content { min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+.buy-bonus-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 4px; }
+.buy-bonus-card { padding: 0; min-width: 0; overflow: hidden; border: 2px solid #a96966; border-radius: 18px; background: #160515; color: #ffe092; font: inherit; cursor: pointer; }
+.buy-bonus-modal .buy-bonus-card::after {
+  z-index: 1;
+  opacity: 0.45;
+}
+.buy-bonus-modal .buy-bonus-card[aria-pressed="true"]::after {
+  border: 4px solid #ff69c4;
+  opacity: 1;
+  box-shadow: inset 0 0 14px #ff149380;
+}
+.buy-bonus-card[aria-pressed="true"] .buy-bonus-card-copy {
+  background: linear-gradient(#6c124b, #380c2c);
+}
+.buy-bonus-art {
+  aspect-ratio: 452 / 365;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at 50% 85%, #8c155966, transparent 70%);
+}
+.buy-bonus-art img {
+  display: block;
+  width: 90%;
+  height: 90%;
+  min-height: 0;
+  object-fit: contain;
+  margin: 0;
+}
+.buy-bonus-card-copy { display: flex; flex-direction: column; gap: 4px; padding: 8px 6px 14px; background: linear-gradient(#160515, #25091d); }
+.buy-bonus-card-copy strong { font-size: clamp(1.5rem, 4vw, 2.4rem); line-height: 1; }
+.buy-bonus-card-copy span { font-size: 0.8rem; }
+.buy-bonus-card-copy b { margin-top: 5px; font-size: 1.25rem; color: #fff4dc; overflow-wrap: anywhere; }
+.buy-bonus-rules { margin: 12px 4px; color: #e0ced8; font-size: 0.75rem; line-height: 1.5; }
+.buy-bonus-stake,
+.buy-bonus-actions {
+  width: min(var(--buy-bonus-controls-width), 100%);
+  align-self: center;
+}
+.buy-bonus-stake { display: flex; justify-content: center; gap: 8px; margin: 4px 0 12px; flex-shrink: 0; }
+.buy-bonus-stake > button { flex: 0 0 var(--buy-bonus-step-width); }
+.buy-bonus-stake button { width: 44px; border: 1px solid #efc477; border-radius: 10px; color: #ffd485; background: #3f092c; font: inherit; font-size: 1.6rem; cursor: pointer; }
+.buy-bonus-stake div { flex: 1; min-width: 0; overflow-wrap: anywhere; text-align: center; display: flex; flex-direction: column; padding: 5px 20px; border: 1px solid #efc477; border-radius: 10px; }
+.buy-bonus-stake span { color: #c3a5b4; font-size: 0.65rem; }
+.buy-bonus-stake strong { color: #ffe092; font-size: 1.2rem; }
+.buy-bonus-actions { display: flex; gap: 10px; flex-shrink: 0; }
+.buy-bonus-submit { background: var(--modal-action-bg); color: var(--modal-action-text); border: 1px solid #f1c777; box-shadow: 0 3px 12px #ee008855; }
+.buy-bonus-modal button:disabled { opacity: 0.4; cursor: default; }
+.buy-bonus-modal button:focus-visible { outline: 2px solid #fff5ba; outline-offset: 2px; }
+.buy-bonus-error { text-align: center; color: #ffb0c0; font-size: 0.8rem; margin: 0 0 8px; }
+.smp-buy-bonus-button { padding: 10px 16px; border: 2px solid transparent; border-radius: 10px; background: linear-gradient(180deg, #2e0b24, #10070d 70%, #230919); color: var(--modal-action-text); font-family: var(--game-font); font-size: 0.8rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; box-shadow: none; }
+.smp-buy-bonus-button:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 600px) {
+  .buy-bonus-modal { padding: 10px; }
+  .buy-bonus-modal .smp-modal-dialog { padding: 24px 14px 16px; }
+  .buy-bonus-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .buy-bonus-card { border-radius: 10px; }
+  .buy-bonus-card-copy { padding: 6px 3px 10px; }
+  .buy-bonus-card-copy span { font-size: 0.65rem; }
+  .buy-bonus-card-copy b { font-size: 0.85rem; }
+  .buy-bonus-actions .smp-modal-action { font-size: 0.75rem; letter-spacing: 0; }
+}
+@media (max-width: 400px) and (max-height: 700px) and (orientation: portrait) {
+  .buy-bonus-modal .smp-modal-dialog { padding: 18px 12px 14px; }
+  .buy-bonus-modal .smp-modal-title { font-size: 1.15rem; margin-bottom: 10px; }
+  .buy-bonus-cards { gap: 8px; }
+  .buy-bonus-art { height: 72px; aspect-ratio: auto; }
+  .buy-bonus-card-copy { gap: 3px; padding: 5px 3px 7px; }
+  .buy-bonus-card-copy strong { font-size: 1.25rem; }
+  .buy-bonus-card-copy span { font-size: 0.6rem; }
+  .buy-bonus-card-copy b { margin-top: 2px; font-size: 0.8rem; }
+  .buy-bonus-rules { margin: 8px 4px; font-size: 0.65rem; line-height: 1.35; }
+  .buy-bonus-stake { margin: 4px 0 8px; }
+  .buy-bonus-stake div { padding: 3px 12px; }
+  .buy-bonus-stake strong { font-size: 1rem; }
+  .buy-bonus-actions .smp-modal-action { min-height: 40px; padding: 10px 8px; }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .smp-buy-bonus-button { padding: 5px 8px; font-size: 0.6rem; }
+  .buy-bonus-modal .smp-modal-dialog { --buy-bonus-step-width: 32px; padding: 12px 20px; }
+  .buy-bonus-modal .smp-modal-title { margin: 0 0 6px; font-size: 1rem; }
+  .buy-bonus-card { display: flex; align-items: center; }
+  .buy-bonus-art { width: 42%; flex-shrink: 0; }
+  .buy-bonus-card-copy { flex: 1; padding: 4px; }
+  .buy-bonus-card-copy strong { font-size: 1.2rem; }
+  .buy-bonus-card-copy span { font-size: 0.55rem; }
+  .buy-bonus-card-copy b { font-size: 0.7rem; margin: 0; }
+  .buy-bonus-stake { margin: 4px 0; }
+  .buy-bonus-stake div { padding: 2px 14px; }
+  .buy-bonus-stake strong { font-size: 0.9rem; }
+  .buy-bonus-stake button { width: 32px; font-size: 1.1rem; }
+  .buy-bonus-actions .smp-modal-action { padding: 7px; font-size: 0.7rem; }
+  .buy-bonus-rules { margin: 5px 4px; font-size: 0.6rem; }
+}
+
+@media (min-width: 701px) and (max-width: 1100px) and (min-height: 401px) and (max-height: 600px) and (orientation: landscape) {
+  .buy-bonus-modal .smp-modal-dialog {
+    width: min(720px, 100%);
+    padding: 20px 24px;
+    --buy-bonus-step-width: 40px;
+  }
+  .buy-bonus-modal .smp-modal-title {
+    font-size: 1.3rem;
+    margin-bottom: 14px;
+  }
+  .buy-bonus-cards {
+    gap: 12px;
+  }
+  .buy-bonus-card {
+    flex-direction: column;
+    border-radius: 16px;
+  }
+  .buy-bonus-art {
+    width: 100%;
+    height: 112px;
+    aspect-ratio: auto;
+  }
+  .buy-bonus-card-copy {
+    width: 100%;
+    gap: 5px;
+    padding: 8px 6px 12px;
+  }
+  .buy-bonus-card-copy strong {
+    font-size: 1.7rem;
+  }
+  .buy-bonus-card-copy span {
+    font-size: 0.7rem;
+  }
+  .buy-bonus-card-copy b {
+    margin-top: 3px;
+    font-size: 1rem;
+  }
+  .buy-bonus-rules {
+    margin: 14px 4px 12px;
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+  .buy-bonus-stake {
+    margin: 2px 0 8px;
+  }
+  .buy-bonus-stake div {
+    padding: 4px 14px;
+  }
+  .buy-bonus-stake strong {
+    font-size: 1.05rem;
+  }
+  .buy-bonus-actions .smp-modal-action {
+    min-height: 40px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1100px) and (min-height: 401px) and (max-height: 500px) and (orientation: landscape) {
+  .buy-bonus-modal .smp-modal-dialog {
+    width: min(680px, 100%);
+    padding: 14px 20px;
+  }
+  .buy-bonus-modal .smp-modal-title {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+  .buy-bonus-art {
+    height: 88px;
+  }
+  .buy-bonus-card-copy {
+    gap: 4px;
+    padding: 6px 6px 8px;
+  }
+  .buy-bonus-card-copy strong {
+    font-size: 1.5rem;
+  }
+  .buy-bonus-rules {
+    margin: 10px 4px;
+    font-size: 0.68rem;
+    line-height: 1.4;
+  }
+  .buy-bonus-stake {
+    margin: 2px 0 6px;
+  }
+  .buy-bonus-actions .smp-modal-action {
+    min-height: 36px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 300px) {
+  .buy-bonus-modal { padding: 6px 10px; align-items: center; overflow: hidden; }
+  .buy-bonus-modal .smp-modal-dialog {
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px);
+    width: min(520px, 100%);
+    padding: 9px 12px;
+    overflow: hidden;
+    --buy-bonus-step-width: 28px;
+  }
+  .buy-bonus-modal .smp-modal-title { font-size: 0.85rem; margin: 0 0 4px; flex-shrink: 0; }
+  .buy-bonus-modal .smp-modal-close { width: 24px; height: 24px; top: 6px; right: 8px; font-size: 0.8rem; }
+  .buy-bonus-content { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+  .buy-bonus-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 2px; flex-shrink: 0; }
+  .buy-bonus-card { flex-direction: column; border-radius: 8px; }
+  .buy-bonus-art { width: 100%; height: 30px; aspect-ratio: auto; }
+  .buy-bonus-card-copy { width: 100%; gap: 1px; padding: 2px 2px 4px; }
+  .buy-bonus-card-copy strong { font-size: 0.85rem; }
+  .buy-bonus-card-copy span { font-size: 0.48rem; line-height: 1.15; }
+  .buy-bonus-card-copy b { font-size: 0.65rem; line-height: 1.1; }
+  .buy-bonus-modal .buy-bonus-card[aria-pressed="true"]::after { border-width: 2px; }
+  .buy-bonus-rules { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; margin: 4px 2px; font-size: 0.58rem; line-height: 1.3; }
+  .buy-bonus-stake { margin: 3px 0 4px; }
+  .buy-bonus-stake div { flex-direction: row; align-items: center; justify-content: center; gap: 6px; padding: 2px 8px; }
+  .buy-bonus-stake button { min-height: 26px; }
+  .buy-bonus-stake strong { font-size: 0.85rem; }
+  .buy-bonus-stake span { font-size: 0.6rem; }
+  .buy-bonus-actions .smp-modal-action { min-height: 28px; padding: 5px 8px; font-size: 0.65rem; }
+  .buy-bonus-error { margin: 0 0 2px; font-size: 0.55rem; }
+}
+
+.smp-buy-bonus-button--desktop { display: none; }
+
+@media (min-width: 601px) {
+  .smp-side-controls .smp-buy-bonus-button { display: none; }
+
+  .smp-logo-col .smp-buy-bonus-button--desktop {
+    display: block;
+    width: 100%;
+    min-height: 56px;
+    margin-top: clamp(12px, 2.5vh, 24px);
+    padding: 12px 8px;
+    border-radius: 14px;
+    font-size: clamp(0.8rem, 1.25vw, 1.1rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    text-shadow: none;
+    transition: filter 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .smp-logo-col .smp-buy-bonus-button--desktop:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+
+  .smp-buy-bonus-button--desktop:focus-visible {
+    outline: 2px solid #fff2b7;
+    outline-offset: 4px;
+  }
+}
+
+@media (min-width: 601px) and (max-height: 600px) {
+  .smp-logo-col .smp-buy-bonus-button--desktop {
+    min-height: 38px;
+    margin-top: 8px;
+    padding: 6px 4px;
+    border-radius: 8px;
+    font-size: 0.65rem;
+    letter-spacing: 0;
+  }
+}
+
+.buy-bonus-stake button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.buy-bonus-step-icon {
+  position: relative;
+  display: block;
+  width: 0.8em;
+  height: 0.8em;
+}
+.buy-bonus-step-icon::before,
+.buy-bonus-step-icon--plus::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.buy-bonus-step-icon--plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.smp-buy-bonus-label {
+  font: inherit;
+  background-image: linear-gradient(180deg, #fff6d4 0%, #ffe45c 32%, #e8c040 68%, #d4a028 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.buy-bonus-art--single-box img {
+  width: 79.38%;
+  height: 79.38%;
+}
+
+.buy-bonus-art--two-boxes img {
+  width: 85.5%;
+  height: 85.5%;
+}
+
+.buy-bonus-confirmation .smp-modal-dialog {
+  width: min(440px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.buy-bonus-confirmation__summary {
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  gap: 8px;
+  text-align: center;
+  overflow-wrap: anywhere;
+  color: #ffe58b;
+}
+.buy-bonus-confirmation__actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 10px;
+}
+.buy-bonus-confirmation__actions .smp-modal-action {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  padding: 10px;
+  font-size: clamp(12px, 2.6vw, 18px);
+  white-space: normal;
+}
+@media (max-height: 300px) {
+  .buy-bonus-confirmation .smp-modal-dialog { gap: 6px; padding: 12px 18px; }
+  .buy-bonus-confirmation .smp-modal-title { font-size: 18px; margin: 0 30px 4px; }
+  .buy-bonus-confirmation__summary { font-size: 13px; gap: 4px; }
+  .buy-bonus-confirmation__actions .smp-modal-action { padding: 6px; }
+}

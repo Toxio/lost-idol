@@ -1,0 +1,230 @@
+/* Match the modal surfaces, type and amount treatment used by the game UI. */
+.bonus-status {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px 16px;
+  padding: 12px 16px 10px;
+  font-family: var(--game-font);
+  text-align: center;
+  background: linear-gradient(180deg, #1a0d0d 0%, #0e0808 100%);
+  border: 1px solid rgba(180, 140, 60, 0.4);
+  border-radius: 14px;
+  box-shadow:
+    0 8px 24px #0006,
+    inset 0 1px 0 #ffffff0d;
+}
+.bonus-status__section {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.bonus-status__section + .bonus-status__section {
+  border-inline-start: 1px solid rgba(180, 140, 60, 0.2);
+}
+.bonus-status__label,
+.bonus-dialog__label {
+  color: #d4ab5a;
+  font-size: clamp(0.65rem, 1.1vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+.bonus-status__value {
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.bonus-status__total {
+  font-size: 0.7em;
+}
+.bonus-backdrop {
+  z-index: 10000;
+  font-family: var(--game-font);
+}
+.bonus-dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 40px);
+  overflow: hidden;
+  text-align: center;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(180, 140, 60, 0.4) transparent;
+}
+.bonus-dialog > * {
+  flex-shrink: 0;
+}
+.bonus-dialog__symbol {
+  display: block;
+  width: clamp(64px, 13vh, 100px);
+  height: clamp(64px, 13vh, 100px);
+  object-fit: contain;
+  margin: 0 auto 14px;
+  filter: drop-shadow(0 4px 14px rgba(232, 184, 64, 0.2));
+}
+.bonus-dialog__number {
+  margin: 14px 0 20px;
+  font-size: clamp(2.2rem, 9vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  filter: drop-shadow(0 2px 4px #0009);
+}
+.bonus-status__value,
+.bonus-status__value .smp-currency-pair,
+.bonus-status__value .smp-currency-pair > *,
+.bonus-dialog__number,
+.bonus-dialog__number .smp-currency-pair,
+.bonus-dialog__number .smp-currency-pair > * {
+  background-image: linear-gradient(
+    180deg,
+    #fff6d4 0%,
+    #ffe45c 32%,
+    #e8c040 68%,
+    #d4a028 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.bonus-dialog__description {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #af467b transparent;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+.bonus-dialog__label {
+  margin: 20px 0 0;
+}
+.bonus-dialog .smp-modal-action {
+  font-family: var(--game-font);
+  min-height: 48px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+}
+.bonus-dialog .smp-modal-action:hover,
+.bonus-dialog .smp-modal-action:active {
+  transform: none;
+}
+
+.bonus-dialog .smp-modal-action:focus-visible {
+  outline: 2px solid #fff6d4;
+  outline-offset: 4px;
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  .bonus-dialog {
+    max-height: calc(100dvh - 16px);
+  }
+  .bonus-dialog__symbol {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+  .bonus-dialog__number {
+    font-size: 2.4rem;
+    margin: 8px 0 12px;
+  }
+}
+@media (max-width: 400px) and (max-height: 700px) and (orientation: portrait) {
+  .bonus-backdrop {
+    padding: 12px;
+  }
+  .bonus-dialog {
+    max-height: calc(100dvh - 24px);
+    padding: 18px 16px;
+  }
+  .bonus-dialog__symbol {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 6px;
+  }
+  .bonus-dialog .smp-modal-title {
+    font-size: 1.15rem;
+    padding-inline: 0;
+  }
+  .bonus-dialog__number {
+    font-size: 2rem;
+    margin: 6px 0 10px;
+  }
+  .bonus-dialog__description {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+  .bonus-dialog .smp-modal-action {
+    min-height: 44px;
+    padding: 10px 8px;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-height: 300px) and (orientation: landscape) {
+  .bonus-backdrop {
+    padding: 6px 10px;
+  }
+  .bonus-dialog {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px 8px;
+    padding: 12px 16px;
+    max-height: calc(100dvh - 12px);
+  }
+  .bonus-dialog--intro {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  .bonus-dialog__symbol {
+    width: 32px;
+    height: 32px;
+    margin: 0;
+  }
+  .bonus-dialog .smp-modal-title {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+  }
+  .bonus-dialog__number {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  .bonus-dialog__description {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 0.68rem;
+    line-height: 1.3;
+  }
+  .bonus-dialog__label {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+  .bonus-dialog__label + .bonus-dialog__number {
+    grid-column: 1 / -1;
+  }
+  .bonus-dialog .smp-modal-action {
+    grid-column: 1 / -1;
+    min-height: 32px;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bonus-backdrop {
+    animation: none;
+  }
+  .bonus-dialog .smp-modal-action {
+    transition: none;
+  }
+}

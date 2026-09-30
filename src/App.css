@@ -1,0 +1,703 @@
+.app-page--loading {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.app-page {
+  position: relative;
+  height: 100%;
+  max-height: 100svh;
+  overflow: hidden;
+  padding: max(8px, env(safe-area-inset-top, 0px))
+    max(8px, env(safe-area-inset-right, 0px))
+    max(8px, env(safe-area-inset-bottom, 0px))
+    max(8px, env(safe-area-inset-left, 0px));
+  background: #0a0007;
+}
+
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app-bg__poster,
+.app-bg video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.app-page > .main-screen {
+  position: relative;
+  z-index: 1;
+}
+
+.main-screen {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* ── SlotMachinePixi ──────────────────────────────────────────────────────── */
+.smp-wrapper {
+  --smp-stage-scale: 1.15;
+  --smp-title-height: clamp(24px, 12dvh, 120px);
+  --smp-title-gap: clamp(4px, 1dvh, 12px);
+  --smp-logo-scale: 0.7;
+  --smp-ui-chrome: 118px;
+  --smp-footer-height: clamp(72px, 10vh, 96px);
+  --smp-stage-gap: clamp(
+    calc(16px * var(--smp-stage-scale)),
+    calc(2.5vw * var(--smp-stage-scale)),
+    calc(28px * var(--smp-stage-scale))
+  );
+  --smp-logo-col-width: clamp(
+    calc(126px * var(--smp-stage-scale) * var(--smp-logo-scale)),
+    calc(14.3vw * var(--smp-stage-scale) * var(--smp-logo-scale)),
+    calc(202px * var(--smp-stage-scale) * var(--smp-logo-scale))
+  );
+  --smp-controls-col-width: clamp(
+    calc(148px * var(--smp-stage-scale)),
+    calc(17vw * var(--smp-stage-scale)),
+    calc(182px * var(--smp-stage-scale))
+  );
+  --smp-canvas-width: min(
+    calc(880px * var(--smp-stage-scale)),
+    calc(
+      100vw - var(--smp-logo-col-width) - var(--smp-controls-col-width) - 2 *
+        var(--smp-stage-gap) - 32px
+    ),
+    calc((100svh - var(--smp-ui-chrome) - var(--smp-title-height) - var(--smp-title-gap)) * 1641 / 1022 * var(--smp-stage-scale))
+  );
+  --smp-stage-width: calc(
+    var(--smp-logo-col-width) + var(--smp-canvas-width) +
+      var(--smp-controls-col-width) + 2 * var(--smp-stage-gap)
+  );
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: clamp(10px, 2dvh, 18px);
+  position: relative;
+  max-height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding-top: clamp(10px, 3dvh, 28px);
+  padding-bottom: calc(
+    var(--smp-footer-height) + env(safe-area-inset-bottom, 0px)
+  );
+  box-sizing: border-box;
+}
+
+.smp-stage-grid {
+  display: grid;
+  grid-template-columns: var(--smp-logo-col-width) var(--smp-canvas-width) var(
+      --smp-controls-col-width
+    );
+  grid-template-rows: auto;
+  grid-template-areas: "logo reels controls";
+  gap: var(--smp-stage-gap);
+  align-items: start;
+  justify-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.smp-logo-col {
+  grid-area: logo;
+  justify-self: center;
+  align-self: start;
+}
+
+.smp-reels-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-area: reels;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ── Canvas ──────────────────────────────────────────────────────────────── */
+.smp-canvas {
+  position: relative;
+  width: var(--smp-canvas-width);
+  max-width: 100%;
+  aspect-ratio: 1641 / 1022;
+  justify-self: center;
+}
+
+.smp-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.smp-side-controls {
+  grid-area: controls;
+}
+
+.smp-stage-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 12;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 115%, rgba(174, 111, 30, 0.16), transparent 65%),
+    linear-gradient(180deg, rgba(29, 5, 17, 0.45) 0%, rgba(20, 5, 12, 0.88) 38%, #0d0509 100%);
+  box-shadow: 0 -10px 28px rgba(16, 2, 9, 0.18);
+  border-radius: 0;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .smp-wrapper {
+    --smp-ui-chrome: 168px;
+    --smp-logo-col-width: clamp(
+      calc(84px * var(--smp-stage-scale) * var(--smp-logo-scale)),
+      calc(20.2vw * var(--smp-stage-scale) * var(--smp-logo-scale)),
+      calc(118px * var(--smp-stage-scale) * var(--smp-logo-scale))
+    );
+    --smp-stage-gap: clamp(
+      calc(10px * var(--smp-stage-scale)),
+      calc(2vw * var(--smp-stage-scale)),
+      calc(16px * var(--smp-stage-scale))
+    );
+  }
+}
+
+/* ── Mobile landscape layout ─────────────────────────────────────────────── */
+@media (orientation: landscape) and (max-height: 600px),
+  (pointer: coarse) and (orientation: landscape) and (max-height: 700px) {
+  .smp-wrapper {
+    --smp-ui-chrome: 120px;
+    --smp-footer-height: 28px;
+    --smp-canvas-width: min(
+      calc(880px * var(--smp-stage-scale)),
+      calc(
+        (100dvh - var(--smp-ui-chrome) - var(--smp-title-height) - var(--smp-title-gap)) * 1641 / 1022 * var(--smp-stage-scale)
+      )
+    );
+    padding-bottom: calc(
+      var(--smp-footer-height) + env(safe-area-inset-bottom, 0px)
+    );
+  }
+
+  .smp-stage-footer {
+    align-items: center;
+    padding-top: calc(env(safe-area-inset-bottom, 0px) / 2);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) / 2);
+  }
+
+  .smp-stage-grid {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: var(--smp-logo-col-width) minmax(0, 1fr) auto;
+    justify-items: stretch;
+  }
+
+  .smp-logo-col {
+    justify-self: center;
+  }
+
+  .smp-reels-col {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .smp-canvas {
+    width: min(var(--smp-canvas-width), 100%);
+  }
+
+  .smp-side-controls {
+    justify-self: end;
+    align-self: center;
+    width: auto;
+    padding-left: 0;
+  }
+}
+
+/* Stake Engine popout / mini-player (Popout L 800×450, phone landscape) */
+@media (orientation: landscape) and (max-height: 500px) {
+  .smp-wrapper {
+    --smp-logo-col-width: clamp(48px, 11vw, 86px);
+    --smp-stage-gap: clamp(6px, 1.2vw, 14px);
+  }
+
+  .smp-logo-col {
+    align-self: center;
+  }
+}
+
+/* Stake Engine Popout S (400×225) */
+@media (orientation: landscape) and (max-height: 280px) {
+  .app-page {
+    padding: 2px;
+  }
+
+  .smp-wrapper {
+    --smp-logo-col-width: clamp(48px, 13vw, 56px);
+    --smp-stage-gap: 4px;
+    --smp-ui-chrome: 64px;
+    padding-top: 0;
+  }
+
+  .smp-home-btn-fixed {
+    top: 4px;
+    right: 4px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .smp-reels-col {
+    align-self: center;
+  }
+}
+
+/* ── Mobile portrait layout ───────────────────────────────────────────────── */
+.smp-mobile-win {
+  display: none;
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .smp-wrapper {
+    --smp-canvas-width: min(
+      calc(100vw - 16px),
+      calc((100dvh - 330px) * 1641 / 1022)
+    );
+    --smp-mobile-footer-height: calc(140px + env(safe-area-inset-bottom, 0px));
+    height: 100%;
+    align-self: stretch;
+    padding-top: clamp(2px, 0.5dvh, 6px);
+    padding-bottom: var(--smp-mobile-footer-height);
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .smp-stage-grid {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    align-items: center;
+    width: 100%;
+    gap: clamp(6px, 1.5dvh, 14px);
+    padding-top: clamp(2px, 0.8dvh, 8px);
+  }
+
+  .smp-logo-col {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .smp-reels-col {
+    width: var(--smp-canvas-width);
+    max-width: 100%;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .smp-reels-col .smp-canvas {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .smp-wrapper:not(.smp-wrapper--bonus) .smp-reels-col {
+    margin-top: 0;
+    margin-bottom: auto;
+  }
+
+  .smp-wrapper:not(.smp-wrapper--bonus) .smp-logo-col {
+    margin-top: auto;
+    padding-top: 0;
+  }
+
+  .smp-side-controls {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    gap: clamp(10px, 3.5vw, 24px);
+    padding: clamp(4px, 1dvh, 10px) max(4px, env(safe-area-inset-right, 0px))
+      clamp(4px, 1dvh, 10px) 8px;
+    margin-top: 0;
+    flex-shrink: 0;
+  }
+
+  .smp-stage-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 12;
+    display: block;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  /* Mobile WIN — below reels (no overlap on symbols) */
+  .smp-mobile-win {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: clamp(48px, 12vw, 64px);
+    margin-top: clamp(10px, 2.5dvh, 20px);
+    gap: 2px;
+    pointer-events: none;
+    padding: 0 8px 2px;
+  }
+
+  .smp-mobile-win__label,
+  .smp-mobile-win__value,
+  .smp-mobile-win__value .smp-currency-pair__symbol,
+  .smp-mobile-win__value .smp-currency-pair__amount {
+    background: linear-gradient(
+      180deg,
+      #fffff5 0%,
+      #fff4c8 10%,
+      #ffe866 28%,
+      #f5c830 52%,
+      #d4a020 74%,
+      #9a6810 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .smp-mobile-win__label {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    opacity: 0.45;
+    transition:
+      opacity 0.25s ease,
+      filter 0.25s ease;
+  }
+
+  .smp-mobile-win__value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(1.1 * clamp(2rem, 10vw, 3rem));
+    font-size: clamp(2rem, 10vw, 3rem);
+    white-space: nowrap;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    opacity: 0.45;
+    transition:
+      opacity 0.25s ease,
+      filter 0.25s ease;
+  }
+
+  .smp-mobile-win__value .smp-currency-pair {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  .smp-mobile-win:not(.smp-mobile-win--active)
+    .smp-mobile-win__value
+    .smp-currency-pair {
+    visibility: hidden;
+  }
+
+  .smp-mobile-win--active .smp-mobile-win__label,
+  .smp-mobile-win--active .smp-mobile-win__value {
+    opacity: 1;
+    filter: drop-shadow(0 2px 0 rgba(180, 120, 20, 0.9))
+      drop-shadow(0 0 24px rgba(255, 200, 50, 0.6));
+  }
+}
+
+@media (max-width: 600px) and (max-height: 800px) and (orientation: portrait) {
+  .smp-mobile-win {
+    min-height: clamp(32px, 8vw, 44px);
+    margin-top: clamp(4px, 1dvh, 10px);
+  }
+
+  .smp-mobile-win__label {
+    font-size: 1rem;
+  }
+
+  .smp-mobile-win__value {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+    min-height: calc(1.1 * clamp(1.4rem, 7vw, 2rem));
+  }
+}
+
+@media (max-width: 400px) and (orientation: portrait) {
+  .smp-wrapper {
+    --smp-canvas-width: min(
+      calc(100vw - 12px),
+      calc((100dvh - 268px) * 1641 / 1022)
+    );
+    --smp-mobile-footer-height: calc(140px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .smp-stage-grid {
+    gap: clamp(2px, 0.6dvh, 8px);
+    padding-top: 0;
+  }
+
+  .smp-side-controls {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .smp-mobile-win {
+    min-height: clamp(28px, 8vw, 40px);
+    margin-top: clamp(4px, 1dvh, 8px);
+  }
+
+  .smp-home-btn-fixed {
+    top: 6px;
+    right: 6px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ── Squarish portrait (e.g. 527×606) — не хватает вертикали, ужимаем UI ─── */
+@media (max-width: 600px) and (orientation: portrait) and (min-aspect-ratio: 3/4) {
+  .smp-wrapper {
+    --smp-mobile-footer-height: calc(96px + env(safe-area-inset-bottom, 0px));
+    --smp-canvas-width: min(calc(70vw), calc((100dvh - 360px) * 1641 / 1022));
+    gap: 0;
+  }
+
+  .smp-stage-grid {
+    gap: clamp(2px, 0.5dvh, 6px);
+  }
+
+  .smp-mobile-win {
+    min-height: clamp(24px, 6vw, 34px);
+    margin-top: clamp(2px, 0.5dvh, 6px);
+    padding: 0 8px;
+  }
+
+  .smp-mobile-win__label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+  }
+
+  .smp-mobile-win__value {
+    font-size: clamp(1.1rem, 5vw, 1.6rem);
+    min-height: calc(1.1 * clamp(1.1rem, 5vw, 1.6rem));
+  }
+}
+
+/* ── Fixed test button (top-left) ────────────────────────────────────────── */
+.smp-test-btn-fixed {
+  display: grid;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.38);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition:
+    filter 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.smp-test-btn-fixed:hover:not(:disabled) {
+  border-color: rgba(201, 166, 255, 0.55);
+  background: rgba(201, 166, 255, 0.14);
+}
+
+.smp-test-btn-fixed:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Home / exit button (top-right) ──────────────────────────────────────── */
+.smp-home-btn-fixed {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    filter 0.15s ease,
+    transform 0.1s ease;
+}
+
+.smp-home-btn-fixed img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.smp-home-btn-fixed:hover {
+  filter: brightness(1.15) drop-shadow(0 0 6px rgba(255, 200, 50, 0.6));
+}
+
+.smp-home-btn-fixed:active {
+  transform: scale(0.93);
+}
+
+/* ── Overlay (connecting / error) ────────────────────────────────────────── */
+.smp-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  border-radius: 32px;
+}
+
+.smp-overlay--error {
+  color: #ff6b6b;
+}
+
+/* ── End SlotMachinePixi ──────────────────────────────────────────────────── */
+
+/* Reserve space for the bonus header as well as the fixed footer. */
+@media (min-width: 601px), (orientation: landscape) {
+  .smp-wrapper--bonus {
+    --smp-bonus-header-height: 72px;
+    --smp-bonus-wild-height: 0px;
+    --smp-bonus-footer-space: clamp(72px, 10vh, 96px);
+    --smp-canvas-width: max(0px, min(
+      1012px,
+      calc(100vw - var(--smp-logo-col-width) - var(--smp-controls-col-width) - 2 * var(--smp-stage-gap) - 32px),
+      calc((100svh - var(--smp-title-height) - var(--smp-title-gap) - var(--smp-bonus-footer-space) - var(--smp-bonus-header-height) - var(--smp-bonus-wild-height) - 48px - env(safe-area-inset-bottom, 0px)) * 1641 / 1022)
+    ));
+    padding-top: 8px;
+    padding-bottom: calc(var(--smp-bonus-footer-space) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .smp-wrapper--bonus .smp-stage-grid {
+    width: auto;
+    grid-template-columns: var(--smp-logo-col-width) var(--smp-canvas-width) var(--smp-controls-col-width);
+  }
+
+  .smp-wrapper--bonus .smp-reels-col {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: var(--smp-canvas-width);
+  }
+
+  .smp-wrapper--bonus .bonus-status {
+    min-height: var(--smp-bonus-header-height);
+    padding: 8px 12px;
+    align-items: center;
+  }
+
+  .smp-wrapper--bonus .bonus-wild-values {
+    height: var(--smp-bonus-wild-height);
+    min-height: var(--smp-bonus-wild-height);
+    line-height: var(--smp-bonus-wild-height);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .smp-wrapper--bonus {
+    --smp-bonus-header-height: 34px;
+    --smp-bonus-wild-height: 0px;
+    --smp-bonus-footer-space: 36px;
+  }
+
+  .smp-wrapper--bonus .bonus-status {
+    padding: 4px 8px;
+    gap: 6px;
+    border-radius: 8px;
+  }
+
+  .smp-wrapper--bonus .bonus-status__section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .smp-wrapper--bonus .bonus-status__label {
+    font-size: clamp(0.45rem, 1.2vw, 0.65rem);
+    letter-spacing: 0.02em;
+  }
+
+  .smp-wrapper--bonus .bonus-status__value {
+    font-size: clamp(0.7rem, 1.8vw, 1rem);
+    white-space: nowrap;
+  }
+
+  .smp-wrapper--bonus .bonus-wild-values {
+    font-size: 14px;
+  }
+}
+
+/* Multiplier text sits outside the canvas, above its reel column. */
+.smp-canvas {
+  container-type: inline-size;
+}
+.smp-wild-multiplier {
+  position: absolute;
+  top: 0.4%;
+  transform: translate(-50%, 0);
+  color: #ffe58b;
+  font-family: Arial, sans-serif;
+  font-size: 3cqw;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 0, 0, 0.6);
+  z-index: 5;
+}
