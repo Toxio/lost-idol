@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Modal } from "@/components/modal";
 import { CurrencyAmount } from "@/components/CurrencyAmount";
 import { play as playSound } from "@/audio/soundManager";
@@ -23,9 +23,9 @@ export function BetSettingsModal({
   onConfirm,
   onClose,
 }: BetSettingsModalProps) {
-  const [selected, setSelected] = useState(() =>
-    quickBets.length ? snapToBetLevel(quickBets, currentBet) : currentBet,
-  );
+  const selected = quickBets.length
+    ? snapToBetLevel(quickBets, currentBet)
+    : currentBet;
   const index = useMemo(
     () => indexOfBetLevel(quickBets, selected),
     [quickBets, selected],
@@ -38,15 +38,7 @@ export function BetSettingsModal({
     const next = quickBets[nextIndex];
     if (next === undefined) return;
     if (withSound) playSound("ui_button");
-    setSelected(next);
-  };
-
-  const applyAndClose = () => {
-    playSound("ui_button");
-    onConfirm(
-      quickBets.length ? snapToBetLevel(quickBets, selected) : selected,
-    );
-    onClose();
+    onConfirm(next);
   };
 
   return (
@@ -54,7 +46,7 @@ export function BetSettingsModal({
       title={t("bet_title")}
       size="narrow"
       className="smp-bsm-modal"
-      onClose={applyAndClose}
+      onClose={onClose}
     >
       <div className="smp-bsm">
         <div className="smp-bsm-stepper">
@@ -106,13 +98,6 @@ export function BetSettingsModal({
         </div>
       </div>
 
-      <button
-        type="button"
-        className="smp-modal-action smp-bsm-confirm"
-        onClick={applyAndClose}
-      >
-        {t("bet_confirm")}
-      </button>
     </Modal>
   );
 }

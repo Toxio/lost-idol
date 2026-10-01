@@ -16,8 +16,6 @@ import {
 
 /** Resting frame of `win` — matches the static reel art, not setup pose. */
 const SETTLED_WIN_FRAME_TIME = 0;
-/** Scatter `scale` bone is unstable at setup pose — freeze `win` at its resting keyframe. */
-const SCATTER_REST_FRAME_TIME = 1.0;
 
 function freezeSpine(spine: Spine): Spine {
   spine.autoUpdate = false;
@@ -35,7 +33,7 @@ function createSettledWinPose(
   return freezeSpine(spine);
 }
 
-/** High-quality static pose from the same Spine atlases used by win animations. */
+/** Static resting poses; animations play only in the win overlay. */
 export function createSettledSymbolSpine(alias: string): Spine | null {
   switch (alias) {
     case 'sym-seven':
@@ -54,10 +52,10 @@ export function createSettledSymbolSpine(alias: string): Spine | null {
       return createSettledWinPose(createGobletSpine);
     case 'heels':
       return createSettledWinPose(createHeelsSpine);
-    case 'sym-scatter':
-      return createSettledWinPose(createScatterSpine, SCATTER_REST_FRAME_TIME);
-    case 'sym-star':
-      return createSettledWinPose(createStarSpine);
+    case 'sym-bonus-door':
+      return createSettledWinPose(createScatterSpine);
+    case 'sym-paying-scatter':
+      return createSettledWinPose(createStarSpine, 14 / 8);
     default:
       return null;
   }

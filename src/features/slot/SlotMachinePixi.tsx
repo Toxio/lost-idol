@@ -1,3 +1,4 @@
+import { FlaskConical } from "lucide-react";
 import { REEL_GRID, REEL_COUNT } from "./reels/constants";
 import { t } from "@/utils/i18n";
 import { BuyBonusModal } from "./bonus/BuyBonusModal";
@@ -25,6 +26,12 @@ import "./ui/SlotLogo.css";
 import { SlotSideControls } from "./ui/SlotSideControls";
 import { ReplayControls } from "./ui/ReplayControls";
 import "./ui/SlotSideControls.css";
+import "./ui/SlotDesktopControls.css";
+import "./ui/SlotMobileControls.css";
+import "./ui/SlotQuickSound.css";
+import "./ui/SlotBetStepper.css";
+import "./ui/SlotBonusButton.css";
+import buyBonusButtonImg from "@/assets/buttons/buy-bonus-jade.webp";
 import { SlotReels } from "./reels";
 import { TestModal } from "./test/TestModal";
 
@@ -211,6 +218,26 @@ export function SlotMachinePixi({
 
   useResponsiveCanvas({ containerRef, appRef });
 
+  const gameControls = (
+<SlotSideControls
+              bonusGame={bonusActive}
+              spinning={spinning}
+              controlsDisabled={controlsDisabled}
+              spinSpeed={bonusActive ? bonusSpeed : spinSpeed}
+              autoSpinActive={!bonusActive && autoplay.autoSpinEnabled}
+              autoSpinRemaining={autoplay.autoSpinRemaining}
+              autoplayDisabled={jurisdiction.disabledAutoplay}
+              turboDisabled={jurisdiction.disabledTurbo}
+              insufficientFunds={!bonusActive && cannotAffordBet}
+              currency={currency}
+              onSpin={handleSpinClick}
+              onAutoSpinStart={autoplay.start}
+              onAutoSpinStop={autoplay.stop}
+              onSpeedCycle={handleSpeedCycle}
+              onBuyBonus={bonusActive || jurisdiction.disabledBuyFeature ? undefined : () => setBuyBonusOpen(true)}
+            />
+  );
+
   return (
     <>
       {buyBonusOpen && !roundBusy && !replay && !jurisdiction.disabledBuyFeature && <BuyBonusModal
@@ -227,6 +254,7 @@ export function SlotMachinePixi({
                 disabled={controlsDisabled || spinning || autoplay.autoSpinEnabled}
                 onClick={() => { playSound("ui_button"); setBuyBonusOpen(true); }}
               >
+                <img className="smp-buy-bonus-artwork" src={buyBonusButtonImg} alt="" draggable={false} />
                 <span className="smp-buy-bonus-label">{t("buy_bonus_title")}</span>
               </button>
             )}
@@ -305,31 +333,14 @@ export function SlotMachinePixi({
             </div>
           </div>
 
-          {!replay && (
-            <SlotSideControls
-              bonusGame={bonusActive}
-              spinning={spinning}
-              controlsDisabled={controlsDisabled}
-              spinSpeed={bonusActive ? bonusSpeed : spinSpeed}
-              autoSpinActive={!bonusActive && autoplay.autoSpinEnabled}
-              autoSpinRemaining={autoplay.autoSpinRemaining}
-              autoplayDisabled={jurisdiction.disabledAutoplay}
-              turboDisabled={jurisdiction.disabledTurbo}
-              insufficientFunds={!bonusActive && cannotAffordBet}
-              currency={currency}
-              onSpin={handleSpinClick}
-              onAutoSpinStart={autoplay.start}
-              onAutoSpinStop={autoplay.stop}
-              onSpeedCycle={handleSpeedCycle}
-              onBuyBonus={bonusActive || jurisdiction.disabledBuyFeature ? undefined : () => setBuyBonusOpen(true)}
-            />
-          )}
+
         </div>
       </div>
 
       {!replay && (
         <div className="smp-stage-footer">
           <SlotBottomBar
+            controls={gameControls}
             balance={balance}
             currency={currency}
             precision={precision}
@@ -379,7 +390,7 @@ export function SlotMachinePixi({
           aria-label="Open test preset panel"
           title="Open test preset panel"
         >
-          🧪
+          <FlaskConical size={20} aria-hidden="true" />
         </button>
       )}
 

@@ -1,0 +1,75 @@
+/* Lost Idol desktop controls; mobile retains its current layout. */
+.smp-desktop-icon, .smp-desktop-bet-label, .smp-desktop-speed { display: none; }
+@media (min-width: 901px) {
+  .smp-wrapper { --smp-controls-col-width: var(--smp-logo-col-width); --smp-footer-height: 86px; }
+  .smp-stage-footer { background: none; box-shadow: none; padding: 0 16px max(14px, env(safe-area-inset-bottom)); }
+  .smp-bottom-bar { width: min(780px, 100%); max-width: 780px; min-height: 72px; padding: 6px 12px; gap: 18px; border-radius: 8px; border-top: 1px solid #b7a46540; background: #0b201bef; box-shadow: 0 8px 24px #0004; }
+  .smp-bottom-bar .smp-bottom-bar-right, .smp-bottom-bar .smp-bottom-balance-icon-btn, .smp-bottom-bar .smp-bottom-bet-bg, .smp-bottom-menu img { display: none; }
+  .smp-bottom-bar .smp-bottom-bar-core { gap: 24px; justify-content: space-between; }
+  .smp-bottom-menu { width: 40px; height: 44px; color: #afc1b1; }
+  .smp-desktop-icon { display: block; width: 22px; height: 22px; }
+  .smp-bottom-balance { flex: 1 1 auto; }
+  .smp-bottom-win { align-items: flex-start; flex: 1 1 auto; gap: 4px; }
+  .smp-bottom-label, .smp-bottom-win-label { font-size: 10px; font-weight: 500; letter-spacing: .08em; color: #a8b9a8; }
+  .smp-bottom-balance .smp-bottom-value, .smp-bottom-win-value { min-width: 0; min-height: 18px; width: auto; font-size: 17px; font-weight: 500; line-height: 1.1; filter: none; text-align: left; }
+  .smp-bottom-win-value:empty::after { content: '—'; color: #9eac9e; }
+  .smp-bottom-bar .smp-currency-pair, .smp-bottom-bar .smp-currency-pair__symbol, .smp-bottom-bar .smp-currency-pair__amount { background: none; -webkit-text-fill-color: currentColor; color: #f0ecdd; filter: none; }
+  .smp-bottom-win-value--active .smp-currency-pair, .smp-bottom-win-value--active .smp-currency-pair span { color: #e1c889; }
+  .smp-bottom-bet { flex: 0 0 124px; height: 48px; aspect-ratio: auto; background: #ffffff06; border-radius: 5px; }
+  .smp-bottom-bet-inner { padding: 0 3px; grid-template-columns: 24px minmax(0, 1fr) 24px; }
+  .smp-bottom-bet-amount { flex-direction: column; gap: 5px; height: 44px; }
+  .smp-desktop-bet-label { display: block; color: #a8b9a8; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+  .smp-bottom-bet-amount .smp-currency-pair { font-size: 15px; font-weight: 500; }
+  .smp-bottom-bet-arrow::before { width: 7px; height: 7px; border-width: 1.5px; filter: none; }
+  .smp-bottom-bar .smp-side-controls { order: 3; display: flex; flex-direction: row; width: auto; padding: 0; gap: 12px; flex-shrink: 0; }
+  .smp-bottom-bar .smp-side-controls__secondary { display: flex; gap: 3px; width: auto; }
+  .smp-bottom-bar .smp-side-btn { color: #b8cbbb; }
+  .smp-bottom-bar .smp-side-btn img, .smp-bottom-bar .smp-side-btn__arrows-wrap, .smp-bottom-bar .smp-side-btn__stop-wrap { display: none; }
+  .smp-bottom-bar .smp-side-btn--spin { width: 58px; height: 58px; border: 2px solid #d3bc7b; border-radius: 50%; background: #214632; color: #f0edcf; }
+  .smp-bottom-bar .smp-side-btn--spin .smp-desktop-icon { width: 29px; height: 29px; }
+  .smp-bottom-bar .smp-side-btn--small { flex: none; min-width: 36px; max-width: none; width: 36px; height: 44px; }
+  .smp-bottom-bar .smp-side-btn:disabled { opacity: .4; }
+  .smp-bottom-bar .smp-side-btn[aria-pressed=true] { color: #8ce6ad; filter: none; }
+  .smp-bottom-bar .smp-side-btn__autospin-square { width: 26px; height: 26px; border-width: 1px; }
+  .smp-bottom-bar .smp-side-btn__autospin-count { font-size: 11px; color: #b4efc5; }
+  .smp-desktop-speed { display: block; position: absolute; bottom: 0; right: 0; font-size: 9px; }
+  .smp-bottom-bar button:focus-visible { outline: 2px solid #a8efbd; outline-offset: 3px; }
+  .smp-logo-col { align-self: center; }
+  .smp-logo-col .smp-buy-bonus-button--desktop { background: #132c23ed; border: 1px solid #b49a5966; border-image: none; border-radius: 6px; box-shadow: none; min-height: 48px; padding: 12px 8px; font-size: 12px; font-weight: 500; letter-spacing: .06em; color: #dec78c; }
+  .smp-logo-col .smp-buy-bonus-label { color: #dec78c; background: none; -webkit-text-fill-color: currentColor; text-shadow: none; }
+}
+@media (min-width: 901px) {
+  .smp-bottom-bar .smp-side-btn::after, .smp-bottom-bar .smp-bottom-menu::after,
+  .smp-bottom-bar .smp-bottom-bet::after, .smp-wrapper .smp-buy-bonus-button--desktop::after { display: none; }
+  .smp-bottom-bar .smp-side-btn--small { background: transparent; }
+  :root .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop { border-color: #b49a5966; }
+}
+
+/* Use the space freed by moving the controls below the reels. */
+@media (min-width: 901px) {
+  .main-screen .smp-wrapper {
+    --smp-title-height: clamp(32px, 6dvh, 64px);
+    --smp-title-gap: 0px;
+    --smp-extra-header: 0px;
+    --smp-logo-col-width: clamp(76px, 6vw, 96px);
+    --smp-controls-col-width: var(--smp-logo-col-width);
+    --smp-stage-gap: 8px;
+    --smp-canvas-width: min(
+      1800px,
+      calc(100vw - 2 * var(--smp-logo-col-width) - 32px),
+      calc((100svh - var(--smp-title-height) - var(--smp-title-gap) - var(--smp-extra-header) - 100px) * 1641 / 1022)
+    );
+    padding-top: 0;
+    --smp-footer-height: 86px;
+  }
+  .main-screen .smp-stage-grid {
+    width: fit-content;
+    grid-template-columns: var(--smp-logo-col-width) var(--smp-canvas-width) var(--smp-controls-col-width);
+  }
+  .main-screen .smp-reels-col { align-items: center; }
+}
+
+@media (min-width: 901px) {
+  .main-screen .smp-wrapper--bonus { --smp-extra-header: 40px; --smp-bonus-header-height: 40px; }
+  .main-screen .smp-wrapper--bonus .bonus-status { min-height: 40px; padding-block: 4px; }
+}

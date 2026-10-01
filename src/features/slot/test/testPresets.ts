@@ -43,6 +43,7 @@ export interface TestPreset {
   label: string;
   subtitle: string;
   badge: string;
+  iconSymbol?: number;
   badgeColor: string;
   rewardLabel?: string;
   preset: ForceSpinPreset;
@@ -51,74 +52,83 @@ export interface TestPreset {
 const WIN_SPINE_ANIM_PRESETS: TestPreset[] = [
   {
     id: "win-anim-seven",
-    label: "Win anim · Seven",
+    label: "Win anim · Idol",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "7️⃣×5",
-    badgeColor: "#ff4d4d",
+    iconSymbol: 1,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(1, 100),
   },
   {
     id: "win-anim-lips",
-    label: "Win anim · Lips",
+    label: "Win anim · Treasure",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "💋×5",
-    badgeColor: "#ff6b9d",
+    iconSymbol: 2,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(2, 95),
   },
   {
     id: "win-anim-parfume",
-    label: "Win anim · Parfume",
+    label: "Win anim · Serpent Key",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "🌸×5",
-    badgeColor: "#e040fb",
+    iconSymbol: 3,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(3, 92),
   },
   {
     id: "win-anim-rose",
-    label: "Win anim · Rose",
+    label: "Win anim · Torch",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "🌹×5",
-    badgeColor: "#ff5252",
+    iconSymbol: 4,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(4, 88),
   },
   {
     id: "win-anim-glass",
-    label: "Win anim · Glass",
+    label: "Win anim · Compass",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "🕶️×5",
-    badgeColor: "#80dfff",
+    iconSymbol: 5,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(5, 80),
   },
   {
     id: "win-anim-lipstick",
-    label: "Win anim · Lipstick",
+    label: "Win anim · Machete",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "💄×5",
-    badgeColor: "#ff4081",
+    iconSymbol: 6,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(6, 85),
   },
   {
     id: "win-anim-goblet",
-    label: "Win anim · Goblet",
+    label: "Win anim · Chalice",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "🥂×5",
-    badgeColor: "#ffa040",
+    iconSymbol: 7,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(7, 82),
   },
   {
     id: "win-anim-heels",
-    label: "Win anim · Heels",
+    label: "Win anim · Map",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "👠×5",
-    badgeColor: "#ff80ab",
+    iconSymbol: 8,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(8, 90),
   },
   {
     id: "win-anim-wild",
-    label: "Win anim · Wild",
+    label: "Win anim · Monkey Wild",
     subtitle: "Spine · Line 1 · ×5 · expand",
-    badge: "👸×5",
-    badgeColor: "#c084fc",
+    iconSymbol: 9,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [7, 1, 4],
@@ -134,18 +144,20 @@ const WIN_SPINE_ANIM_PRESETS: TestPreset[] = [
   },
   {
     id: "win-anim-scatter",
-    label: "Win anim · Scatter",
+    label: "Win anim · Bonus",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "📦×5",
-    badgeColor: "#fbbf24",
+    iconSymbol: 10,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(10, 150),
   },
   {
     id: "win-anim-star",
-    label: "Win anim · Star",
+    label: "Win anim · Scatter",
     subtitle: "Spine · Line 1 · ×5",
-    badge: "⭐×5",
-    badgeColor: "#ffe066",
+    iconSymbol: 11,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: winAnimMidRowFive(11, 40),
   },
 ];
@@ -156,10 +168,11 @@ export const TEST_PRESETS: TestPreset[] = [
   ...WIN_SPINE_ANIM_PRESETS,
   {
     id: "star-bot",
-    label: "5× Star",
+    label: "5× Scatter",
     subtitle: "Line 3 · Bottom row",
-    badge: "⭐×5",
-    badgeColor: "#ffe066",
+    iconSymbol: 11,
+    badge: "×5",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [7, 2, 11],
@@ -174,10 +187,11 @@ export const TEST_PRESETS: TestPreset[] = [
   },
   {
     id: "glass-3",
-    label: "3× Glass",
+    label: "3× Compass",
     subtitle: "Line 3 · Bottom row",
-    badge: "🕶️×3",
-    badgeColor: "#80dfff",
+    iconSymbol: 5,
+    badge: "×3",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [6, 2, 5],
@@ -192,10 +206,11 @@ export const TEST_PRESETS: TestPreset[] = [
   },
   {
     id: "lips-3",
-    label: "3× Lips",
+    label: "3× Treasure",
     subtitle: "Line 1 · Small win",
-    badge: "💋×3",
-    badgeColor: "#ff6b9d",
+    iconSymbol: 2,
+    badge: "×3",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [4, 2, 1],
@@ -210,10 +225,11 @@ export const TEST_PRESETS: TestPreset[] = [
   },
   {
     id: "seven-v",
-    label: "V-Shape Seven",
+    label: "V-Shape Idol",
     subtitle: "Line 4 · V pattern",
-    badge: "7️⃣ V",
-    badgeColor: "#ff4d4d",
+    iconSymbol: 1,
+    badge: "V",
+    badgeColor: "#d8c18a",
     preset: {
       // Line 4 = rows [0,1,2,1,0]
       matrix: buildMatrix([
@@ -229,10 +245,11 @@ export const TEST_PRESETS: TestPreset[] = [
   },
   {
     id: "all-sevens",
-    label: "Full Board Sevens",
+    label: "Full Board Idols",
     subtitle: "Lines 1–10 · Max win",
-    badge: "7️⃣ ALL",
-    badgeColor: "#ff4d4d",
+    iconSymbol: 1,
+    badge: "ALL",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [1, 1, 1],
@@ -260,8 +277,8 @@ export const TEST_PRESETS: TestPreset[] = [
     id: "showcase",
     label: "All Symbols",
     subtitle: "Every symbol visible",
-    badge: "🎰 show",
-    badgeColor: "#aaa",
+    badge: "show",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: [
         [1, 2, 3],
@@ -277,10 +294,11 @@ export const TEST_PRESETS: TestPreset[] = [
   },
   {
     id: "seven-3-wild-col2",
-    label: "3× Seven + Wild",
-    subtitle: "Line 1 · Wild in 2nd column",
-    badge: "7️⃣×3👸",
-    badgeColor: "#f472b6",
+    label: "3× Idol + Monkey Wild",
+    subtitle: "Line 1 · Monkey Wild in 2nd column",
+    iconSymbol: 1,
+    badge: "×3",
+    badgeColor: "#d8c18a",
     preset: {
       // Middle row (line 1): seven | wild | seven | … — three-of-a-kind with substitute on column 2.
       matrix: buildMatrix([
@@ -297,10 +315,11 @@ export const TEST_PRESETS: TestPreset[] = [
   },
   {
     id: "wild-3-line1",
-    label: "3× Wild + Lips row",
-    subtitle: "Line 1 · Triple wild · Line 2 · Lips ×5 (top)",
-    badge: "👸×3",
-    badgeColor: "#c084fc",
+    label: "3× Monkey Wild + Treasure row",
+    subtitle: "Line 1 · Triple wild · Line 2 · Treasure ×5 (top)",
+    iconSymbol: 9,
+    badge: "×3",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [2, 3, 11],
@@ -319,7 +338,7 @@ export const TEST_PRESETS: TestPreset[] = [
     label: "BIG WIN",
     subtitle: "20× · 3 win lines + banner",
     badge: "20×",
-    badgeColor: "#ffd54f",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [1, 7, 11],
@@ -342,7 +361,7 @@ export const TEST_PRESETS: TestPreset[] = [
     label: "MEGA WIN",
     subtitle: "50× · 3 win lines + banner",
     badge: "50×",
-    badgeColor: "#ff9800",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [1, 7, 11],
@@ -365,7 +384,7 @@ export const TEST_PRESETS: TestPreset[] = [
     label: "SUPER WIN",
     subtitle: "100× · 3 win lines + banner",
     badge: "100×",
-    badgeColor: "#e040fb",
+    badgeColor: "#d8c18a",
     preset: {
       matrix: buildMatrix([
         [1, 7, 11],
@@ -385,10 +404,11 @@ export const TEST_PRESETS: TestPreset[] = [
   },
   {
     id: "scatter-3-line0",
-    label: "3× Scatter + Free Spins",
+    label: "3× Bonus + Free Spins",
     subtitle: "Full bonus round · current bet · no wallet changes",
-    badge: "📦×3",
-    badgeColor: "#fbbf24",
+    iconSymbol: 10,
+    badge: "×3",
+    badgeColor: "#d8c18a",
     rewardLabel: "5 Free Spins",
     preset: {
       book: bonusFixture,

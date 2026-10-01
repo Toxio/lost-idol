@@ -214,7 +214,7 @@
   }
 
   :root .smp-menu-dialog .smp-menu-sidebar .smp-menu-tab--active::after {
-    background: #ff36ac;
+    background: #6dc897;
   }
 
   .smp-menu-tab__icon {
@@ -265,7 +265,7 @@
     padding: 0;
     gap: 4px;
     border-right: 0;
-    border-bottom: 1px solid #af467b55;
+    border-bottom: 1px solid #46af7755;
   }
   .smp-menu-tab {
     flex: 1;
@@ -287,7 +287,7 @@
     background: transparent;
     box-shadow: none;
   }
-  :root .smp-menu-dialog .smp-menu-sidebar .smp-menu-tab--active::after { background: #ff36ac; }
+  :root .smp-menu-dialog .smp-menu-sidebar .smp-menu-tab--active::after { background: #6dc897; }
   .smp-menu-tab__icon { display: none; }
   .smp-menu-content-header { padding: 4px 4px; }
   .smp-menu-content-title { font-size: 0.8rem; }

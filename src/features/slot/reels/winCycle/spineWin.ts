@@ -14,63 +14,17 @@ import {
   createStarSpine,
 } from '@/animation/symbols';
 import {
-  applyWildShowThenIdleLoop,
   createWildSpineShowThenIdle,
   type WildShowAnimationName,
 } from '@/animation/wildSpine';
-import { symbolAlias } from '../scene/assets';
-import { VISIBLE_ROWS } from '../constants';
 
 const SPINE_CELL_SCALE = 0.82;
 
-const EXPANDED_WILD_SIDE_PAD_FRAC = 0.07;
-const EXPANDED_WILD_HEIGHT_MUL = 1.12;
-const EXPANDED_WILD_COLUMN_H_FRAC = 0.92;
-/** Applied after width/height fit so the whole spine is smaller (<1 shrinks both axes). */
-const EXPANDED_WILD_FIT_SCALE = 1.29;
-const EXPANDED_WILD_SHIFT_DOWN_FRAC = 0.16;
-/** Positive nudges the sprite to the left; lower / negative → further right. */
-const EXPANDED_WILD_SHIFT_LEFT_FRAC = -0.17;
-const EXPANDED_WILD_SHIFT_RIGHT_PX = 2;
-
-// Separate tuning for the non-expanding wild idle shown in cell (does not affect expand).
-const WILD_IDLE_FIT_SCALE = 2.145;
-const WILD_IDLE_SHIFT_DOWN_FRAC = 0.523;
-const WILD_IDLE_SHIFT_RIGHT_PX = 1;
-
-export function layoutWildIdleInCell(
-  spine: Spine,
-  absXCenter: number,
-  absYCenter: number,
-  cellW: number,
-  cellH: number,
-): void {
-  const refEntry = spine.state.setAnimation(0, 'wild2', false);
-  if (refEntry) refEntry.trackTime = 0;
-  spine.update(0);
-  const lb = spine.getLocalBounds();
-  const bw = lb.width > 0 ? lb.width : 1;
-  const bh = lb.height > 0 ? lb.height : 1;
-  const paddedW = cellW * Math.max(0.55, 1 - 2 * EXPANDED_WILD_SIDE_PAD_FRAC);
-  const targetH = cellH * EXPANDED_WILD_COLUMN_H_FRAC * EXPANDED_WILD_HEIGHT_MUL;
-  const s = Math.max(paddedW / bw, targetH / bh) * WILD_IDLE_FIT_SCALE;
-  spine.scale.set(s);
-  const nx = absXCenter - (lb.x + lb.width / 2) * s - cellW * EXPANDED_WILD_SHIFT_LEFT_FRAC;
-  const ny = absYCenter - (lb.y + lb.height / 2) * s + cellH * WILD_IDLE_SHIFT_DOWN_FRAC;
-  spine.position.set(nx + WILD_IDLE_SHIFT_RIGHT_PX, ny);
-}
+/** The monkey occupies one cell both at rest and in an expanded column. */
+export const layoutWildIdleInCell = layoutSpineInCell;
 
 export function wildAnimationForRow(row: number): WildShowAnimationName {
   return row === 0 ? 'wild1' : row === 2 ? 'wild3' : 'wild2';
-}
-
-/** Row of the wild symbol before column expansion (`wild1` / `wild2` / `wild3`); fallback middle. */
-export function wildRevealRowForExpandingColumn(matrix: number[][], col: number): number {
-  const wildAlias = symbolAlias(9);
-  for (let row = 0; row < VISIBLE_ROWS; row++) {
-    if (symbolAlias(matrix[col]?.[row] ?? -1) === wildAlias) return row;
-  }
-  return 1;
 }
 
 /** One shot per payline highlight — no chained repeat (see symbol_fx the same). */
@@ -152,38 +106,4 @@ export function layoutSymbolFxInCell(
   const s = Math.min((cellW * pad) / bw, (cellH * pad) / bh);
   spine.scale.set(s);
   spine.position.set(absX - (lb.x + lb.width / 2) * s, absY - (lb.y + lb.height / 2) * s);
-}
-
-export function layoutWildSpineExpandedInColumn(
-  spine: Spine,
-  absXCenter: number,
-  absYCenter: number,
-  cellW: number,
-  columnHeight: number,
-  revealAnim: WildShowAnimationName,
-): void {
-  /** Fit and column center use wild2 skeleton bounds (`SetupPoseBoundsProvider`), then reveal plays wild1/wild2/wild3. */
-  const refEntry = spine.state.setAnimation(0, 'wild2', false);
-  if (refEntry) refEntry.trackTime = 0;
-  spine.update(0);
-  const lb = spine.getLocalBounds();
-  const bw = lb.width > 0 ? lb.width : 1;
-  const bh = lb.height > 0 ? lb.height : 1;
-  const paddedW = cellW * Math.max(0.55, 1 - 2 * EXPANDED_WILD_SIDE_PAD_FRAC);
-  const targetW = paddedW;
-  const targetH = columnHeight * EXPANDED_WILD_COLUMN_H_FRAC * EXPANDED_WILD_HEIGHT_MUL;
-  const s = Math.max(targetW / bw, targetH / bh) * EXPANDED_WILD_FIT_SCALE;
-  spine.scale.set(s);
-  const nx = absXCenter - (lb.x + lb.width / 2) * s - cellW * EXPANDED_WILD_SHIFT_LEFT_FRAC;
-  let ny = absYCenter - (lb.y + lb.height / 2) * s;
-  ny += columnHeight * EXPANDED_WILD_SHIFT_DOWN_FRAC;
-
-  /** Top/bottom reveals are offset ±1 reel row vs `wild2` in the Spine; layout uses wild2 sizing (see tests `win-anim-wild`, `wild-3-line1`). */
-  const rowH = columnHeight / VISIBLE_ROWS;
-  if (revealAnim === 'wild1') ny -= rowH;
-  else if (revealAnim === 'wild3') ny += rowH;
-
-  spine.position.set(nx + EXPANDED_WILD_SHIFT_RIGHT_PX, ny);
-
-  applyWildShowThenIdleLoop(spine, revealAnim);
 }

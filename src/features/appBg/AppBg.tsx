@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
 import landscapePoster from '@/assets/background/landscape.webp';
-import landscapeWebm from '@/assets/background/landscape.webm?url';
-import landscapeMp4 from '@/assets/background/landscape.mp4?url';
+import landscapeWebm from '@/assets/background/landscape-loop.webm?url';
+import landscapeMp4 from '@/assets/background/landscape-loop.mp4?url';
 import portraitPoster from '@/assets/background/portrait.webp';
 import portraitWebm from '@/assets/background/portrait.webm?url';
 import portraitMp4 from '@/assets/background/portrait.mp4?url';
+
+import bonusVideo from '@/assets/background/bonus.mp4?url';
+import bonusDesktopPoster from '@/assets/background/bonus-desktop.webp';
+import bonusMobilePoster from '@/assets/background/bonus-mobile.webp';
 
 const PORTRAIT_QUERY = '(orientation: portrait)';
 const backgrounds = {
@@ -13,11 +17,12 @@ const backgrounds = {
   portrait: { poster: portraitPoster, webm: portraitWebm, mp4: portraitMp4 },
 };
 
-export function AppBg() {
+export function AppBg({ bonus = false }: { bonus?: boolean }) {
   const [portrait, setPortrait] = useState(() => window.matchMedia(PORTRAIT_QUERY).matches);
   const videoRef = useRef<HTMLVideoElement>(null);
   const orientation = portrait ? 'portrait' : 'landscape';
   const background = backgrounds[orientation];
+  const poster = bonus ? (portrait ? bonusMobilePoster : bonusDesktopPoster) : background.poster;
 
   useEffect(() => {
     const media = window.matchMedia(PORTRAIT_QUERY);
@@ -46,23 +51,23 @@ export function AppBg() {
       document.removeEventListener('pointerdown', resume);
       video.pause();
     };
-  }, [orientation]);
+  }, [orientation, bonus]);
 
   return (
     <div className="app-bg" aria-hidden="true">
-      <img className="app-bg__poster" src={background.poster} alt="" />
+      <img className="app-bg__poster" src={poster} alt="" />
       <video
-        key={orientation}
+        key={`${bonus ? "bonus" : "base"}-${orientation}`}
         ref={videoRef}
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
-        poster={background.poster}
+        poster={poster}
       >
-        <source src={background.webm} type="video/webm" />
-        <source src={background.mp4} type="video/mp4" />
+        {!bonus && <source src={background.webm} type="video/webm" />}
+        <source src={bonus ? bonusVideo : background.mp4} type="video/mp4" />
       </video>
     </div>
   );

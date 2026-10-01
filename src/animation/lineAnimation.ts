@@ -14,7 +14,7 @@ import { Assets, Container, type Ticker } from 'pixi.js';
 
 import lineAtlasUrl from '@/assets/line/line.atlas.txt?url';
 import lineJsonUrl from '@/assets/line/line.json?url';
-import linePngUrl from '@/assets/line/line.webp?url';
+import linePngUrl from '@/assets/line/line-green.webp?url';
 
 // ── Asset aliases ──────────────────────────────────────────────────────────────
 const LINE_SKEL_ALIAS = 'lineSpineSkel';
@@ -100,7 +100,6 @@ export function createPaylineAnimation(
   const { gridX, gridY, cellW, cellH, ticker } = metrics;
 
   const container = new Container();
-
   const spine = Spine.from({
     skeleton: LINE_SKEL_ALIAS,
     atlas: LINE_ATLAS_ALIAS,

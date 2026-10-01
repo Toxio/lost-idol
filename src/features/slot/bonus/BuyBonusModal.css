@@ -19,25 +19,25 @@
 }
 .buy-bonus-content { min-height: 0; overflow-y: auto; scrollbar-width: thin; }
 .buy-bonus-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 4px; }
-.buy-bonus-card { padding: 0; min-width: 0; overflow: hidden; border: 2px solid #a96966; border-radius: 18px; background: #160515; color: #ffe092; font: inherit; cursor: pointer; }
+.buy-bonus-card { padding: 0; min-width: 0; overflow: hidden; border: 2px solid #a96966; border-radius: 18px; background: #07140d; color: #ffe092; font: inherit; cursor: pointer; }
 .buy-bonus-modal .buy-bonus-card::after {
   z-index: 1;
   opacity: 0.45;
 }
 .buy-bonus-modal .buy-bonus-card[aria-pressed="true"]::after {
-  border: 4px solid #ff69c4;
+  border: 4px solid #92d6b2;
   opacity: 1;
-  box-shadow: inset 0 0 14px #ff149380;
+  box-shadow: inset 0 0 14px #55be8680;
 }
 .buy-bonus-card[aria-pressed="true"] .buy-bonus-card-copy {
-  background: linear-gradient(#6c124b, #380c2c);
+  background: linear-gradient(#235b3d, #133121);
 }
 .buy-bonus-art {
   aspect-ratio: 452 / 365;
   overflow: hidden;
   display: grid;
   place-items: center;
-  background: radial-gradient(ellipse at 50% 85%, #8c155966, transparent 70%);
+  background: radial-gradient(ellipse at 50% 85%, #2c754e66, transparent 70%);
 }
 .buy-bonus-art img {
   display: block;
@@ -47,11 +47,11 @@
   object-fit: contain;
   margin: 0;
 }
-.buy-bonus-card-copy { display: flex; flex-direction: column; gap: 4px; padding: 8px 6px 14px; background: linear-gradient(#160515, #25091d); }
+.buy-bonus-card-copy { display: flex; flex-direction: column; gap: 4px; padding: 8px 6px 14px; background: linear-gradient(#07140d, #0d2116); }
 .buy-bonus-card-copy strong { font-size: clamp(1.5rem, 4vw, 2.4rem); line-height: 1; }
 .buy-bonus-card-copy span { font-size: 0.8rem; }
 .buy-bonus-card-copy b { margin-top: 5px; font-size: 1.25rem; color: #fff4dc; overflow-wrap: anywhere; }
-.buy-bonus-rules { margin: 12px 4px; color: #e0ced8; font-size: 0.75rem; line-height: 1.5; }
+.buy-bonus-rules { margin: 12px 4px; color: #cee0d6; font-size: 0.75rem; line-height: 1.5; }
 .buy-bonus-stake,
 .buy-bonus-actions {
   width: min(var(--buy-bonus-controls-width), 100%);
@@ -59,16 +59,16 @@
 }
 .buy-bonus-stake { display: flex; justify-content: center; gap: 8px; margin: 4px 0 12px; flex-shrink: 0; }
 .buy-bonus-stake > button { flex: 0 0 var(--buy-bonus-step-width); }
-.buy-bonus-stake button { width: 44px; border: 1px solid #efc477; border-radius: 10px; color: #ffd485; background: #3f092c; font: inherit; font-size: 1.6rem; cursor: pointer; }
+.buy-bonus-stake button { width: 44px; border: 1px solid #efc477; border-radius: 10px; color: #ffd485; background: #143423; font: inherit; font-size: 1.6rem; cursor: pointer; }
 .buy-bonus-stake div { flex: 1; min-width: 0; overflow-wrap: anywhere; text-align: center; display: flex; flex-direction: column; padding: 5px 20px; border: 1px solid #efc477; border-radius: 10px; }
-.buy-bonus-stake span { color: #c3a5b4; font-size: 0.65rem; }
+.buy-bonus-stake span { color: #a5c3b3; font-size: 0.65rem; }
 .buy-bonus-stake strong { color: #ffe092; font-size: 1.2rem; }
 .buy-bonus-actions { display: flex; gap: 10px; flex-shrink: 0; }
-.buy-bonus-submit { background: var(--modal-action-bg); color: var(--modal-action-text); border: 1px solid #f1c777; box-shadow: 0 3px 12px #ee008855; }
+.buy-bonus-submit { background: var(--modal-action-bg); color: var(--modal-action-text); border: 1px solid #f1c777; box-shadow: 0 3px 12px #41ad7355; }
 .buy-bonus-modal button:disabled { opacity: 0.4; cursor: default; }
 .buy-bonus-modal button:focus-visible { outline: 2px solid #fff5ba; outline-offset: 2px; }
-.buy-bonus-error { text-align: center; color: #ffb0c0; font-size: 0.8rem; margin: 0 0 8px; }
-.smp-buy-bonus-button { padding: 10px 16px; border: 2px solid transparent; border-radius: 10px; background: linear-gradient(180deg, #2e0b24, #10070d 70%, #230919); color: var(--modal-action-text); font-family: var(--game-font); font-size: 0.8rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; box-shadow: none; }
+.buy-bonus-error { text-align: center; color: #c6e9d6; font-size: 0.8rem; margin: 0 0 8px; }
+.smp-buy-bonus-button { padding: 10px 16px; border: 2px solid transparent; border-radius: 10px; background: linear-gradient(180deg, #10291c, #07100b 70%, #0c2015); color: var(--modal-action-text); font-family: var(--game-font); font-size: 0.8rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; box-shadow: none; }
 .smp-buy-bonus-button:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 600px) {
   .buy-bonus-modal { padding: 10px; }
@@ -236,7 +236,7 @@
 
 .smp-buy-bonus-button--desktop { display: none; }
 
-@media (min-width: 601px) {
+@media (min-width: 901px), (orientation: landscape) {
   .smp-side-controls .smp-buy-bonus-button { display: none; }
 
   .smp-logo-col .smp-buy-bonus-button--desktop {
@@ -357,3 +357,6 @@
   .buy-bonus-confirmation__summary { font-size: 13px; gap: 4px; }
   .buy-bonus-confirmation__actions .smp-modal-action { padding: 6px; }
 }
+
+/* Portal cards retain the complete generated artwork at every viewport. */
+.buy-bonus-art--portal img { width: 100%; height: 100%; object-fit: contain; transform: none; }

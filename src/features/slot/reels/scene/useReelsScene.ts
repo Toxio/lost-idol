@@ -9,7 +9,6 @@ import {
 import { type RefObject, useEffect } from "react";
 
 import { play as playSound } from "@/audio/soundManager";
-import { ensureBigWinSpineLoaded } from "@/animation/bigWinSpine";
 import {
   createReelFrame,
   ensureReelFrameLoaded,
@@ -28,16 +27,10 @@ import {
   ensureStarSpineLoaded,
 } from "@/animation/symbols";
 import { ensureLineAssetsLoaded } from "@/animation/lineAnimation";
-import {
-  createSymbolFxSpine,
-  ensureSymbolFxSpineLoaded,
-} from "@/animation/symbolFxSpine";
 import { ensureWildSpineLoaded } from "@/animation/wildSpine";
 import { preloadHtmlImages } from "@/utils/preloadHtmlImages";
 import {
   ALL_ASSETS,
-  disposeReelSymbolTextures,
-  ensureHeelsReelSymbolTexture,
   randomAlias,
   symbolAlias,
 } from "./assets";
@@ -58,7 +51,6 @@ import { getSlotGridMetrics } from "../lib/grid";
 import {
   createWinSpineForSymbol,
   layoutSpineInCell,
-  layoutSymbolFxInCell,
 } from "../winCycle/spineWin";
 import {
   isScatterSymbol,
@@ -265,12 +257,10 @@ export function useReelsScene({
       ensureHeelsSpineLoaded(),
       ensureWildSpineLoaded(),
       ensureScatterSpineLoaded(),
-      ensureSymbolFxSpineLoaded(),
       ensureLineAssetsLoaded(),
     ]).catch(() => {});
 
     async function init() {
-      await ensureHeelsReelSymbolTexture();
       await Assets.load(ALL_ASSETS);
       if (cancelled) return;
       await Promise.all([spinePromise, preloadHtmlImages()]);
@@ -280,8 +270,6 @@ export function useReelsScene({
       loadedRef.current = true;
       onAssetsLoaded?.();
 
-      // Fire-and-forget: big-win assets download in the background after splash.
-      void ensureBigWinSpineLoaded();
 
       const reelFrame = createReelFrame(DESIGN_WIDTH, DESIGN_HEIGHT);
       app!.stage.addChildAt(reelFrame, 0);
@@ -412,7 +400,7 @@ export function useReelsScene({
 
     function restoreWildIdle() {
       for (const { spine, col, row } of wildIdleSpinesRef.current) {
-        spine.visible = true;
+        spine.visible = !expandingWildColsRef.current.includes(col);
         const sym = reelsRef.current[col]?.symbols[row + 1];
         if (sym) setSlotSymbolVisibility(sym, false);
       }
@@ -515,17 +503,6 @@ export function useReelsScene({
         const absX = gridX + col * cellW + cellW / 2;
         const absY = gridY + row * cellH + cellH / 2;
 
-        if (!scatterOnly) {
-          const fxSpine = createSymbolFxSpine({
-            loop: false,
-            animation: "win",
-            ticker: app!.ticker,
-          });
-          layoutSymbolFxInCell(fxSpine, absX, absY, cellW, cellH);
-          overlay.addChild(fxSpine);
-          newSpines.push(fxSpine);
-        }
-
         // Wild substituting cells have animIdx=comboSymbol but matrixIdx=9 — play wild animation.
         const effectiveAnimIdx = isWildMatrixSymbol(matrixIdx)
           ? WILD_SERVER_IDX
@@ -554,8 +531,9 @@ export function useReelsScene({
     activateWinLineRef.current = activateWinLine;
 
     function attachSettledColumn(col: number) {
-      if (!spineReadyRef.current) return;
+      if (!spineReadyRef.current || !app) return;
       attachSettledColumnOverlays(col, targetMatrixRef.current, {
+        ticker: app.ticker,
         settledOverlayRef,
         settledSymbolSpinesRef,
         reelsRef,
@@ -586,6 +564,9 @@ export function useReelsScene({
         for (const sym of reel.symbols) setSlotSymbolVisibility(sym, false);
       }
       hideSettledOverlaysForColumns(settledSymbolSpinesRef.current, cols);
+      for (const { spine, col } of wildIdleSpinesRef.current) {
+        if (cols.includes(col)) spine.visible = false;
+      }
     };
 
     // ── Reel landing tween logic ─────────────────────────────────────────────
@@ -892,7 +873,6 @@ export function useReelsScene({
 
     return () => {
       app.renderer.off("resize", syncStageScale);
-      disposeReelSymbolTextures();
       cancelled = true;
       loadedRef.current = false;
       spineReadyRef.current = false;

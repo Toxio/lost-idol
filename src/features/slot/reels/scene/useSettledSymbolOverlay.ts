@@ -46,6 +46,7 @@ export function useSettledSymbolOverlay({
     const skipCols = expandingWild.map((flag, col) => (flag ? col : -1)).filter((col) => col >= 0);
 
     const ctx: SettledOverlayContext = {
+      ticker: app.ticker,
       settledOverlayRef,
       settledSymbolSpinesRef,
       reelsRef,

@@ -1,11 +1,10 @@
-.bonus-transition {
-  position: fixed;
-  inset: 0;
-  z-index: 20000;
-  overflow: hidden;
-  outline: none;
-  touch-action: none;
-}
-.bonus-transition canvas { display: block; width: 100%; height: 100%; }
-
+.bonus-transition { position: fixed; inset: 0; z-index: 20000; overflow: hidden; outline: none; touch-action: none; }
 .bonus-transition--hidden { visibility: hidden; pointer-events: none; }
+.bonus-transition__scene { position: absolute; inset: 0; background: #06180e; }
+.bonus-transition__portal { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 50% 50%; }
+.bonus-transition:not(.bonus-transition--hidden) .bonus-transition__scene { animation: portal-enter .15s both; }
+@keyframes portal-enter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes portal-return { 0%, 100% { opacity: 0; } 35%, 65% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .bonus-transition:not(.bonus-transition--hidden) .bonus-transition__scene { animation: portal-return .45s both; }
+}

@@ -1,171 +1,53 @@
 :root {
-  --modal-surface: #100310 url('../../assets/bonus-buy/background.webp') center / 100% 100% no-repeat;
-  --modal-action-bg: linear-gradient(#ff80ca, #ed087e 30%, #970148 75%, #df167d);
-  --modal-action-text: #fff0b5;
-  --modal-title-text: #fff1d3;
-  --modal-title-shadow: 0 2px 0 #83104a, 0 0 14px #ef0088;
-  --modal-action-shadow: 0 3px 12px #ee008855;
+  --modal-surface: #10271f;
+  --modal-action-bg: #306b4e;
+  --modal-action-text: #f3edd8;
+  --modal-title-text: #e4ce97;
+  --modal-title-shadow: none;
+  --modal-action-shadow: none;
 }
 
-/* Preserve the artwork's corners instead of stretching them with tall dialogs.
-   The explicit image width paints inward without changing content dimensions. */
-@media (max-width: 600px), (max-height: 600px) {
-  :root .smp-modal-backdrop .smp-modal-dialog,
-  :root .smp-menu-backdrop .smp-menu-dialog,
-  :root .smp-tm-backdrop .smp-tm-panel {
-    border-radius: 0;
-    background: transparent;
-    border-image-source: url('../../assets/bonus-buy/background.webp');
-    border-image-slice: 64 fill;
-    border-image-width: 12px;
-    border-image-repeat: stretch;
-  }
-}
-
-/* A single frame treatment for the game's HTML buttons. */
-:is(.smp-modal-action, .smp-menu-close, .smp-tm-close,
-    .smp-bsm-step, .smp-bsm-option, .smp-asm-counter-btn, .smp-asm-spin-option,
-    .buy-bonus-card, .buy-bonus-stake button, .smp-buy-bonus-button,
-    .smp-menu-tab, .smp-tm-card, .smp-sound-muted-banner) {
-  position: relative;
-}
-
-:is(.smp-modal-action, .smp-modal-close, .smp-menu-close, .smp-tm-close,
-    .smp-bsm-step, .smp-bsm-option, .smp-asm-counter-btn, .smp-asm-spin-option,
-    .buy-bonus-card, .buy-bonus-stake button, .smp-buy-bonus-button,
-    .smp-menu-tab, .smp-tm-card, .smp-sound-muted-banner)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 2px solid #f423a1;
-  border-radius: inherit;
-  box-shadow: 0 0 6px #ee00885c;
-  pointer-events: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-}
-
-:is(.smp-modal-action, .smp-modal-close, .smp-menu-close, .smp-tm-close,
-    .smp-bsm-step, .smp-bsm-option, .smp-asm-counter-btn, .smp-asm-spin-option,
-    .buy-bonus-card, .buy-bonus-stake button, .smp-buy-bonus-button,
-    .smp-menu-tab, .smp-tm-card, .smp-sound-muted-banner):hover:not(:disabled)::after,
-:is(.smp-bsm-option, .buy-bonus-card, .smp-menu-tab)[aria-pressed="true"]::after,
-.smp-asm-spin-option--selected::after {
-  border-color: #ff69c4;
-  box-shadow: 0 0 9px #ef008899;
-}
-
-:is(.smp-modal-action, .smp-modal-close, .smp-menu-close, .smp-tm-close,
-    .smp-bsm-step, .smp-bsm-option, .smp-asm-counter-btn, .smp-asm-spin-option,
-    .buy-bonus-card, .buy-bonus-stake button, .smp-buy-bonus-button,
-    .smp-menu-tab, .smp-tm-card, .smp-sound-muted-banner):disabled::after {
-  opacity: 0.35;
-  box-shadow: none;
-}
-
-/* Image-based game controls use the same neon edge, with their original shape. */
-:is(.smp-bottom-menu, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn) {
-  position: relative;
-}
-:is(.smp-side-btn, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn) {
-  border-radius: 50%;
-}
-:is(.smp-side-btn, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn) > img {
-  clip-path: circle(43% at 50% 50%);
-}
-.smp-bottom-menu > img {
-  clip-path: inset(12% round 6%);
-}
-:is(.smp-side-btn, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn, .smp-bottom-menu)::after,
-.smp-bottom-bet::after {
-  content: "";
-  position: absolute;
-  inset: 5%;
-  border: 2px solid #ff36ac;
-  border-radius: 50%;
-  box-shadow: 0 0 7px #ef008899;
-  pointer-events: none;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
-}
-.smp-bottom-menu::after {
-  inset: 10%;
-  border-radius: 12%;
-}
-.smp-bottom-bet {
-  border-radius: 999px;
-  background: linear-gradient(180deg, #2e0b24, #10070d 70%, #230919);
-}
-.smp-bottom-bet-bg { visibility: hidden; }
-.smp-bottom-bet::after {
-  inset: 0;
-  border-radius: inherit;
-}
-:is(.smp-side-btn, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn, .smp-bottom-menu):hover:not(:disabled)::after,
-.smp-bottom-bet:focus-within::after {
-  border-color: #ff8ad2;
-  box-shadow: 0 0 12px #ef0088bb;
-}
-:is(.smp-side-btn, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn, .smp-bottom-menu):focus-visible {
-  outline: 2px solid #fff0bd;
-  outline-offset: 2px;
-}
-
-/* Keep Spin/Stop artwork above the clipped base image's stacking context. */
-.smp-side-btn__arrows-wrap,
-.smp-side-btn__stop-wrap {
-  position: relative;
-  z-index: 1;
-}
-
-/* Small control assets have a thicker baked-in gold ring than Spin. */
-.smp-side-btn--small {
-  background: radial-gradient(circle closest-side, #171918 89%, transparent 90%);
-}
-.smp-side-btn--small > img {
-  clip-path: circle(38% at 50% 50%);
-}
-
-/* Stronger outline for the three primary game controls. */
-.smp-side-btn::after {
-  border-width: 4px;
-}
-
-/* Hide the gold edge baked into both sound-state images. */
-.smp-bottom-sound-btn {
-  background: radial-gradient(circle closest-side, #171918 89%, transparent 90%);
-}
-.smp-bottom-sound-btn > img {
-  clip-path: circle(38% at 50% 50%);
-}
-.smp-bottom-sound-btn::after,
-.smp-bottom-sound-btn:hover:not(:disabled)::after {
-  box-shadow: 0 0 7px #ef008899;
-}
-
-/* Only the shared pseudo-element draws a frame. Preserve border widths for layout,
-   but neutralize legacy component borders and inset selection rings in all states. */
-:root :is(.smp-modal-dialog, .smp-menu-dialog, .smp-tm-panel, .smp-wrapper)
-:is(.smp-modal-action, .smp-modal-close, .smp-menu-close, .smp-tm-close,
-    .smp-bsm-step, .smp-bsm-option, .smp-asm-counter-btn, .smp-asm-spin-option,
-    .buy-bonus-card, .buy-bonus-stake button, .smp-buy-bonus-button,
-    .smp-menu-tab, .smp-tm-card, .smp-sound-muted-banner) {
+/* Controls are distinguished by their fill, not ornamental frames. */
+:root :is(.smp-modal-dialog, .smp-menu-dialog, .smp-tm-panel, .buy-bonus-modal,
+  .smp-bottom-bar, .smp-wrapper) :is(button, .smp-bottom-bet,
+  .smp-asm-row, .smp-bsm-current, .buy-bonus-stake > div,
+  .smp-menu-sidebar, .smp-menu-header) {
   border-color: transparent;
   box-shadow: none;
 }
+:root :is(.smp-modal-dialog, .smp-menu-dialog, .smp-tm-panel) {
+  background: var(--modal-surface);
+  border: 0;
+  border-image: none;
+  box-shadow: 0 16px 60px #0006;
+}
+:root .smp-bottom-bar { border: 0; }
+:root :is(.smp-side-btn, .smp-bottom-menu, .smp-bottom-sound-btn,
+ .smp-bottom-balance-icon-btn, .smp-bottom-bet, .smp-buy-bonus-button,
+ .smp-modal-action, .smp-modal-close, .smp-menu-close, .smp-tm-close,
+ .smp-bsm-step, .smp-bsm-option, .smp-asm-counter-btn, .smp-asm-spin-option,
+ .buy-bonus-card, .buy-bonus-stake button, .smp-menu-tab, .smp-tm-card,
+ .smp-sound-muted-banner)::after { display: none; }
+:root :is(.smp-bsm-option--selected, .smp-asm-spin-option--selected,
+ .smp-menu-tab--active, .buy-bonus-card[aria-pressed="true"]) {
+  background: var(--modal-action-bg);
+  box-shadow: none;
+}
+:root .smp-menu-dialog .smp-menu-sidebar .smp-menu-tab--active {
+  background: var(--modal-action-bg);
+}
+:root :is(.smp-modal-dialog, .smp-menu-dialog, .smp-tm-panel, .smp-bottom-bar,
+ .smp-wrapper) button:focus-visible { outline: 2px solid #a8efbd; outline-offset: 3px; }
 
-/* Clip the original rim on the remaining circular artwork as well. */
-.smp-bottom-balance-icon-btn,
-.smp-side-btn--spin {
-  background: radial-gradient(circle closest-side, #171918 89%, transparent 90%);
-}
-.smp-bottom-balance-icon-btn > img {
-  clip-path: circle(38% at 50% 50%);
-}
-.smp-side-btn--spin > .smp-side-btn__base {
-  clip-path: circle(41% at 50% 50%);
-}
-
-/* Match the fill to the frame's 5% inset. The wrapper specificity prevents
-   component background resets from exposing the scene around clipped artwork. */
-.smp-wrapper :is(.smp-side-btn, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn) {
-  background: radial-gradient(ellipse closest-side, #171918 90%, transparent 90%);
-}
+/* Crop baked-in rims from the legacy mobile artwork. */
+:is(.smp-side-btn, .smp-bottom-sound-btn, .smp-bottom-balance-icon-btn) { border-radius: 50%; }
+:is(.smp-side-btn--small, .smp-bottom-sound-btn) > img { clip-path: circle(38% at 50% 50%); }
+.smp-side-btn--spin > .smp-side-btn__base { clip-path: circle(41% at 50% 50%); }
+.smp-bottom-balance-icon-btn > img { clip-path: circle(38% at 50% 50%); }
+.smp-bottom-menu > img { clip-path: inset(12% round 6%); }
+.smp-side-btn__arrows-wrap, .smp-side-btn__stop-wrap { position: relative; z-index: 1; }
+.smp-bottom-bet-bg { visibility: hidden; }
+.smp-bottom-bet { background: #10271f; border-radius: 8px; }
+:root .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop { border: 0; }
+:root .smp-bottom-bar .smp-side-btn--spin { border: 0; }
+:root .smp-bottom-bar .smp-side-btn--small { background: transparent; }

@@ -12,7 +12,7 @@
     max(8px, env(safe-area-inset-right, 0px))
     max(8px, env(safe-area-inset-bottom, 0px))
     max(8px, env(safe-area-inset-left, 0px));
-  background: #0a0007;
+  background: #030705;
 }
 
 .app-bg {
@@ -161,14 +161,14 @@
   justify-content: center;
   background:
     radial-gradient(ellipse at 50% 115%, rgba(174, 111, 30, 0.16), transparent 65%),
-    linear-gradient(180deg, rgba(29, 5, 17, 0.45) 0%, rgba(20, 5, 12, 0.88) 38%, #0d0509 100%);
-  box-shadow: 0 -10px 28px rgba(16, 2, 9, 0.18);
+    linear-gradient(180deg, rgba(9, 25, 16, 0.45) 0%, rgba(7, 18, 12, 0.88) 38%, #050d09 100%);
+  box-shadow: 0 -10px 28px rgba(5, 13, 9, 0.18);
   border-radius: 0;
   box-sizing: border-box;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-@media (max-width: 600px) and (orientation: portrait) {
+@media (max-width: 900px) and (orientation: portrait) {
   .smp-wrapper {
     --smp-ui-chrome: 168px;
     --smp-logo-col-width: clamp(
@@ -278,12 +278,9 @@
   display: none;
 }
 
-@media (max-width: 600px) and (orientation: portrait) {
+@media (max-width: 900px) and (orientation: portrait) {
   .smp-wrapper {
-    --smp-canvas-width: min(
-      calc(100vw - 16px),
-      calc((100dvh - 330px) * 1641 / 1022)
-    );
+    --smp-canvas-width: 100%;
     --smp-mobile-footer-height: calc(140px + env(safe-area-inset-bottom, 0px));
     height: 100%;
     align-self: stretch;
@@ -440,7 +437,7 @@
   }
 }
 
-@media (max-width: 600px) and (max-height: 800px) and (orientation: portrait) {
+@media (max-width: 900px) and (max-height: 800px) and (orientation: portrait) {
   .smp-mobile-win {
     min-height: clamp(32px, 8vw, 44px);
     margin-top: clamp(4px, 1dvh, 10px);
@@ -458,10 +455,7 @@
 
 @media (max-width: 400px) and (orientation: portrait) {
   .smp-wrapper {
-    --smp-canvas-width: min(
-      calc(100vw - 12px),
-      calc((100dvh - 268px) * 1641 / 1022)
-    );
+    --smp-canvas-width: 100%;
     --smp-mobile-footer-height: calc(140px + env(safe-area-inset-bottom, 0px));
   }
 
@@ -490,10 +484,11 @@
 }
 
 /* ── Squarish portrait (e.g. 527×606) — не хватает вертикали, ужимаем UI ─── */
-@media (max-width: 600px) and (orientation: portrait) and (min-aspect-ratio: 3/4) {
+@media (max-width: 900px) and (orientation: portrait) and (min-aspect-ratio: 3/4) {
   .smp-wrapper {
-    --smp-mobile-footer-height: calc(96px + env(safe-area-inset-bottom, 0px));
-    --smp-canvas-width: min(calc(70vw), calc((100dvh - 360px) * 1641 / 1022));
+    --smp-mobile-footer-height: calc(140px + env(safe-area-inset-bottom, 0px));
+    --smp-canvas-width: 100%;
+    --smp-title-height: clamp(24px, 7dvh, 48px);
     gap: 0;
   }
 
@@ -530,8 +525,9 @@
   height: 40px;
   padding: 0;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.38);
+  border: 0;
+  color: #b6d8bb;
+  background: #112c22c9;
   cursor: pointer;
   font-size: 1rem;
   line-height: 1;
@@ -542,8 +538,7 @@
 }
 
 .smp-test-btn-fixed:hover:not(:disabled) {
-  border-color: rgba(201, 166, 255, 0.55);
-  background: rgba(201, 166, 255, 0.14);
+  background: #2b553e;
 }
 
 .smp-test-btn-fixed:disabled {
@@ -609,7 +604,7 @@
 /* ── End SlotMachinePixi ──────────────────────────────────────────────────── */
 
 /* Reserve space for the bonus header as well as the fixed footer. */
-@media (min-width: 601px), (orientation: landscape) {
+@media (min-width: 901px), (orientation: landscape) {
   .smp-wrapper--bonus {
     --smp-bonus-header-height: 72px;
     --smp-bonus-wild-height: 0px;
@@ -692,7 +687,7 @@
   top: 0.4%;
   transform: translate(-50%, 0);
   color: #ffe58b;
-  font-family: Arial, sans-serif;
+  font-family: var(--game-font);
   font-size: 3cqw;
   font-weight: 900;
   line-height: 1;
@@ -700,4 +695,22 @@
   pointer-events: none;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 0, 0, 0.6);
   z-index: 5;
+}
+
+/* Portrait phones and narrow previews: reels fill the available safe width. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .app-page {
+    padding-left: max(4px, env(safe-area-inset-left, 0px));
+    padding-right: max(4px, env(safe-area-inset-right, 0px));
+  }
+
+  .smp-reels-col {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) and (min-aspect-ratio: 3/4) {
+  .smp-mobile-win:not(.smp-mobile-win--active) {
+    display: none;
+  }
 }

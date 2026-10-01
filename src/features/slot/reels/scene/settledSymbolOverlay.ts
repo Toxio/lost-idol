@@ -1,5 +1,5 @@
 import { type Spine } from '@esotericsoftware/spine-pixi-v8';
-import { AlphaFilter, type Container } from 'pixi.js';
+import { AlphaFilter, type Container, type Ticker } from 'pixi.js';
 import type { RefObject } from 'react';
 
 import { DESIGN_HEIGHT, DESIGN_WIDTH, REEL_COUNT, VISIBLE_ROWS } from '../constants';
@@ -19,6 +19,7 @@ export interface SettledSymbolEntry {
 }
 
 export interface SettledOverlayContext {
+  ticker: Ticker;
   settledOverlayRef: RefObject<Container | null>;
   settledSymbolSpinesRef: RefObject<SettledSymbolEntry[]>;
   reelsRef: RefObject<Reel[]>;

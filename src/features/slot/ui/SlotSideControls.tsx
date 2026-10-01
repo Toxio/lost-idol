@@ -1,6 +1,8 @@
+import { CirclePlay, RotateCw, Square, Zap } from "lucide-react";
 import { t } from "@/utils/i18n";
 import { useState } from "react";
 import clsx from "clsx";
+import buyBonusButtonImg from "@/assets/buttons/buy-bonus-jade.webp";
 import { play as playSound } from "@/audio/soundManager";
 import autoSpinImg from "@/assets/buttons/auto_spin.webp";
 import spinImg from "@/assets/buttons/spin.webp";
@@ -87,7 +89,10 @@ export function SlotSideControls({
 
   return (
     <div className="smp-side-controls" aria-label="Game controls">
-      {onBuyBonus && <button type="button" className="smp-buy-bonus-button" disabled={controlsDisabled || autoSpinActive || spinning} onClick={onBuyBonus}><span className="smp-buy-bonus-label">{t('buy_bonus_title')}</span></button>}
+      {onBuyBonus && <button type="button" className="smp-buy-bonus-button" disabled={controlsDisabled || autoSpinActive || spinning} onClick={onBuyBonus}>
+        <img className="smp-buy-bonus-artwork" src={buyBonusButtonImg} alt="" draggable={false} />
+        <span className="smp-buy-bonus-label">{t('buy_bonus_title')}</span>
+      </button>}
       <button
         type="button"
         className={clsx(
@@ -101,6 +106,7 @@ export function SlotSideControls({
         disabled={spinDisabled || autoSpinActive}
         aria-label={spinShowStop ? "Stop spin" : "Spin"}
       >
+        {spinShowStop ? <Square className="smp-desktop-icon" aria-hidden="true" /> : <RotateCw className="smp-desktop-icon" aria-hidden="true" />}
         <img
           className="smp-side-btn__base"
           src={spinImg}
@@ -142,6 +148,7 @@ export function SlotSideControls({
           aria-label={autoSpinActive ? `Stop autoplay · ${badge === "∞" ? "Unlimited spins" : `${badge} spins remaining`}` : "Start auto spin"}
           aria-pressed={autoSpinActive}
         >
+          {!autoSpinActive && <CirclePlay className="smp-desktop-icon" aria-hidden="true" />}
           {autoSpinActive ? (
             <>
               <img
@@ -171,6 +178,7 @@ export function SlotSideControls({
           aria-pressed={spinSpeed > 1}
           title={SPEED_LABELS[spinSpeed]}
         >
+          <Zap className="smp-desktop-icon" aria-hidden="true" /><span className="smp-desktop-speed">{spinSpeed > 1 ? `${spinSpeed}×` : ""}</span>
           <img src={TURBO_ICONS[spinSpeed]} alt="" draggable={false} />
         </button>
       </div>

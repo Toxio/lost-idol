@@ -4,16 +4,15 @@ import { type RefObject, useEffect } from 'react';
 
 import { playWildWin } from '@/audio/soundManager';
 import { createWildSpineShowThenIdle } from '@/animation/wildSpine';
-import { DESIGN_HEIGHT, DESIGN_WIDTH, REEL_COUNT } from '../constants';
+import { DESIGN_HEIGHT, DESIGN_WIDTH, REEL_COUNT, VISIBLE_ROWS } from '../constants';
 import { getSlotGridMetrics } from '../lib/grid';
 import {
   syncOverlaySpriteVisibility,
   type SettledSymbolEntry,
 } from '../scene/settledSymbolOverlay';
 import {
-  layoutWildSpineExpandedInColumn,
+  layoutSpineInCell,
   wildAnimationForRow,
-  wildRevealRowForExpandingColumn,
 } from '../winCycle/spineWin';
 import type { Reel } from '../types';
 
@@ -41,8 +40,8 @@ interface UseExpandingWildOverlayOptions {
 }
 
 /**
- * After reels stop, plays the column-wide expanding-wild "show → idle" animation in every
- * reel marked by `expandingWild[col]`. Restores base sprites when there's no win cycle.
+ * After reels stop, fills every reel marked by `expandingWild[col]` with three
+ * independently animated monkey wilds, one per visible row. Restores base sprites when there's no win cycle.
  */
 export function useExpandingWildOverlay({
   app,
@@ -100,21 +99,21 @@ export function useExpandingWildOverlay({
 
     if (!app?.renderer) return;
 
-    const { gridX, gridY, gridH, cellW } = getSlotGridMetrics(DESIGN_WIDTH, DESIGN_HEIGHT);
+    const { gridX, gridY, cellH, cellW } = getSlotGridMetrics(DESIGN_WIDTH, DESIGN_HEIGHT);
 
     hideWildStripColumnsRef.current?.(wildCols);
     playWildWin();
 
     for (let col = 0; col < gridMatrix.length; col++) {
       if (!expandingWild[col]) continue;
-      const revealRow = wildRevealRowForExpandingColumn(gridMatrix, col);
-      const animation = wildAnimationForRow(revealRow);
-      const spine = createWildSpineShowThenIdle(animation, app.ticker);
       const cx = gridX + col * cellW + cellW / 2;
-      const cy = gridY + gridH / 2;
-      layoutWildSpineExpandedInColumn(spine, cx, cy, cellW, gridH, animation);
-      overlay.addChild(spine);
-      wildActiveSpinesRef.current.push(spine);
+      for (let row = 0; row < VISIBLE_ROWS; row++) {
+        const spine = createWildSpineShowThenIdle(wildAnimationForRow(row), app.ticker);
+        const cy = gridY + (row + 0.5) * cellH;
+        layoutSpineInCell(spine, cx, cy, cellW, cellH);
+        overlay.addChild(spine);
+        wildActiveSpinesRef.current.push(spine);
+      }
     }
   }, [
     spinning,

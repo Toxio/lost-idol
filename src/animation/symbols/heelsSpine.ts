@@ -1,15 +1,16 @@
-import heelsAtlasUrl from '@/assets/symbols/heels/heels.atlas.txt?url';
-import heelsJsonUrl from '@/assets/symbols/heels/heels.json?url';
-import heelsPngUrl from '@/assets/symbols/heels/heels.webp?url';
+import atlasUrl from '@/assets/symbols/lost-idol/treasure-map/symbol.atlas.txt?url';
+import jsonUrl from '@/assets/symbols/lost-idol/treasure-map/symbol.json?url';
+import sheetUrl from '@/assets/symbols/lost-idol/treasure-map/sheet.webp?url';
 import { defineSymbolSpine } from './symbolSpineFactory';
 
-const heels = defineSymbolSpine({
-  name: 'heels',
-  jsonUrl: heelsJsonUrl,
-  atlasUrl: heelsAtlasUrl,
-  images: { 'heels.webp': heelsPngUrl },
+// Legacy API name retains the existing math symbol ID 8.
+const symbol = defineSymbolSpine({
+  name: 'lost-idol-treasure-map',
+  jsonUrl,
+  atlasUrl,
+  images: { 'sheet.webp': sheetUrl },
 });
 
-export const ensureHeelsSpineLoaded = heels.ensureLoaded;
-export const createHeelsSpine = heels.create;
-export const createHeelsSetupPose = heels.createSetupPose;
+export const ensureHeelsSpineLoaded = symbol.ensureLoaded;
+export const createHeelsSpine = symbol.create;
+export const createHeelsSetupPose = symbol.createSetupPose;

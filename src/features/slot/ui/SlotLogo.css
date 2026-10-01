@@ -1,5 +1,7 @@
 .smp-logo {
   display: block;
+  position: relative;
+  top: clamp(5px, 2.5dvh, 24px);
   width: min(82%, 520px);
   height: var(--smp-title-height);
   flex-shrink: 0;
@@ -7,6 +9,7 @@
   margin: 0 auto var(--smp-title-gap);
   pointer-events: none;
   user-select: none;
+  scale: 1;
   transform-origin: center;
   animation: lost-idol-logo-idle 6s ease-in-out infinite;
 }
@@ -19,7 +22,7 @@
   padding-top: calc(var(--smp-title-height) + var(--smp-title-gap));
 }
 
-@media (max-width: 600px) and (orientation: portrait) {
+@media (max-width: 900px) and (orientation: portrait) {
   .smp-stage-grid > .smp-logo-col {
     display: none;
   }
@@ -44,4 +47,8 @@
   .smp-logo {
     animation: none;
   }
+}
+
+@media (min-width: 901px) {
+  .smp-logo { scale: 1.1; }
 }

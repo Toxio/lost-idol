@@ -1,71 +1,30 @@
 .splash-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  background: #000;
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity 0.45s ease,
-    visibility 0.45s ease;
+  position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+  overflow: hidden; background: radial-gradient(ellipse at 50% 43%, #153626 0%, #081911 42%, #030906 80%);
+  opacity: 1; visibility: visible; transition: opacity .45s ease, visibility .45s ease;
 }
-
-.splash-screen--hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+.splash-screen::before {
+  content: ''; position: absolute; width: min(70vw, 650px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, #ba98391c, #65bd6120 35%, transparent 68%);
+  animation: splash-glow 4s ease-in-out infinite alternate; pointer-events: none;
 }
-
-.splash-screen__bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
+.splash-screen--hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash-screen__content { position: relative; display: flex; flex-direction: column; align-items: center; gap: clamp(18px, 4dvh, 36px); width: min(84vw, 420px); }
+.splash-screen__logo { display: block; width: auto; height: auto; max-width: min(72vw, 360px); max-height: 62dvh; object-fit: contain; filter: drop-shadow(0 12px 22px #0008); animation: splash-arrive .6s ease-out both; }
+.splash-screen__loading { width: min(64vw, 260px); }
+.splash-screen__caption { display: flex; justify-content: flex-end; margin-bottom: 12px; color: #d3c390; font: 500 11px/1.2 var(--game-font); letter-spacing: .22em; }
+.splash-screen__caption span:last-child { color: #99b39d; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.splash-screen__progress { height: 4px; background: #cce6bf15; border-radius: 4px; overflow: hidden; }
+.splash-screen__progress-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #42815a, #9eca82 65%, #e4c578); transform-origin: left; transition: transform .35s ease; }
+.splash-screen--hidden::before { animation-play-state: paused; }
+@keyframes splash-glow { from { opacity: .5; transform: scale(.9); } to { opacity: 1; transform: scale(1.08); } }
+@keyframes splash-arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-height: 320px) and (orientation: landscape) {
+  .splash-screen__content { gap: 12px; }
+  .splash-screen__logo { max-height: 65dvh; }
+  .splash-screen__caption { margin-bottom: 7px; font-size: 9px; }
 }
-
-.splash-screen__content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(18px, 4vh, 32px);
-  width: min(88vw, 420px);
+@media (prefers-reduced-motion: reduce) {
+  .splash-screen::before, .splash-screen__logo { animation: none; }
+  .splash-screen, .splash-screen__progress-fill { transition: none; }
 }
-
-.splash-screen__logo {
-  width: min(72vw, 340px);
-  height: auto;
-  display: block;
-}
-
-.splash-screen__progress {
-  position: relative;
-  width: min(52vw, 220px);
-  height: 3px;
-}
-
-.splash-screen__progress-track,
-.splash-screen__progress-fill img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-}
-
-.splash-screen__progress-track {
-  opacity: 0.28;
-}
-
-.splash-screen__progress-fill {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  transform-origin: left center;
-  transition: transform 0.35s ease;
-}
-

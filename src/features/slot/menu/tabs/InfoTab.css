@@ -120,9 +120,9 @@
   content: "";
   position: absolute;
   inset: 5%;
-  border: 2px solid #ff36ac;
+  border: 2px solid #6dc897;
   border-radius: inherit;
-  box-shadow: 0 0 5px #ef008855;
+  box-shadow: 0 0 5px #42ad7455;
   pointer-events: none;
 }
 .smp-info-control-icon--spin > .smp-info-control-icon__base {
@@ -134,7 +134,7 @@
 .smp-info-control-icon--bet {
   height: 16px;
   border-radius: 999px;
-  background: linear-gradient(180deg, #2e0b24, #10070d 70%, #230919);
+  background: linear-gradient(180deg, #10291c, #07100b 70%, #0c2015);
 }
 .smp-info-control-icon--bet > img { display: none; }
 .smp-info-control-icon--bet::after { inset: 0; }
@@ -194,10 +194,10 @@
   box-sizing: border-box;
   padding: 0.3em 0.8em;
   margin-block: 0.2em;
-  border: 2px solid #ff38ad;
+  border: 2px solid #6fc899;
   border-radius: 0.65em;
-  background: linear-gradient(180deg, #351027, #140511);
-  box-shadow: 0 0 8px #ff159344, inset 0 0 6px #ff159322;
+  background: linear-gradient(180deg, #133221, #07120c);
+  box-shadow: 0 0 8px #55bf8644, inset 0 0 6px #55bf8622;
   color: #ffe58b;
   text-align: center;
   line-height: 1.2;

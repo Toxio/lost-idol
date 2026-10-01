@@ -1,15 +1,16 @@
-import lipsAtlasUrl from '@/assets/symbols/lips/lips.atlas.txt?url';
-import lipsJsonUrl from '@/assets/symbols/lips/lips.json?url';
-import lipsPngUrl from '@/assets/symbols/lips/lips.webp?url';
+import atlasUrl from '@/assets/symbols/lost-idol/gold-satchel/symbol.atlas.txt?url';
+import jsonUrl from '@/assets/symbols/lost-idol/gold-satchel/symbol.json?url';
+import sheetUrl from '@/assets/symbols/lost-idol/gold-satchel/sheet.webp?url';
 import { defineSymbolSpine } from './symbolSpineFactory';
 
-const lips = defineSymbolSpine({
-  name: 'lips',
-  jsonUrl: lipsJsonUrl,
-  atlasUrl: lipsAtlasUrl,
-  images: { 'lips.webp': lipsPngUrl },
+// Legacy API name retains the existing math symbol ID 2.
+const symbol = defineSymbolSpine({
+  name: 'lost-idol-gold-satchel',
+  jsonUrl,
+  atlasUrl,
+  images: { 'sheet.webp': sheetUrl },
 });
 
-export const ensureLipsSpineLoaded = lips.ensureLoaded;
-export const createLipsSpine = lips.create;
-export const createLipsSetupPose = lips.createSetupPose;
+export const ensureLipsSpineLoaded = symbol.ensureLoaded;
+export const createLipsSpine = symbol.create;
+export const createLipsSetupPose = symbol.createSetupPose;

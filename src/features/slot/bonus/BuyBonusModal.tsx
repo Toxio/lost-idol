@@ -6,9 +6,9 @@ import { indexOfBetLevel } from '@/api/rgs';
 import { play as playSound } from '@/audio/soundManager';
 import plans from '@/config/bonusBuys.json';
 import { wildImg } from '@/assets/symbols/images';
-import fs1 from '@/assets/bonus-buy/fs1.webp';
-import fs2 from '@/assets/bonus-buy/fs2.webp';
-import fs3 from '@/assets/bonus-buy/fs3.webp';
+import fs1 from '@/assets/bonus-buy/portal-5.webp';
+import fs2 from '@/assets/bonus-buy/portal-10.webp';
+import fs3 from '@/assets/bonus-buy/portal-15.webp';
 import './BuyBonusModal.css';
 
 const freeSpinArt: Record<number, string> = { 5: fs1, 10: fs2, 15: fs3 };
@@ -84,7 +84,7 @@ export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose
       <div className="buy-bonus-cards" role="group" aria-label={t('buy_bonus_title')}>
         {plans.map((item, i) => <button type="button" key={item.mode} className="buy-bonus-card"
           aria-pressed={i === selected} onClick={() => { playSound('ui_button'); setSelected(i); }}>
-          <div className={`buy-bonus-art${item.kind === 'free_spins' && item.spins === 5 ? ' buy-bonus-art--single-box' : item.kind === 'free_spins' && item.spins === 10 ? ' buy-bonus-art--two-boxes' : ''}`}>
+          <div className={`buy-bonus-art${item.kind === 'free_spins' ? ' buy-bonus-art--portal' : ''}`}>
             <img src={item.kind === 'free_spins' ? freeSpinArt[item.spins] : wildImg} alt="" draggable={false} />
           </div>
           <div className="buy-bonus-card-copy">

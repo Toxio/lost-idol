@@ -1,15 +1,16 @@
-import roseAtlasUrl from '@/assets/symbols/rose/rose.atlas.txt?url';
-import roseJsonUrl from '@/assets/symbols/rose/rose.json?url';
-import rosePngUrl from '@/assets/symbols/rose/rose.webp?url';
+import atlasUrl from '@/assets/symbols/lost-idol/emerald-torch/symbol.atlas.txt?url';
+import jsonUrl from '@/assets/symbols/lost-idol/emerald-torch/symbol.json?url';
+import sheetUrl from '@/assets/symbols/lost-idol/emerald-torch/sheet.webp?url';
 import { defineSymbolSpine } from './symbolSpineFactory';
 
-const rose = defineSymbolSpine({
-  name: 'rose',
-  jsonUrl: roseJsonUrl,
-  atlasUrl: roseAtlasUrl,
-  images: { 'rose.webp': rosePngUrl },
+// Legacy API name retains the existing math symbol ID 4.
+const symbol = defineSymbolSpine({
+  name: 'lost-idol-emerald-torch',
+  jsonUrl,
+  atlasUrl,
+  images: { 'sheet.webp': sheetUrl },
 });
 
-export const ensureRoseSpineLoaded = rose.ensureLoaded;
-export const createRoseSpine = rose.create;
-export const createRoseSetupPose = rose.createSetupPose;
+export const ensureRoseSpineLoaded = symbol.ensureLoaded;
+export const createRoseSpine = symbol.create;
+export const createRoseSetupPose = symbol.createSetupPose;

@@ -1,9 +1,11 @@
 import { SetupPoseBoundsProvider, Spine } from '@esotericsoftware/spine-pixi-v8';
 import { Assets, type Ticker } from 'pixi.js';
 
-import wildAtlasUrl from '@/assets/symbols/wild/wild.atlas.txt?url';
-import wildJsonUrl from '@/assets/symbols/wild/wild.json?url';
-import wildPngUrl from '@/assets/symbols/wild/wild.webp?url';
+import wildAtlasUrl from '@/assets/symbols/lost-idol/monkey/symbol.atlas.txt?url';
+import wildJsonUrl from '@/assets/symbols/lost-idol/monkey/symbol.json?url';
+import wildPngUrl from '@/assets/symbols/lost-idol/monkey/sheet.webp?url';
+
+import wildTextUrl from '@/assets/symbols/lost-idol/monkey/text.webp?url';
 
 export const WILD_SKEL_ALIAS = 'wildSymbolSpineJson';
 export const WILD_ATLAS_ALIAS = 'wildSymbolSpineAtlas';
@@ -19,7 +21,8 @@ export function registerWildSpineAssets(): void {
     parser: 'spineTextureAtlasLoader',
     data: {
       images: {
-        'wild.webp': wildPngUrl,
+        'sheet.webp': wildPngUrl,
+        'text.webp': wildTextUrl,
       },
     },
   });

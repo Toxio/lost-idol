@@ -1,10 +1,9 @@
-import { lazy, Suspense, useState } from "react";
+import { Menu, Minus, Plus, Volume2, VolumeX } from "lucide-react";
+import { lazy, Suspense, useState, type ReactNode } from "react";
 import { useTime } from "react-timer-hook";
 import balanceIcon from "@/assets/buttons/balance.webp";
 import betBackImg from "@/assets/buttons/bet/bet_back.webp";
 import menuIcon from "@/assets/buttons/menu.webp";
-import soundOffImg from "@/assets/buttons/sound_off_btn.webp";
-import soundOnImg from "@/assets/buttons/sound_on.webp";
 import { play as playSound } from "@/audio/soundManager";
 import { useSoundSettings } from "@/hooks/useSoundSettings";
 import { t } from "@/utils/i18n";
@@ -17,6 +16,7 @@ const MenuModal = lazy(() =>
 );
 
 interface SlotBottomBarProps {
+  controls?: ReactNode;
   balance: number;
   currency: string;
   precision: number;
@@ -28,6 +28,7 @@ interface SlotBottomBarProps {
 }
 
 export function SlotBottomBar({
+  controls,
   balance,
   currency,
   precision,
@@ -68,14 +69,14 @@ export function SlotBottomBar({
               setMenuOpen(true);
             }}
           >
-            <img src={menuIcon} alt="" draggable={false} />
+            <img src={menuIcon} alt="" draggable={false} /><Menu className="smp-desktop-icon" aria-hidden="true" />
           </button>
         </div>
 
         <div className="smp-bottom-bar-right">
           <button
             type="button"
-            className="smp-bottom-sound-btn"
+            className="smp-bottom-sound-btn smp-quick-sound"
             onClick={() => {
               playSound("ui_button");
               toggleMute();
@@ -83,11 +84,7 @@ export function SlotBottomBar({
             aria-label={muted ? "Unmute sound" : "Mute sound"}
             aria-pressed={muted}
           >
-            <img
-              src={muted ? soundOffImg : soundOnImg}
-              alt=""
-              draggable={false}
-            />
+            {muted ? <VolumeX aria-hidden="true" /> : <Volume2 aria-hidden="true" />}
           </button>
           <span
             className="smp-bottom-clock smp-bottom-clock--desktop"
@@ -169,7 +166,7 @@ export function SlotBottomBar({
                 onClick={() => changeBet(betIndex - 1)}
                 disabled={!canDecrease || disabled}
                 aria-label={`${t("bet_title")} −`}
-              />
+              ><Minus aria-hidden="true" /></button>
               <button
                 type="button"
                 className="smp-bottom-bet-amount smp-bottom-bet-amount--clickable"
@@ -183,6 +180,7 @@ export function SlotBottomBar({
                 data-smp-bet-button
                 aria-label={t("info_ctrl_bet_label")}
               >
+                <span className="smp-desktop-bet-label">{t("bet_title")}</span>
                 <CurrencyAmount
                   value={betAmount}
                   currency={currency}
@@ -196,10 +194,11 @@ export function SlotBottomBar({
                 onClick={() => changeBet(betIndex + 1)}
                 disabled={!canIncrease || disabled}
                 aria-label={`${t("bet_title")} +`}
-              />
+              ><Plus aria-hidden="true" /></button>
             </div>
           </div>
         </div>
+        {controls}
       </div>
 
       {menuOpen && (

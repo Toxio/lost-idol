@@ -32,7 +32,7 @@
   );
 }
 
-@media (min-width: 601px) {
+@media (min-width: 901px) {
   .smp-side-controls__secondary .smp-side-btn--small {
     flex: 1 1 0;
     min-width: 0;
@@ -190,7 +190,7 @@
   }
 }
 
-@media (max-width: 600px) and (orientation: portrait) {
+@media (max-width: 900px) and (orientation: portrait) {
   .smp-side-controls {
     flex-direction: row;
     align-items: center;
@@ -220,7 +220,7 @@
   }
 }
 
-@media (max-width: 600px) and (max-height: 800px) and (orientation: portrait) {
+@media (max-width: 900px) and (max-height: 800px) and (orientation: portrait) {
   .smp-side-btn--spin {
     width: clamp(82px, 21vw, 108px);
   }
@@ -234,7 +234,7 @@
   }
 }
 
-@media (max-width: 600px) and (orientation: portrait) and (min-aspect-ratio: 3/4) {
+@media (max-width: 900px) and (orientation: portrait) and (min-aspect-ratio: 3/4) {
   .smp-side-controls {
     gap: clamp(6px, 2vw, 12px);
     margin-top: clamp(4px, 1dvh, 8px);
@@ -304,17 +304,4 @@
 
 .smp-side-btn--insufficient:not(:disabled) {
   filter: drop-shadow(0 0 8px rgba(255, 120, 80, 0.45));
-}
-
-@media (max-width: 600px) and (orientation: portrait) {
-  .smp-side-controls:has(.smp-buy-bonus-button) {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .smp-side-controls .smp-buy-bonus-button {
-    order: 4;
-    flex-basis: 60%;
-    margin-inline: 20%;
-    padding-block: 8px;
-  }
 }

@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "legacy": "seven",
+    "name": "emerald-idol",
+    "source": "Lost_Idol_High_Value_Symbols_Emerald_Idol_Head"
+  },
+  {
+    "id": 2,
+    "legacy": "lips",
+    "name": "gold-satchel",
+    "source": "Lost_Idol_High_Value_Symbols_Sunburst_Gold_Satchel"
+  },
+  {
+    "id": 3,
+    "legacy": "parfume",
+    "name": "serpent-key",
+    "source": "Lost_Idol_High_Value_Symbols_Serpent_Key_Relic"
+  },
+  {
+    "id": 4,
+    "legacy": "rose",
+    "name": "emerald-torch",
+    "source": "Lost_Idol_High_Value_Symbols_Emerald_Flame_Torch"
+  },
+  {
+    "id": 5,
+    "legacy": "glass",
+    "name": "compass",
+    "source": "Lost_Idol_Medium_Value_Symbols_Explorer's_Gold_Compass"
+  },
+  {
+    "id": 6,
+    "legacy": "lipstick",
+    "name": "machete",
+    "source": "Lost_Idol_Medium_Value_Symbols_Golden_Hilt_Machete"
+  },
+  {
+    "id": 7,
+    "legacy": "goblet",
+    "name": "stone-chalice",
+    "source": "Lost_Idol_Medium_Value_Symbols_Dusty_Stone_Chalice"
+  },
+  {
+    "id": 8,
+    "legacy": "heels",
+    "name": "treasure-map",
+    "source": "Lost_Idol_Medium_Value_Symbols_Cracked_Sienna_Map"
+  },
+  {
+    "id": 9,
+    "legacy": "wild",
+    "name": "monkey",
+    "source": "Lost_Idol_Special_Symbols_Leaping_Golden_Monkey"
+  },
+  {
+    "id": 10,
+    "legacy": "scatter",
+    "name": "bonus-door",
+    "source": "Lost_Idol_Special_Symbols_Idol_Relief_Door"
+  },
+  {
+    "id": 11,
+    "legacy": "star",
+    "name": "golden-coin",
+    "source": "Lost_Idol_Special_Symbols_Golden_Coin_Cascade"
+  }
+]

@@ -10,15 +10,9 @@ import {
 import {
   bigWinAmountTickUpDurationMs,
   bigWinAnimationForOdd,
-  createBigWinAmountLabel,
-  createBigWinShineSpine,
-  createBigWinSpine,
-  ensureBigWinSpineLoaded,
-  layoutBigWinAmountLabel,
-  layoutBigWinShineSpine,
-  layoutBigWinSpine,
   startBigWinAmountTickUp,
 } from "@/animation/bigWinSpine";
+import { createLostIdolBigWin, loadLostIdolBigWin } from "@/animation/lostIdolBigWin";
 import { DESIGN_HEIGHT, DESIGN_WIDTH } from "../constants";
 
 /** Extra time the banner stays up after the amount finishes ticking, before auto-advancing. */
@@ -167,7 +161,7 @@ export function useBigWinOverlay({
     // Let the first win-lines pass play out (with its own sounds) before the big-win
     // banner takes over — banner mounts only once that pass completes.
     void Promise.all([
-      ensureBigWinSpineLoaded(),
+      loadLostIdolBigWin(),
       waitForRef(appRef, winCycleFiredRef),
     ]).then(() => {
       if (spinRef.current) {
@@ -193,40 +187,14 @@ export function useBigWinOverlay({
 
       for (const child of [...layer.children]) {
         layer.removeChild(child);
-        child.destroy();
+        child.destroy({ children: true });
       }
 
-      const banner = createBigWinSpine({
-        animation: tier,
-        ticker: appRef.ticker,
-        loop: true,
-      });
-      layoutBigWinSpine(banner, DESIGN_WIDTH, DESIGN_HEIGHT);
-
-      const amountLabel = createBigWinAmountLabel();
-      layoutBigWinAmountLabel(
-        amountLabel,
-        banner,
-        DESIGN_WIDTH,
-        DESIGN_HEIGHT,
-        {
-          measureAmount: targetWinAmount,
-          currency,
-          precision,
-        },
+      const { root, amountLabel } = createLostIdolBigWin(
+        tier, appRef.ticker, DESIGN_WIDTH, DESIGN_HEIGHT,
+        targetWinAmount, currency, precision,
       );
-
-      const shine = createBigWinShineSpine({
-        ticker: appRef.ticker,
-        loop: true,
-      });
-      layoutBigWinShineSpine(shine, DESIGN_WIDTH, DESIGN_HEIGHT, {
-        banner,
-        amountLabel,
-      });
-      layer.addChild(shine);
-      layer.addChild(banner);
-      layer.addChild(amountLabel);
+      layer.addChild(root);
 
       amountTickUpRef.current = startBigWinAmountTickUp(
         amountLabel,
@@ -253,7 +221,7 @@ export function useBigWinOverlay({
         amountTickUpRef.current = null;
         for (const child of [...layer.children]) {
           layer.removeChild(child);
-          child.destroy();
+          child.destroy({ children: true });
         }
         // Unblocks autoplay's next spin / bonus-round frame advance, held off until now.
         winCycleDoneRef.current?.();

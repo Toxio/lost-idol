@@ -1,7 +1,7 @@
-import { Assets, Rectangle, Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
-import heelsAtlasPageUrl from '@/assets/symbols/heels/heels.webp';
 import {
+  heelsImg,
   glassImg,
   gobletImg,
   lipsImg,
@@ -13,54 +13,16 @@ import {
   starImg,
   wildImg,
 } from '@/assets/symbols/images';
-/** Internal alias for full atlas page (multi-region); reel uses cropped {@link ensureHeelsReelSymbolTexture}. */
-const HEELS_ATLAS_PAGE_ALIAS = '__heelsAtlasPage';
-
-/** Region `heels` in `heels.atlas.txt` — matches default mesh attachment on the Spine symbol. */
-const HEELS_REEL_BOUNDS = { x: 294, y: 5, w: 291, h: 300 };
-
-let heelsReelTexture: Texture | null = null;
-
-export async function ensureHeelsReelSymbolTexture(): Promise<void> {
-  await Assets.load({ alias: HEELS_ATLAS_PAGE_ALIAS, src: heelsAtlasPageUrl });
-  const pageTexture = Texture.from(HEELS_ATLAS_PAGE_ALIAS);
-  const prev = heelsReelTexture;
-  heelsReelTexture = new Texture({
-    source: pageTexture.source,
-    frame: new Rectangle(
-      HEELS_REEL_BOUNDS.x,
-      HEELS_REEL_BOUNDS.y,
-      HEELS_REEL_BOUNDS.w,
-      HEELS_REEL_BOUNDS.h,
-    ),
-    orig: new Rectangle(0, 0, HEELS_REEL_BOUNDS.w, HEELS_REEL_BOUNDS.h),
-  });
-  prev?.destroy(false);
-}
-
-/** Release only derived textures; shared image assets remain managed by Pixi. */
-export function disposeReelSymbolTextures(): void {
-  heelsReelTexture?.destroy(false);
-  heelsReelTexture = null;
-}
-
-/** Moving symbols use loaded images; heels use their cropped atlas region. */
+/** Moving and resting symbols use the same Lost Idol artwork. */
 export function resolveSymbolTexture(alias: string): Texture {
-  if (alias === 'heels') {
-    if (!heelsReelTexture) {
-      throw new Error(
-        'heels reel texture missing — ensureHeelsReelSymbolTexture must run before symbols',
-      );
-    }
-    return heelsReelTexture;
-  }
   return Texture.from(alias);
 }
 
 export const ALL_ASSETS = [
-  { alias: 'sym-scatter', src: scatterImg },
+  { alias: 'heels', src: heelsImg },
+  { alias: 'sym-bonus-door', src: scatterImg },
   { alias: 'sym-rose', src: roseImg },
-  { alias: 'sym-star', src: starImg },
+  { alias: 'sym-paying-scatter', src: starImg },
   { alias: 'sym-goblet', src: gobletImg },
   { alias: 'sym-seven', src: sevenImg },
   { alias: 'sym-lips', src: lipsImg },
@@ -84,8 +46,8 @@ const SYMBOL_MAP: Record<number, string> = {
   7: 'sym-goblet',
   8: 'heels',
   9: 'sym-wild',
-  10: 'sym-scatter',
-  11: 'sym-star',
+  10: 'sym-bonus-door',
+  11: 'sym-paying-scatter',
 };
 
 const SYMBOL_ALIASES = Object.values(SYMBOL_MAP);

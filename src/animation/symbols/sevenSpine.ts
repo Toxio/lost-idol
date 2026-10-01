@@ -1,15 +1,16 @@
-import sevenAtlasUrl from '@/assets/symbols/seven/seven.atlas.txt?url';
-import sevenJsonUrl from '@/assets/symbols/seven/seven.json?url';
-import sevenPngUrl from '@/assets/symbols/seven/seven.webp?url';
+import atlasUrl from '@/assets/symbols/lost-idol/emerald-idol/symbol.atlas.txt?url';
+import jsonUrl from '@/assets/symbols/lost-idol/emerald-idol/symbol.json?url';
+import sheetUrl from '@/assets/symbols/lost-idol/emerald-idol/sheet.webp?url';
 import { defineSymbolSpine } from './symbolSpineFactory';
 
-const seven = defineSymbolSpine({
-  name: 'seven',
-  jsonUrl: sevenJsonUrl,
-  atlasUrl: sevenAtlasUrl,
-  images: { 'seven.webp': sevenPngUrl },
+// Legacy API name retains the existing math symbol ID 1.
+const symbol = defineSymbolSpine({
+  name: 'lost-idol-emerald-idol',
+  jsonUrl,
+  atlasUrl,
+  images: { 'sheet.webp': sheetUrl },
 });
 
-export const ensureSevenSpineLoaded = seven.ensureLoaded;
-export const createSevenSpine = seven.create;
-export const createSevenSetupPose = seven.createSetupPose;
+export const ensureSevenSpineLoaded = symbol.ensureLoaded;
+export const createSevenSpine = symbol.create;
+export const createSevenSetupPose = symbol.createSetupPose;

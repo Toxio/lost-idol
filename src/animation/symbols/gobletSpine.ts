@@ -1,15 +1,16 @@
-import gobletAtlasUrl from '@/assets/symbols/goblet/goblet.atlas.txt?url';
-import gobletJsonUrl from '@/assets/symbols/goblet/goblet.json?url';
-import gobletPngUrl from '@/assets/symbols/goblet/goblet.webp?url';
+import atlasUrl from '@/assets/symbols/lost-idol/stone-chalice/symbol.atlas.txt?url';
+import jsonUrl from '@/assets/symbols/lost-idol/stone-chalice/symbol.json?url';
+import sheetUrl from '@/assets/symbols/lost-idol/stone-chalice/sheet.webp?url';
 import { defineSymbolSpine } from './symbolSpineFactory';
 
-const goblet = defineSymbolSpine({
-  name: 'goblet',
-  jsonUrl: gobletJsonUrl,
-  atlasUrl: gobletAtlasUrl,
-  images: { 'goblet.webp': gobletPngUrl },
+// Legacy API name retains the existing math symbol ID 7.
+const symbol = defineSymbolSpine({
+  name: 'lost-idol-stone-chalice',
+  jsonUrl,
+  atlasUrl,
+  images: { 'sheet.webp': sheetUrl },
 });
 
-export const ensureGobletSpineLoaded = goblet.ensureLoaded;
-export const createGobletSpine = goblet.create;
-export const createGobletSetupPose = goblet.createSetupPose;
+export const ensureGobletSpineLoaded = symbol.ensureLoaded;
+export const createGobletSpine = symbol.create;
+export const createGobletSetupPose = symbol.createSetupPose;

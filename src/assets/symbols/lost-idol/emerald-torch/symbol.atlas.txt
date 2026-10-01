@@ -1,0 +1,6 @@
+sheet.webp
+size: 180,292
+filter: Linear,Linear
+pma: false
+frame0
+  bounds: 0,0,180,292

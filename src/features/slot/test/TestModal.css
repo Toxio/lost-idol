@@ -155,3 +155,8 @@
 }
 
 .smp-tm-title { color: var(--modal-title-text); text-shadow: var(--modal-title-shadow); font-weight: 900; text-transform: uppercase; }
+
+.smp-tm-title { display: flex; align-items: center; gap: 9px; }
+.smp-tm-card-badge { display: flex; align-items: center; justify-content: center; gap: 5px; height: 60px; }
+.smp-tm-symbol { width: 60px; height: 60px; object-fit: contain; }
+.smp-tm-card-sub { color: #a7bcab; }

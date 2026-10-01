@@ -1,15 +1,16 @@
-import starAtlasUrl from '@/assets/symbols/star/star.atlas.txt?url';
-import starJsonUrl from '@/assets/symbols/star/star.json?url';
-import starPngUrl from '@/assets/symbols/star/star.webp?url';
+import atlasUrl from '@/assets/symbols/lost-idol/scatter-saved/symbol-opaque.atlas.txt?url';
+import jsonUrl from '@/assets/symbols/lost-idol/scatter-saved/symbol-opaque.json?url';
+import sheetUrl from '@/assets/symbols/lost-idol/scatter-saved/sheet-opaque.webp?url';
 import { defineSymbolSpine } from './symbolSpineFactory';
 
-const star = defineSymbolSpine({
-  name: 'star',
-  jsonUrl: starJsonUrl,
-  atlasUrl: starAtlasUrl,
-  images: { 'star.webp': starPngUrl },
+// Legacy API name retains the existing math symbol ID 11.
+const symbol = defineSymbolSpine({
+  name: 'lost-idol-paying-scatter-opaque',
+  jsonUrl,
+  atlasUrl,
+  images: { 'sheet-opaque.webp': sheetUrl },
 });
 
-export const ensureStarSpineLoaded = star.ensureLoaded;
-export const createStarSpine = star.create;
-export const createStarSetupPose = star.createSetupPose;
+export const ensureStarSpineLoaded = symbol.ensureLoaded;
+export const createStarSpine = symbol.create;
+export const createStarSetupPose = symbol.createSetupPose;
