@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { X } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { play as playSound } from '@/audio/soundManager';
@@ -51,7 +52,7 @@ export function Modal({
         onClick={stopDialogPropagation}
       >
         <button type="button" className="smp-modal-close" onClick={() => { playSound('ui_button'); onClose(); }} aria-label="Close">
-          ✕
+          <X size={20} />
         </button>
 
         {icon && <div className="smp-modal-icon">{icon}</div>}

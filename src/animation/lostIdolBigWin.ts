@@ -32,8 +32,6 @@ function createGlyphTitle(text: string, maxWidth: number): Container {
 
 export function createLostIdolBigWin(tier: BigWinAnimationName, ticker: Ticker, width: number, height: number, amount: number, currency: string, precision: number) {
   const root = new Container();
-  const shade = new Graphics().rect(0, 0, width, height).fill({ color: 0x03120d, alpha: 0.8 });
-  root.addChild(shade);
   const panel = new Container();
   panel.position.set(width / 2, height / 2);
   root.addChild(panel);

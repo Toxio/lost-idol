@@ -56,6 +56,7 @@ export function AutoSpinModal({
             <button
               key={opt}
               type="button"
+              aria-pressed={settings.count === opt}
               className={`smp-asm-spin-option${settings.count === opt ? " smp-asm-spin-option--selected" : ""}`}
               onClick={click(() => update({ count: opt }))}
             >

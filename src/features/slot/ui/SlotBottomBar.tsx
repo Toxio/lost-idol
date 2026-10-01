@@ -1,11 +1,11 @@
-import { Menu, Minus, Plus, Volume2, VolumeX } from "lucide-react";
+import { Menu, Minus, Plus } from "lucide-react";
 import { lazy, Suspense, useState, type ReactNode } from "react";
 import { useTime } from "react-timer-hook";
 import balanceIcon from "@/assets/buttons/balance.webp";
 import betBackImg from "@/assets/buttons/bet/bet_back.webp";
 import menuIcon from "@/assets/buttons/menu.webp";
 import { play as playSound } from "@/audio/soundManager";
-import { useSoundSettings } from "@/hooks/useSoundSettings";
+import { QuickSound } from './QuickSound';
 import { t } from "@/utils/i18n";
 import { CurrencyAmount } from "@/components/CurrencyAmount";
 import { indexOfBetLevel } from "@/api/rgs";
@@ -38,7 +38,6 @@ export function SlotBottomBar({
   disabled,
   onBetChange,
 }: SlotBottomBarProps) {
-  const { muted, toggleMute } = useSoundSettings();
   const { hours, minutes } = useTime();
   const currentTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
   const [modalOpen, setModalOpen] = useState(false);
@@ -74,18 +73,7 @@ export function SlotBottomBar({
         </div>
 
         <div className="smp-bottom-bar-right">
-          <button
-            type="button"
-            className="smp-bottom-sound-btn smp-quick-sound"
-            onClick={() => {
-              playSound("ui_button");
-              toggleMute();
-            }}
-            aria-label={muted ? "Unmute sound" : "Mute sound"}
-            aria-pressed={muted}
-          >
-            {muted ? <VolumeX aria-hidden="true" /> : <Volume2 aria-hidden="true" />}
-          </button>
+          <QuickSound />
           <span
             className="smp-bottom-clock smp-bottom-clock--desktop"
             aria-hidden="true"

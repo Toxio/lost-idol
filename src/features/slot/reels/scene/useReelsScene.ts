@@ -14,7 +14,6 @@ import {
   ensureReelFrameLoaded,
 } from "@/animation/reelFrame";
 import {
-  createScatterSpine,
   ensureGlassSpineLoaded,
   ensureGobletSpineLoaded,
   ensureHeelsSpineLoaded,
@@ -494,7 +493,6 @@ export function useReelsScene({
 
       if (!spineReadyRef.current) return;
 
-      const scatterOnly = paylineAnim === null;
       const newSpines: Spine[] = [];
       for (const { col, row, animIdx, matrixIdx } of highlight.cells) {
         if (expandingWildColsRef.current.includes(col)) continue;
@@ -507,14 +505,7 @@ export function useReelsScene({
         const effectiveAnimIdx = isWildMatrixSymbol(matrixIdx)
           ? WILD_SERVER_IDX
           : animIdx;
-        const spine =
-          scatterOnly && animIdx === 10
-            ? createScatterSpine({
-                loop: true,
-                animation: "win",
-                ticker: app!.ticker,
-              })
-            : createWinSpineForSymbol(effectiveAnimIdx, app!.ticker, row);
+        const spine = createWinSpineForSymbol(effectiveAnimIdx, app!.ticker, row);
         if (!spine) continue;
 
         layoutSpineInCell(spine, absX, absY, cellW, cellH);

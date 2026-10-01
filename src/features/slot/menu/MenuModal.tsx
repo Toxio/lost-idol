@@ -1,26 +1,23 @@
 import { useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { Volume2 } from "lucide-react";
+import { Gem, BookOpen, X } from "lucide-react";
 import { play as playSound } from "@/audio/soundManager";
 import { useBackdropDismiss } from "@/hooks/useBackdropDismiss";
 import { t } from "@/utils/i18n";
 import { InfoTab } from "./tabs/InfoTab";
 import { PaytableTab } from "./tabs/PaytableTab";
-import { SoundTab } from "./tabs/SoundTab";
 import "./MenuModal.css";
 
-type MenuTab = "paytable" | "info" | "sound";
+type MenuTab = "paytable" | "info";
 
 const TABS: Array<{ id: MenuTab; icon: ReactNode }> = [
-  { id: "paytable", icon: "★" },
-  { id: "info", icon: "ⓘ" },
-  { id: "sound", icon: <Volume2 size={20} /> },
+  { id: "paytable", icon: <Gem size={18} /> },
+  { id: "info", icon: <BookOpen size={18} /> },
 ];
 
 const TAB_LABEL_KEYS: Record<MenuTab, Parameters<typeof t>[0]> = {
   paytable: "menu_paytable",
   info: "menu_info",
-  sound: "menu_sound",
 };
 
 interface MenuModalProps {
@@ -92,7 +89,7 @@ export function MenuModal({
               }}
               aria-label="Close"
             >
-              ✕
+              <X size={20} />
             </button>
           </div>
           <div className="smp-menu-content-body">
@@ -111,7 +108,6 @@ export function MenuModal({
                 precision={precision}
               />
             )}
-            {activeTab === "sound" && <SoundTab />}
           </div>
         </div>
       </div>

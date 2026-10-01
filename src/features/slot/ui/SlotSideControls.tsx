@@ -1,4 +1,4 @@
-import { CirclePlay, RotateCw, Square, Zap } from "lucide-react";
+import { RotateCw, Square, Zap } from "lucide-react";
 import { t } from "@/utils/i18n";
 import { useState } from "react";
 import clsx from "clsx";
@@ -148,7 +148,13 @@ export function SlotSideControls({
           aria-label={autoSpinActive ? `Stop autoplay · ${badge === "∞" ? "Unlimited spins" : `${badge} spins remaining`}` : "Start auto spin"}
           aria-pressed={autoSpinActive}
         >
-          {!autoSpinActive && <CirclePlay className="smp-desktop-icon" aria-hidden="true" />}
+          {!autoSpinActive && (
+            <svg className="smp-desktop-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12a11.5 11.5 0 0 1 21-3M26 4v5h-5" />
+              <path d="M27 20A11.5 11.5 0 0 1 6 23M6 28v-5h5" />
+              <path d="m12.5 21 3.5-10 3.5 10M14 17h4" strokeWidth="1.6" />
+            </svg>
+          )}
           {autoSpinActive ? (
             <>
               <img

@@ -6,14 +6,26 @@ import wildJsonUrl from '@/assets/symbols/lost-idol/monkey/symbol.json?url';
 import wildPngUrl from '@/assets/symbols/lost-idol/monkey/sheet.webp?url';
 
 import wildTextUrl from '@/assets/symbols/lost-idol/monkey/text.webp?url';
+import wildWinJsonUrl from '@/assets/symbols/lost-idol/monkey/win-saved.json?url';
+import wildWinAtlasUrl from '@/assets/symbols/lost-idol/monkey/win-saved.atlas.txt?url';
+import wildWinSheetUrl from '@/assets/symbols/lost-idol/monkey/win-saved.webp?url';
 
 export const WILD_SKEL_ALIAS = 'wildSymbolSpineJson';
 export const WILD_ATLAS_ALIAS = 'wildSymbolSpineAtlas';
+const WILD_WIN_SKEL_ALIAS = 'wildSavedWinJson';
+const WILD_WIN_ATLAS_ALIAS = 'wildSavedWinAtlas';
 
 let registered = false;
 
 export function registerWildSpineAssets(): void {
   if (registered) return;
+  Assets.add({ alias: WILD_WIN_SKEL_ALIAS, src: wildWinJsonUrl });
+  Assets.add({
+    alias: WILD_WIN_ATLAS_ALIAS,
+    src: wildWinAtlasUrl,
+    parser: 'spineTextureAtlasLoader',
+    data: { images: { 'win-saved.webp': wildWinSheetUrl } },
+  });
   Assets.add({ alias: WILD_SKEL_ALIAS, src: wildJsonUrl });
   Assets.add({
     alias: WILD_ATLAS_ALIAS,
@@ -34,7 +46,9 @@ let loadPromise: Promise<void> | null = null;
 export function ensureWildSpineLoaded(): Promise<void> {
   registerWildSpineAssets();
   if (!loadPromise) {
-    loadPromise = Assets.load([WILD_SKEL_ALIAS, WILD_ATLAS_ALIAS]).then(() => undefined);
+    loadPromise = Assets.load([
+      WILD_SKEL_ALIAS, WILD_ATLAS_ALIAS, WILD_WIN_SKEL_ALIAS, WILD_WIN_ATLAS_ALIAS,
+    ]).then(() => undefined);
   }
   return loadPromise;
 }
@@ -94,7 +108,12 @@ export function createWildSpineShowThenIdle(
   ticker?: Ticker,
   mixSec?: number,
 ): Spine {
-  const spine = createWildSpineInstance(ticker);
+  const spine = Spine.from({
+    skeleton: WILD_WIN_SKEL_ALIAS,
+    atlas: WILD_WIN_ATLAS_ALIAS,
+    boundsProvider: new SetupPoseBoundsProvider(),
+    ticker,
+  });
   applyWildShowThenIdleLoop(spine, showAnim, mixSec);
   return spine;
 }
