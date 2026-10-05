@@ -1,4 +1,5 @@
 import bonusFixture from "@/api/rgs/bonusFixture.json";
+import collectorBooks from '@/api/rgs/collectorBooks.json';
 import { boardToMatrix } from "@/features/slot/player/bookEvents";
 import type { ForceSpinPreset, WinLine } from "@/hooks/useRgsSession";
 
@@ -165,6 +166,16 @@ const WIN_SPINE_ANIM_PRESETS: TestPreset[] = [
 // ─── Presets ─────────────────────────────────────────────────────────────────
 
 export const TEST_PRESETS: TestPreset[] = [
+  {
+    id: 'collector-wild', label: 'Collector Wild', subtitle: 'One monkey · 3 respins · collect ×',
+    badge: '×+', badgeColor: '#8ee2ac',
+    preset: { matrix: buildMatrix([]), winLines: [], winAmount: 0, book: collectorBooks.wild_spin[0] },
+  },
+  {
+    id: 'collector-bonus', label: 'Collector Free Spins', subtitle: 'Persistent monkey · growing multiplier',
+    badge: 'FS', badgeColor: '#8ee2ac',
+    preset: { matrix: buildMatrix([]), winLines: [], winAmount: 0, book: collectorBooks.bonus_5[0] },
+  },
   ...WIN_SPINE_ANIM_PRESETS,
   {
     id: "star-bot",

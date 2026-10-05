@@ -1,5 +1,6 @@
 import { Spine } from '@esotericsoftware/spine-pixi-v8';
 import type { Ticker } from 'pixi.js';
+import { isBonusDoorSpine } from '@/animation/symbols/scatterSpine';
 
 import {
   createGlassSpine,
@@ -15,6 +16,7 @@ import {
 } from '@/animation/symbols';
 import {
   createWildSpineShowThenIdle,
+  isWildSpine,
   type WildShowAnimationName,
 } from '@/animation/wildSpine';
 
@@ -80,10 +82,18 @@ export function layoutSpineInCell(
   cellH: number,
 ): void {
   spine.update(0);
+  // Match the moving door's full 256px texture, including transparent padding.
+  // Clipping and perimeter graphics must not change the door's fit or centre.
+  if (isBonusDoorSpine(spine)) {
+    spine.scale.set(Math.min(cellW * SPINE_CELL_SCALE / 256, cellH * SPINE_CELL_SCALE / 256));
+    spine.position.set(absX, absY);
+    return;
+  }
   const lb = spine.getLocalBounds();
   const bw = lb.width > 0 ? lb.width : 1;
   const bh = lb.height > 0 ? lb.height : 1;
-  const s = Math.min((cellW * SPINE_CELL_SCALE) / bw, (cellH * SPINE_CELL_SCALE) / bh);
+  const fit = SPINE_CELL_SCALE * (isWildSpine(spine) ? 1.8 : 1);
+  const s = Math.min((cellW * fit) / bw, (cellH * fit) / bh);
   spine.scale.set(s);
   spine.position.set(absX - (lb.x + lb.width / 2) * s, absY - (lb.y + lb.height / 2) * s);
 }

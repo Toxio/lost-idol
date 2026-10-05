@@ -12,7 +12,7 @@ interface UseAutoplayOptions {
   cannotAffordBet: boolean;
   connectionLost: boolean;
   spin: () => Promise<void> | void;
-  onSpinSpeedChange: (speed: 1 | 2 | 3) => void;
+  onSpinSpeedChange: (speed: 1 | 2) => void;
   showInsufficientFunds: () => void;
 }
 
@@ -127,7 +127,7 @@ export function useAutoplay({
       setLastAutoSpinCount(options.count);
       setAutoSpinRemaining(options.count);
       setAutoSpin(true);
-      onSpinSpeedChange(3);
+      onSpinSpeedChange(2);
       window.setTimeout(decrementAndSpin, 300);
     },
     [betAmount, cannotAffordBet, showInsufficientFunds, onSpinSpeedChange, decrementAndSpin],

@@ -1,0 +1,1 @@
+Source: expanded 16 frames from bonus-portal.mp4. Preserve portal with stone columns, orange lamps and vines. Remove external background and heavy upper-left cast shadows. Keep green perimeter illumination progression. Transparent alpha. Edited with image_gen.

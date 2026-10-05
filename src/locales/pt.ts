@@ -129,7 +129,7 @@ export const pt: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'Quando o botão "Giro Auto" é pressionado, o jogo entra em modo automático com um número limitado de giros. Durante o Giro Automático, haverá uma contagem regressiva dos giros restantes dentro do botão "Parar auto" e quando chegar a zero, o recurso de Giro Automático será encerrado automaticamente. A qualquer momento, o jogador pode desativar o Giro Automático pressionando o botão "Parar auto".',
   info_rtp_title: 'Retorno ao Jogador',
-  info_rtp_body: 'O RTP médio do jogo é de 95%.',
+  info_rtp_body: 'O RTP médio do jogo é de 96%.',
   info_disclaimer_title: "Aviso legal",
   info_disclaimer_body: "Qualquer falha anula todos os prêmios e jogadas. É necessária uma conexão estável com a internet. Em caso de desconexão, recarregue o jogo para concluir rodadas incompletas. O retorno esperado é calculado ao longo de muitas jogadas. A exibição do jogo não representa nenhum dispositivo físico e serve apenas para fins ilustrativos. Os ganhos são liquidados conforme o valor recebido do Servidor de Jogo Remoto e não pelos eventos no navegador.\n\nTM e © 2026 Engine.",
   replay_play: "Reproduzir",

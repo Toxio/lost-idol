@@ -23,8 +23,8 @@ import {
   scatterImg,
   sevenImg,
   starImg,
-  wildImg,
 } from "@/assets/symbols/images";
+import wildImg from "@/assets/bonus-buy/leaping-monkey.webp";
 import "./PaytableTab.css";
 
 const SYMBOL_IMAGE: Record<number, string> = {
@@ -118,7 +118,7 @@ export function PaytableTab({
               className="smp-pt-wild-multipliers"
               aria-label={t("bonus_wild_multipliers")}
             >
-              {[5, 3, 2].map((mult) => (
+              {[1, 20].map((mult) => (
                 <span key={mult} className="smp-pt-wild-mult">
                   ×{mult}
                 </span>

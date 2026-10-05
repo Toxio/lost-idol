@@ -94,12 +94,24 @@ export type Book = {
 };
 
 export type SpinVisualResult = {
+  collector?: CollectorAction;
   matrix: number[][];
   winLines: WinLine[];
   expandingWild: number[];
   /** Display-currency win (already converted from book/API units). */
   winAmount: number;
   spinOdd: number | null;
+};
+
+export type CollectorCell = { reel: number; row: number; multiplier: number };
+export type CollectorAction = {
+  wild: CollectorCell;
+  from: CollectorCell;
+  stone: { reel: number; row: number; value: number } | null;
+  respin: number;
+  totalRespins: number;
+  initialMatrix: number[][];
+  underlyingMatrix: number[][];
 };
 
 export function emptySpinResult(matrix: number[][]): SpinVisualResult {

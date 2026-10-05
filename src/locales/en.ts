@@ -1,23 +1,23 @@
 export const en = {
-  "info_ctrl_bonus_desc": "Opens the bonus selection window. Select a Free Spins or Wild Spin card to see its rules and total amount. Use − / + to change the base amount; this also updates the main control and symbol win amounts. Selecting a card does not start a round. For modes above 2×, the bottom action button opens a separate confirmation showing the mode, multiplier and total amount. Only Confirm purchase starts the feature; Cancel or × returns without starting it. Close (×) leaves the window without starting a feature. This button is unavailable during a round, free spins or Autoplay.",
+  "info_ctrl_bonus_desc": "Choose Wild Spin or a 5 / 10 / 15 Free Spins package. The card shows its price as a multiple of the base bet. Press Buy, review the total cost and confirm to start. Selecting a card alone does not buy the feature. Unavailable during a round, Free Spins or Autoplay.",
   "info_ctrl_feature_desc": "After the transition, select Start free spins to begin the awarded feature. The counter shows the current spin and total awarded spins; Feature win shows the accumulated win. Spins advance automatically. Spin/Stop can shorten the current animation when allowed, and Speed changes its speed. Autoplay remains visible but disabled. Select Continue on the final summary to return to the main game.",
-  "info_ctrl_windows_desc": "Click or tap buttons to activate them. Use the menu tabs to switch between symbol wins, game information and sound settings. Scroll or swipe long text and option lists. Close (×) dismisses a window where available. Disabled controls cannot be used in the current state or at a limit. Notifications offer Close, Try Again or Reconnect as appropriate; reconnecting restores the recorded round.",
+  "info_ctrl_windows_desc": "Tap or click controls. Amount and Autoplay menus close when you select an option, click outside or press Escape. Scroll long lists and information. Close other windows with ×. Disabled controls are unavailable in the current game state.",
   "info_ctrl_replay_desc": "In Replay, select Play to view the recorded round and Play Again to watch it again after completion. The panel shows the total amount, base amount, mode multiplier and recorded win. Replay does not start a new round or change the balance; amount selection and Autoplay are unavailable.",
   wild_spin_title: "Wild Spin",
-  wild_spin_rules: "One spin for 10× the base bet. At least one Wild expands across its reel with a ×2, ×3, ×5 or ×10 multiplier. No SCATTER, stars or free spins. A win is not guaranteed. Maximum win: 5000× the base bet.",
+  wild_spin_rules: "For 10× the base bet, a single Wild is guaranteed, followed by 3 respins at no extra cost. Stones add +1 to its multiplier, up to ×20. A win is not guaranteed. Maximum round win: 5000× the base bet.",
   buy_bonus_title: "Buy bonus",
   buy_bonus_action: "Buy",
   buy_bonus_cost: "Total cost",
   buy_bonus_confirm: "Confirm purchase",
-  buy_bonus_rules: "Wilds expand with ×2, ×3, ×5 or ×10 multipliers. No extra charge per free spin. No retriggers. The 5000× base-bet round limit ends the bonus early. The opening SCATTER board only starts the feature and awards no wins. Only the free spins pay. Wilds are not guaranteed.",
+  buy_bonus_rules: "One Wild persists throughout the free spins and collects +1 stones up to ×20. No extra charge per spin. No retriggers. The opening BONUS board only triggers the feature. The round ends at 5000× the base bet.",
 
   bonus_wild_multipliers: "Wild multipliers",
   bonus_win: "Feature win",
   bonus_collect: "Continue",
   bonus_done: "Free spins complete",
   bonus_start: "Start free spins",
-  bonus_limits: "The triggering bet stays fixed. No retriggers. Stars retain their payouts; SCATTER boxes do not pay. The round ends when the 5000× bet limit is reached.",
-  bonus_intro: "Wilds expand across the reel with ×2, ×3, ×5 or ×10 multipliers. All awarded free spins are played at no extra cost.",
+  bonus_limits: "The triggering bet stays fixed. No retriggers. Scatter retains its payout; BONUS does not pay. The round ends at 5000× the bet.",
+  bonus_intro: "A single Wild starts at ×1 and keeps its multiplier throughout the free spins. It moves and collects +1 stones before winning lines are shown.",
   bonus_title: "Free Spins",
   footer_balance: 'Balance',
   footer_win: 'Win',
@@ -64,43 +64,43 @@ export const en = {
   insufficient_close: 'Close',
 
   paytable_scatter: 'Scatter',
-  paytable_star_note: "Stars appear on reels 1, 3 and 5 and pay independently of paylines. They do not trigger free spins.",
+  paytable_star_note: "Three golden Scatter scarabs on reels 1, 3 and 5 pay 20× the total bet, independently of paylines. Scarabs do not trigger Free Spins and WILD does not substitute for them.",
   paytable_wild_note:
-    'An Expanding Wild lands on 2nd, 3rd and 4th reels and substitutes for all symbols on the same reel except for the Scatters, can appear with the ×5, ×3 or ×2 multipliers.',
-  paytable_dollar_note: "SCATTER boxes can appear on all five reels. In the base game, 3 / 4 / 5 boxes award 5 / 10 / 15 free spins, regardless of paylines. Boxes do not pay money and do not retrigger during free spins.",
+    "The monkey occupies one cell and starts at ×1. In the base game it awards 3 respins without another bet. During respins it moves before wins are shown and may collect a +1 stone, up to ×20. Only winning lines through its final cell receive the multiplier. The multiplier resets when the feature ends. A simultaneous Free Spins trigger takes priority over base-game respins.",
+  paytable_dollar_note: "3 / 4 / 5 BONUS doors award 5 / 10 / 15 Free Spins. Doors do not pay directly. No additional Free Spins are awarded during the feature.",
 
   info_intro_title: 'Introduction',
   info_intro_body:
-    "Lost Idol has 5 reels, 10 paylines and expanding Wilds. Line wins pay from left to right. Stars pay independently of paylines. SCATTER boxes can appear on all five reels. In the base game, 3 / 4 / 5 boxes award 5 / 10 / 15 free spins, regardless of paylines. Boxes do not pay money and do not retrigger during free spins.",
+    "Explore Lost Idol on a 5 × 3 grid with 10 fixed paylines. Match symbols, collect wins with the monkey WILD and enter the temple for Free Spins. All 10 lines are active on every spin.",
   info_howtobet_title: 'How to Place a Bet',
   info_howtobet_1:
-    'To start a round, press the "Spin" button or select one of the available betting options.',
+    "Choose a bet from the amount menu, then press Spin. Selecting a bet does not start a round. The displayed bet is the total for all 10 paylines.",
   info_paylines_title: 'Paylines and Rules',
   info_paylines_body_1:
-    'All payouts are awarded for matching symbol combinations. Except for Scatter symbols, winning combinations must appear on consecutive reels from left to right, beginning with the first reel and following an active payline.',
+    "Follow each numbered path from the leftmost reel. Matching symbols must occupy consecutive reels on that path. The idol pays from 2 matching symbols; other regular symbols pay from 3. WILD substitutes for regular symbols, not BONUS doors or Scatter scarabs.",
   info_paylines_body_2:
-    "Only the highest matching combination on each payline is awarded. Wins from all paylines are added together, along with SCATTER wins. Paytable multipliers apply to the total selected bet; it is not divided by the number of lines. Wild multipliers greater than ×1 on a winning line are added together.",
+    "Only the highest matching combination on each line pays. Wins on different lines are added. Paytable displays amounts for the selected total bet. The monkey multiplier affects only winning lines through its final position.",
   info_paylines_body_3:
-    'Any game malfunction will invalidate all game rounds and winnings. The outcome of each spin is determined randomly, and player actions or skill have no influence on the results.',
+    "The diagrams show all 10 fixed paylines. Highlighted cells belong to that line. Scatter payouts do not follow these paths; BONUS doors trigger Free Spins instead of a direct payout.",
   info_controls_title: 'Game Controls',
   info_ctrl_spin_label: 'Spin',
   info_ctrl_spin_desc:
     "Press Spin or the Space bar to start a round when enabled. During a manual spin, press Stop or tap the game area to shorten the animation when allowed. This does not change the result. Space is inactive while a window is open and may be unavailable under platform settings.",
   info_ctrl_autospin_label: 'Autoplay',
-  info_ctrl_autospin_desc: "Opens Autoplay settings. Choose a spin count, optionally enable stop after the first win, a single-win threshold or a net-loss threshold, and adjust thresholds with − / +. Press Start to confirm. The number inside the stop square shows spins still to start and decreases as each spin starts. Press that button to stop future spins; the current round finishes. After completion, Repeat autoplay starts the same settings again; Cancel closes the summary.",
+  info_ctrl_autospin_desc: "Opens a sliding menu with 10, 20, 50, 100 or 250 spins. Selecting a number starts Autoplay immediately at fast speed. The counter shows spins remaining to start. Press the same button to stop future spins; the current round finishes. No optional win or loss stop conditions are used.",
   info_ctrl_speed_label: 'Speed',
   info_ctrl_speed_desc:
-    "Cycles through Normal, Fast and Turbo. All three speeds can be selected during Autoplay and free spins when enabled. Autoplay starts at Turbo. Speed changes animation timing only, not the result. Platform settings may disable this control.",
+    "Toggles between normal and fast animation. A lit lightning bolt means fast speed. Speed changes presentation only, never the result. Available when permitted by platform settings.",
   info_ctrl_bet_label: 'Bet Options',
   info_ctrl_bet_desc:
-    "Press the amount to open Bet Options. Select an amount tile or use − / +, then press Confirm. Closing this window also applies the selected amount. The main arrows change the bet directly. The bonus window and Paytable use the same selected bet. Changes are disabled while a round or Autoplay is active.",
+    "Press the bet amount to open a sliding list of available bets. Tap an amount to apply it and close the list. The − / + buttons on the main panel step through the same list. Bet changes are unavailable during a round or Autoplay.",
   info_ctrl_menu_label: 'Menu',
-  info_ctrl_menu_desc: 'Opens the game settings and configuration menu.',
+  info_ctrl_menu_desc: "Opens Paytable, Info and Sound. Paytable shows symbol payouts for the selected bet; Info explains the rules and controls.",
   info_ctrl_sound_label: 'Sound Control',
   info_ctrl_sound_desc:
-    "The speaker button mutes or unmutes all audio. In the Sound tab, drag the Music and Sound effects sliders to adjust each volume. When muted, select Unmute before adjusting the sliders.",
+    "Press the speaker to mute or unmute and open the volume slider. The quick slider adjusts music and effects together. The Sound tab has separate sliders for music and effects. Only one music track plays at a time.",
   info_balance_label: 'Balance',
-  info_balance_desc: "Shows the current balance. The Win display shows the round win. These are status displays, not buttons.",
+  info_balance_desc: "Balance shows the available balance. Win shows the displayed round win. The Free Spins counter and feature total track bonus progress. These displays are not buttons.",
   info_betvalue_label: 'Bet Options',
   info_betvalue_desc:
     'Shows the total wager applied across all active paylines. Selecting this option allows the player to choose a different stake amount.',
@@ -122,9 +122,9 @@ export const en = {
   info_responsible_title: 'Responsible Gaming',
   info_responsible_autoplay_label: 'Using the Autoplay Feature',
   info_responsible_autoplay_desc:
-    'When "Autoplay" is activated, the game automatically performs a predefined number of spins. During this mode, the remaining number of spins is displayed within the "Stop Auto" button. Once the counter reaches zero, Autoplay ends automatically. The player may stop Autoplay at any moment by pressing the "Stop Auto" button.',
+    "Each Autoplay round uses the selected bet. Stop future spins at any time using the Autoplay button. Autoplay also stops when the selected count is reached, funds are insufficient or the connection is lost.",
   info_rtp_title: 'Return to Player (RTP)',
-  info_rtp_body: 'The theoretical Return to Player (RTP) percentage for this game is 95%.',
+  info_rtp_body: 'The theoretical Return to Player (RTP) percentage for this game is 96%.',
   info_disclaimer_title: "Game Disclaimer",
   info_disclaimer_body: "Malfunction voids all wins and plays. A consistent internet connection is required. In the event of a disconnection, reload the game to finish any uncompleted rounds. The expected return is calculated over many plays. The game display is not representative of any physical device and is for illustrative purposes only. Winnings are settled according to the amount received from the Remote Game Server and not from events within the web browser.\n\nTM and © 2026 Engine.",
 

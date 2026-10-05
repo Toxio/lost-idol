@@ -67,6 +67,7 @@ export interface ReelTween {
 }
 
 export interface SlotReelsProps {
+  collectorOverlayVisible?: boolean;
   spinSpeed: SpinSpeedLevel;
   spinning: boolean;
   targetMatrix: number[][] | null;

@@ -1,0 +1,64 @@
+.smp-collector-layer { position: absolute; inset: 0; pointer-events: none; z-index: 3; color: #fff1b8; font-family: var(--game-font), sans-serif; }
+.smp-collector-monkey { --from-x: 50%; --from-y: 50%; --to-x: 50%; --to-y: 50%; position: absolute; transform: translate(-50%, -50%); }
+.smp-collector-monkey-sprite { position: relative; animation: collector-idle-frames 4250ms steps(1, end) infinite; transform: scale(1.8); transform-origin: center; width: 100%; height: 100%; background-size: 400% 400%; background-position: 0 0; background-repeat: no-repeat; filter: drop-shadow(0 0 12px #74ed79); }
+.smp-collector-monkey.is-moving .smp-collector-monkey-sprite { animation: collector-jump-frames 1350ms steps(1, end) both; }
+.smp-wild-glyphs { position: absolute; left: 50%; bottom: -23%; transform: translateX(-50%); display: flex; justify-content: center; height: 17.92%; width: 54.4%; filter: drop-shadow(0 2px 3px #001c0b); }
+.smp-wild-glyphs svg { height: 100%; width: auto; max-width: 33%; overflow: hidden; }
+.smp-collector-monkey.is-moving { animation: collector-jump 1350ms ease-in-out both; }
+.smp-collector-smoke { position: absolute; transform: translate(-50%, -50%); background-size: 400% 400%; background-repeat: no-repeat; z-index: 2; pointer-events: none; }
+@keyframes collector-jump { 0%, 29% { left: var(--from-x); top: var(--from-y); } 60% { transform: translate(-50%, -90%) scale(1.12); } 86%, 100% { left: var(--to-x); top: var(--to-y); transform: translate(-50%, -50%); } }
+@media (prefers-reduced-motion: reduce) { .smp-collector-monkey.is-moving { animation: none; } }
+
+@keyframes collector-jump-frames {
+  0% { background-position: 0 0; }
+  6.25% { background-position: 33.3333% 0; }
+  12.5% { background-position: 66.6667% 0; }
+  18.75% { background-position: 100% 0; }
+  25% { background-position: 0 33.3333%; }
+  31.25% { background-position: 33.3333% 33.3333%; }
+  37.5% { background-position: 66.6667% 33.3333%; }
+  43.75% { background-position: 100% 33.3333%; }
+  50% { background-position: 0 66.6667%; }
+  56.25% { background-position: 33.3333% 66.6667%; }
+  62.5% { background-position: 66.6667% 66.6667%; }
+  68.75% { background-position: 100% 66.6667%; }
+  75% { background-position: 0 100%; }
+  81.25% { background-position: 33.3333% 100%; }
+  87.5% { background-position: 66.6667% 100%; }
+  93.75% { background-position: 100% 100%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* Align standing poses by the midpoint of their feet and the ground line. */
+@keyframes collector-idle-frames {
+  0.00000000% { background-position: 0 0; left: 0; top: 0; }
+  3.52941177% { background-position: 33.33333333% 0; left: -1.40625000%; top: 0; }
+  7.05882353% { background-position: 100.00000000% 0; left: -0.70312500%; top: 0; }
+  10.58823529% { background-position: 0 33.33333333%; left: -1.40625000%; top: 1.40625000%; }
+  14.11764706% { background-position: 33.33333333% 33.33333333%; left: -0.70312500%; top: 1.40625000%; }
+  17.64705882% { background-position: 66.66666667% 33.33333333%; left: -0.70312500%; top: 1.40625000%; }
+  21.17647059% { background-position: 100.00000000% 33.33333333%; left: 0; top: 0.70312500%; }
+  24.70588235% { background-position: 0 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
+  28.23529412% { background-position: 33.33333333% 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
+  31.76470588% { background-position: 66.66666667% 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
+  35.29411765% { background-position: 100.00000000% 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
+  38.82352941% { background-position: 0 100.00000000%; left: -2.10937500%; top: 7.03125000%; }
+  42.35294118% { background-position: 33.33333333% 100.00000000%; left: -0.70312500%; top: 7.73437500%; }
+  45.88235294% { background-position: 66.66666667% 100.00000000%; left: -0.70312500%; top: 7.03125000%; }
+  49.41176470% { background-position: 100.00000000% 100.00000000%; left: 0; top: 7.73437500%; }
+  52.94117647%, 100% { background-position: 0 0; left: 0; top: 0; }
+}
+
+/* The collectible is an overlay, not a paying reel symbol. */
+.smp-collector-stone { position: absolute; aspect-ratio: 1; transform: translate(-50%, -50%); z-index: 3; animation: collector-stone-collect 1350ms both; }
+.smp-collector-stone__sprite { width: 100%; height: 100%; background-size: 400% 400%; background-repeat: no-repeat; animation: collector-jump-frames 1100ms steps(1, end) both; filter: drop-shadow(0 0 5px #67ff96); }
+.smp-collector-stone strong { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #fff5bb; font-size: clamp(12px, 2.5vw, 30px); text-shadow: 0 2px 2px #001c0b, 0 0 4px #001c0b; }
+.smp-collector-monkey { z-index: 4; }
+.smp-collector-gain { position: absolute; left: 50%; bottom: 0; color: #caff9a; font-weight: 800; font-size: clamp(12px, 2.5vw, 30px); text-shadow: 0 2px 3px #001c0b; animation: collector-gain 850ms ease-out both; }
+.smp-collector-monkey.just-collected .smp-wild-glyphs { animation: collector-multiplier-flash 850ms ease-out; }
+@keyframes collector-stone-collect { 0%, 75% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 88% { opacity: 1; transform: translate(-50%, 0) scale(.6); } 100% { opacity: 0; transform: translate(-50%, 45%) scale(.1); } }
+@keyframes collector-gain { from { opacity: 1; transform: translate(-50%, 0); } to { opacity: 0; transform: translate(-50%, -30px); } }
+@keyframes collector-multiplier-flash { 0%, 40% { filter: drop-shadow(0 0 8px #ffe493); } 100% { filter: drop-shadow(0 2px 3px #001c0b); } }
+@media (prefers-reduced-motion: reduce) { .smp-collector-stone { animation: none; } .smp-collector-stone__sprite { animation: none; } .smp-collector-gain { animation-name: collector-gain-reduced; } }
+
+@keyframes collector-gain-reduced { from { opacity: 1; } to { opacity: 0; } }

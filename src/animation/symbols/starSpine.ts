@@ -1,14 +1,14 @@
-import atlasUrl from '@/assets/symbols/lost-idol/scatter-saved/symbol-opaque.atlas.txt?url';
-import jsonUrl from '@/assets/symbols/lost-idol/scatter-saved/symbol-opaque.json?url';
-import sheetUrl from '@/assets/symbols/lost-idol/scatter-saved/sheet-opaque.webp?url';
+import atlasUrl from '@/assets/symbols/lost-idol/scarab/symbol.atlas.txt?url';
+import jsonUrl from '@/assets/symbols/lost-idol/scarab/symbol.json?url';
+import sheetUrl from '@/assets/symbols/lost-idol/scarab/sheet.webp?url';
 import { defineSymbolSpine } from './symbolSpineFactory';
 
 // Legacy API name retains the existing math symbol ID 11.
 const symbol = defineSymbolSpine({
-  name: 'lost-idol-paying-scatter-opaque',
+  name: 'lost-idol-paying-scarab',
   jsonUrl,
   atlasUrl,
-  images: { 'sheet-opaque.webp': sheetUrl },
+  images: { 'sheet.webp': sheetUrl },
 });
 
 export const ensureStarSpineLoaded = symbol.ensureLoaded;

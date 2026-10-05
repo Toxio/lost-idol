@@ -14,7 +14,6 @@
   .smp-bottom-balance .smp-bottom-value, .smp-bottom-win-value { min-width: 0; min-height: 18px; width: auto; font-size: 17px; font-weight: 500; line-height: 1.1; filter: none; text-align: left; }
   .smp-bottom-win-value:empty::after { content: '—'; color: #9eac9e; }
   .smp-bottom-bar .smp-currency-pair, .smp-bottom-bar .smp-currency-pair__symbol, .smp-bottom-bar .smp-currency-pair__amount { background: none; -webkit-text-fill-color: currentColor; color: #f0ecdd; filter: none; }
-  .smp-bottom-win-value--active .smp-currency-pair, .smp-bottom-win-value--active .smp-currency-pair span { color: #e1c889; }
   .smp-bottom-bet { flex: 0 0 124px; height: 48px; aspect-ratio: auto; background: #ffffff06; border-radius: 5px; }
   .smp-bottom-bet-inner { padding: 0 3px; grid-template-columns: 24px minmax(0, 1fr) 24px; }
   .smp-bottom-bet-amount { flex-direction: column; gap: 5px; height: 44px; }

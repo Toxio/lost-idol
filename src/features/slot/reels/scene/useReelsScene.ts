@@ -1,7 +1,9 @@
+import { ensureWinBackgroundLoaded, createWinBackground } from '@/animation/winBackground';
 import { type Spine } from "@esotericsoftware/spine-pixi-v8";
 import {
   type Application,
   Assets,
+  loadTextures,
   BlurFilter,
   Container,
   Graphics,
@@ -92,6 +94,7 @@ interface UseReelsSceneOptions {
   // Strip / matrix state
   reelsRef: RefObject<Reel[]>;
   matrixRef: RefObject<number[][]>;
+  collectorOverlayVisibleRef: RefObject<boolean>;
   targetMatrixRef: RefObject<number[][] | null>;
   applyMatrixToAllReelsRef: RefObject<(source: number[][]) => void>;
 
@@ -150,6 +153,7 @@ interface UseReelsSceneOptions {
  * the same shared mutable scene.
  */
 export function useReelsScene({
+  collectorOverlayVisibleRef,
   app,
   isInitialised,
   onAssetsLoaded,
@@ -243,6 +247,11 @@ export function useReelsScene({
     let reelFrameContainer: Container | null = null;
     let cancelled = false;
 
+    // Mobile/LAN browsers can stall the worker ImageBitmap capability probe.
+    if (loadTextures.config && (!window.isSecureContext || window.matchMedia('(pointer: coarse)').matches)) {
+      loadTextures.config.preferWorkers = false;
+      loadTextures.config.preferCreateImageBitmap = false;
+    }
     const spinePromise = Promise.all([
       ensureReelFrameLoaded(),
       ensureGlassSpineLoaded(),
@@ -257,12 +266,11 @@ export function useReelsScene({
       ensureWildSpineLoaded(),
       ensureScatterSpineLoaded(),
       ensureLineAssetsLoaded(),
-    ]).catch(() => {});
+      ensureWinBackgroundLoaded(),
+    ]);
 
     async function init() {
-      await Assets.load(ALL_ASSETS);
-      if (cancelled) return;
-      await Promise.all([spinePromise, preloadHtmlImages()]);
+      await Promise.all([Assets.load(ALL_ASSETS), spinePromise, preloadHtmlImages()]);
       if (cancelled) return;
 
       spineReadyRef.current = true;
@@ -318,7 +326,10 @@ export function useReelsScene({
       bumpSceneAssets();
     }
 
-    void init();
+    void init().catch((error: unknown) => {
+      console.error('Game assets failed to load', error);
+      if (!cancelled) window.dispatchEvent(new Event('game-assets-error'));
+    });
 
     // ── Grid / symbol helpers ────────────────────────────────────────────────
     /** Strip index for each grid row when the reel has landed (position ≡ 0 mod REEL_SIZE). */
@@ -508,6 +519,20 @@ export function useReelsScene({
         const spine = createWinSpineForSymbol(effectiveAnimIdx, app!.ticker, row);
         if (!spine) continue;
 
+        const background = createWinBackground({ ticker: app!.ticker, loop: false });
+        // Each payline pass owns exactly one full symbol/effect playback.
+        // Replacing the track also removes the wild's queued looping idle.
+        for (const animated of [spine, background]) {
+          const animation = animated.state.getCurrent(0)?.animation;
+          if (animation) {
+            const entry = animated.state.setAnimation(0, animation.name, false);
+            entry.timeScale = animation.duration / (highlight.showMs / 1000);
+            animated.update(0);
+          }
+        }
+        layoutSpineInCell(background, absX, absY, cellW * 1.3, cellH * 1.3);
+        overlay.addChildAt(background, 0);
+        newSpines.push(background);
         layoutSpineInCell(spine, absX, absY, cellW, cellH);
         overlay.addChild(spine);
         newSpines.push(spine);
@@ -808,17 +833,45 @@ export function useReelsScene({
           if (sym.container.y < 0 && prevY > cellH && !reel.stopping) {
             updateSymbol(sym, randomAlias(), cellW, cellH);
           }
+          // Buffer cells outside a landed reel must not bleed into the grid,
+          // especially the enlarged wild above the first visible row.
+          const reelMoving = (spinRef.current && !reel.stopping)
+            || tweensRef.current.some(tween => tween.reel === reel);
+          const outsideSettledGrid = !reelMoving
+            && (baseY < -0.01 || baseY >= VISIBLE_ROWS * cellH - 0.01);
+          sym.sprite.renderable = !outsideSettledGrid
+            && !(collectorOverlayVisibleRef.current && sym.alias === 'sym-wild');
         }
       }
 
+      for (const { spine } of wildIdleSpinesRef.current) {
+        spine.renderable = !collectorOverlayVisibleRef.current;
+      }
       const highlights = winHighlightsRef.current;
-      if (!spinRef.current && highlights.length > 0) {
+      // The bonus-entry reveal is one-shot; keep it from restarting under the transition.
+      const bonusRevealFinished = winCycleFiredRef.current && highlights.some(highlight =>
+        highlight.winAmount === 0 && highlight.cells.some(cell => cell.animIdx === 10));
+      if (!spinRef.current && highlights.length > 0 && !bonusRevealFinished) {
         const current = highlights[paylineCycleIdxRef.current];
         const lineShowMs = current?.showMs ?? 1000;
         const lineCycleMs = lineShowMs + LINE_DELAY_MS;
 
         paylineCycleElapsedRef.current += app!.ticker.deltaMS;
         const elapsed = paylineCycleElapsedRef.current;
+
+        // Door reaches its fully-open pose before the end of the reveal.
+        // Hand off directly to the portal transition and keep the open Spine
+        // visible underneath it instead of restoring the closed static symbol.
+        const isFinalBonusDoor = paylineCycleIdxRef.current === highlights.length - 1
+          && current?.winAmount === 0
+          && current.cells.some(cell => cell.animIdx === 10);
+        if (isFinalBonusDoor && elapsed >= lineShowMs * 0.84 && !winCycleFiredRef.current) {
+          const finalWin = finalWinAmountRef.current;
+          if (finalWin != null && finalWin > 0) onPresentedWinChangeRef.current?.(finalWin);
+          winCycleFiredRef.current = true;
+          if (!bigWinPendingRef.current) winCycleDoneRef.current?.();
+          return;
+        }
 
         if (elapsed >= lineCycleMs) {
           paylineCycleElapsedRef.current = 0;

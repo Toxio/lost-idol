@@ -1,0 +1,23 @@
+{
+  "source": "monkey3.png",
+  "orderZeroBased": [
+    9,
+    9,
+    10,
+    1,
+    0,
+    7,
+    1,
+    10,
+    9,
+    13,
+    12,
+    4,
+    3,
+    13,
+    9,
+    9
+  ],
+  "durationMs": 2400,
+  "firstAndLast": "neutral stance, row 3 column 2"
+}

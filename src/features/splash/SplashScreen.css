@@ -12,8 +12,6 @@
 .splash-screen__content { position: relative; display: flex; flex-direction: column; align-items: center; gap: clamp(18px, 4dvh, 36px); width: min(84vw, 420px); }
 .splash-screen__logo { display: block; width: auto; height: auto; max-width: min(72vw, 360px); max-height: 62dvh; object-fit: contain; filter: drop-shadow(0 12px 22px #0008); animation: splash-arrive .6s ease-out both; }
 .splash-screen__loading { width: min(64vw, 260px); }
-.splash-screen__caption { display: flex; justify-content: flex-end; margin-bottom: 12px; color: #d3c390; font: 500 11px/1.2 var(--game-font); letter-spacing: .22em; }
-.splash-screen__caption span:last-child { color: #99b39d; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
 .splash-screen__progress { height: 4px; background: #cce6bf15; border-radius: 4px; overflow: hidden; }
 .splash-screen__progress-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #42815a, #9eca82 65%, #e4c578); transform-origin: left; transition: transform .35s ease; }
 .splash-screen--hidden::before { animation-play-state: paused; }
@@ -22,7 +20,6 @@
 @media (max-height: 320px) and (orientation: landscape) {
   .splash-screen__content { gap: 12px; }
   .splash-screen__logo { max-height: 65dvh; }
-  .splash-screen__caption { margin-bottom: 7px; font-size: 9px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .splash-screen::before, .splash-screen__logo { animation: none; }

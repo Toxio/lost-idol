@@ -1,36 +1,36 @@
 sheet.webp
-size: 1772,1764
+size: 1024,1024
 filter: Linear,Linear
 pma: false
 frame0
-  bounds: 0,0,443,441
+  bounds: 0,0,256,256
 frame1
-  bounds: 443,0,443,441
+  bounds: 256,0,256,256
 frame2
-  bounds: 886,0,443,441
+  bounds: 512,0,256,256
 frame3
-  bounds: 1329,0,443,441
+  bounds: 768,0,256,256
 frame4
-  bounds: 0,441,443,441
+  bounds: 0,256,256,256
 frame5
-  bounds: 443,441,443,441
+  bounds: 256,256,256,256
 frame6
-  bounds: 886,441,443,441
+  bounds: 512,256,256,256
 frame7
-  bounds: 1329,441,443,441
+  bounds: 768,256,256,256
 frame8
-  bounds: 0,882,443,441
+  bounds: 0,512,256,256
 frame9
-  bounds: 443,882,443,441
+  bounds: 256,512,256,256
 frame10
-  bounds: 886,882,443,441
+  bounds: 512,512,256,256
 frame11
-  bounds: 1329,882,443,441
+  bounds: 768,512,256,256
 frame12
-  bounds: 0,1323,443,441
+  bounds: 0,768,256,256
 frame13
-  bounds: 443,1323,443,441
+  bounds: 256,768,256,256
 frame14
-  bounds: 886,1323,443,441
+  bounds: 512,768,256,256
 frame15
-  bounds: 1329,1323,443,441
+  bounds: 768,768,256,256

@@ -69,6 +69,19 @@ const CONFIGS: Record<SoundKey, SoundConfig> = {
   winning_line: { src: [winningLineSrc], loop: false, volume: 0.2, kind: 'effect' },
 };
 
+// Vite can replace this module while its previous audio objects are still playing.
+// Dispose the global audio pool so those orphaned tracks cannot survive a reload.
+if (import.meta.hot) {
+  Howler.unload();
+  import.meta.hot.dispose(() => {
+    Howler.unload();
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+    (['touchstart', 'touchend', 'click'] as const).forEach(event => {
+      document.removeEventListener(event, resumeAudioContext);
+    });
+  });
+}
+
 const howls = new Map<SoundKey, Howl>();
 
 // ── Persistence ──────────────────────────────────────────────────────────────
@@ -226,6 +239,16 @@ export function setMuted(value: boolean): void {
 }
 
 export function play(key: SoundKey): void {
+  // Music is exclusive: stop the previous track before starting another one.
+  // Effects remain independent so reel and interface sounds can play over music.
+  if (CONFIGS[key].kind === 'music') {
+    for (const [otherKey, otherHowl] of howls) {
+      if (otherKey !== key && CONFIGS[otherKey].kind === 'music') {
+        otherHowl.unload();
+        howls.delete(otherKey);
+      }
+    }
+  }
   const { loop } = CONFIGS[key];
   const volume = getEffectiveVolume(key);
   const howl = getHowl(key);
@@ -239,7 +262,14 @@ export function play(key: SoundKey): void {
 }
 
 export function stop(key: SoundKey): void {
-  howls.get(key)?.stop();
+  const howl = howls.get(key);
+  if (CONFIGS[key].kind === 'music') {
+    // Unload also cancels pending playback while a track is loading/unlocking.
+    howl?.unload();
+    howls.delete(key);
+  } else {
+    howl?.stop();
+  }
 }
 
 function pauseBackgroundForBigWin(): void {
@@ -257,25 +287,15 @@ function clearBigWinIntroHandler(): void {
   howls.get('big_win_in')?.off('end');
 }
 
-/** Play big-win intro once, then loop the tier-appropriate track. Pauses the current background theme until spin. */
-export function playBigWin(tier: 'big' | 'mega' | 'super'): void {
+/** Shared, one-shot celebration for every win tier; no repeated opening fanfare. */
+export function playBigWin(): void {
   pauseBackgroundForBigWin();
-
   clearBigWinIntroHandler();
   stop('big_win_in');
   stop('big_win_loop');
   stop('mega_win_loop');
   stop('super_win_loop');
-
-  const loopKey: SoundKey =
-    tier === 'super' ? 'super_win_loop' : tier === 'mega' ? 'mega_win_loop' : 'big_win_loop';
-  const intro = getHowl('big_win_in');
-  intro.once('end', () => {
-    stop(backgroundTrack);
-    play(loopKey);
-  });
-  const id = intro.play();
-  intro.volume(getEffectiveVolume('big_win_in'), id);
+  play('big_win_in');
 }
 
 const WILD_WIN_KEYS: SoundKey[] = ['wild_win', 'wild_win2', 'wild_win3'];

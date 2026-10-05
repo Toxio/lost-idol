@@ -180,7 +180,7 @@ export function useBigWinOverlay({
       }
 
       bigWinActiveRef.current = true;
-      playBigWin(tier);
+      playBigWin();
 
       amountTickUpRef.current?.stop();
       amountTickUpRef.current = null;

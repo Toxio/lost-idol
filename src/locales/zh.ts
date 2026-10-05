@@ -120,7 +120,7 @@ export const zh: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     '按下"自动游戏"按钮时，游戏以有限的旋转次数进入自动模式。在自动游戏期间，"停止自动"按钮内将有剩余旋转次数的倒计时，当达到零时，自动游戏功能将自动终止。玩家可以随时按"停止自动"按钮禁用自动游戏功能。',
   info_rtp_title: '返还玩家率',
-  info_rtp_body: '游戏的平均RTP为95%。',
+  info_rtp_body: '游戏的平均RTP为96%。',
   info_disclaimer_title: "免责声明",
   info_disclaimer_body: "任何故障将使所有奖金和游戏无效。需要稳定的互联网连接。如果断开连接，请重新加载游戏以完成未完成的回合。预期回报是根据多次游戏计算的。游戏显示并不代表任何物理设备，仅用于说明目的。奖金根据远程游戏服务器接收到的金额结算，不依据浏览器内的事件。\n\nTM 和 © 2026 Engine.",
   replay_play: "播放",

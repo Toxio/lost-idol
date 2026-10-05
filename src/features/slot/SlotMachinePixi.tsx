@@ -3,6 +3,7 @@ import { REEL_GRID, REEL_COUNT } from "./reels/constants";
 import { t } from "@/utils/i18n";
 import { BuyBonusModal } from "./bonus/BuyBonusModal";
 import { BonusFeature } from "./bonus/BonusFeature";
+import { FeaturePlaque } from './ui/FeaturePlaque';
 import { Application } from "@pixi/react";
 import type { Application as PixiApplication } from "pixi.js";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -31,15 +32,18 @@ import "./ui/SlotMobileControls.css";
 import "./ui/SlotQuickSound.css";
 import "./ui/SlotBetStepper.css";
 import "./ui/SlotBonusButton.css";
+import "./ui/SlotDesktopLayout.css";
 import buyBonusButtonImg from "@/assets/buttons/buy-bonus-jade.webp";
 import { SlotReels } from "./reels";
 import { TestModal } from "./test/TestModal";
+import { CollectorOverlay } from './ui/CollectorOverlay';
+import { WildMultiplier } from './ui/WildMultiplier';
 
 export interface SlotMachinePixiProps {
   hub: SlotSessionState;
   bonusIntroReady?: boolean;
-  spinSpeed: 1 | 2 | 3;
-  onSpinSpeedChange: (speed: 1 | 2 | 3) => void;
+  spinSpeed: 1 | 2;
+  onSpinSpeedChange: (speed: 1 | 2) => void;
   onAssetsLoaded?: () => void;
   onRegisterInsufficientFunds?: (handler: () => void) => void;
 }
@@ -73,6 +77,8 @@ export function SlotMachinePixi({
 
   const {
     roundBusy,
+    collector,
+    collectorMoving,
     bonus,
     continueBonus,
     handleWinPresentationComplete,
@@ -87,6 +93,7 @@ export function SlotMachinePixi({
     matrix,
     targetMatrix,
     winAmount,
+    collectorWinAmount,
     winLines,
     expandingWild,
     spinOdd,
@@ -112,7 +119,11 @@ export function SlotMachinePixi({
     setPresentedWinAmount(null);
   }
 
-  const displayedWinAmount = spinning
+  const displayedWinAmount = collectorWinAmount !== null
+    ? (collectorWinAmount > 0 ? collectorWinAmount : null)
+    : bonus.phase !== 'idle'
+      ? (bonus.totalWin > 0 ? bonus.totalWin : null)
+    : spinning
     ? null
     : bonus.total > 0
       ? winAmount
@@ -161,19 +172,15 @@ export function SlotMachinePixi({
     setTestOpen(true);
   }, [cannotAffordBet, showInsufficientFunds]);
 
-  const maxSpeed: 1 | 2 | 3 = jurisdiction.disabledTurbo
-    ? 1
-    : jurisdiction.disabledSuperTurbo
-      ? 2
-      : 3;
+  const maxSpeed: 1 | 2 = jurisdiction.disabledTurbo ? 1 : 2;
   const bonusActive = bonus.phase !== "idle";
   useGameSounds(bonusActive);
-  const bonusSpeed = Math.min(maxSpeed, spinSpeed) as 1 | 2 | 3;
+  const bonusSpeed = Math.min(maxSpeed, spinSpeed) as 1 | 2;
 
   const handleSpeedCycle = useCallback(() => {
     const current = bonusActive ? bonusSpeed : spinSpeed;
-    const next = current >= maxSpeed ? 1 : ((current + 1) as 1 | 2 | 3);
-    onSpinSpeedChange(next as 1 | 2 | 3);
+    const next = current >= maxSpeed ? 1 : 2;
+    onSpinSpeedChange(next as 1 | 2);
   }, [
     spinSpeed,
     bonusActive,
@@ -244,7 +251,7 @@ export function SlotMachinePixi({
         bet={betAmount} onBetChange={setBetAmount} bets={quickBets} balance={balance} currency={currency} precision={precision}
         onClose={closeBuyBonus} onBuy={(mode, stake) => { setBuyBonusOpen(false); void buyBonus(mode, stake); }}
       />}
-      <div className={`smp-wrapper${bonusActive ? " smp-wrapper--bonus" : ""}`}>
+      <div className={`smp-wrapper smp-wrapper--feature${bonusActive ? " smp-wrapper--bonus" : ""}`}>
         <div className="smp-stage-grid">
           <div className="smp-logo-col">
             {!replay && !bonusActive && !jurisdiction.disabledBuyFeature && (
@@ -262,6 +269,7 @@ export function SlotMachinePixi({
 
           <div className="smp-reels-col">
             <SlotLogo />
+            <FeaturePlaque bonus={bonus} collector={collector} precision={precision} pending={spinning || collectorMoving} winLines={winLines} />
             <BonusFeature
               introReady={bonusIntroReady}
               bonus={spinning ? { ...bonus, wildMultipliers: [] } : bonus}
@@ -285,6 +293,7 @@ export function SlotMachinePixi({
                 }}
               >
                 <SlotReels
+                  collectorOverlayVisible={Boolean(collector && (collectorMoving || (spinning && (collector.respin > 0 || bonus.current > 1))))}
                   spinSpeed={bonusActive ? bonusSpeed : spinSpeed}
                   spinning={spinning}
                   targetMatrix={targetMatrix}
@@ -306,6 +315,16 @@ export function SlotMachinePixi({
                   autoAdvance={autoplay.autoSpinEnabled || roundBusy}
                 />
               </Application>
+              {collector && (!spinning || collector.respin > 0 || bonus.current > 1) && <CollectorOverlay action={collector} moving={collectorMoving} spinning={spinning} />}
+              {!collector && !spinning && matrix.flatMap((reel, col) => reel.map((symbol, row) => symbol === 9 ? (
+                <div key={`${col}-${row}`} className="smp-collector-layer">
+                  <div className="smp-collector-monkey" style={{
+                    left: `${(REEL_GRID.x + (col + 0.5) * REEL_GRID.w / 5) * 100}%`,
+                    top: `${(REEL_GRID.y + (row + 0.5) * REEL_GRID.h / 3) * 100}%`,
+                    width: `${REEL_GRID.w / 5 * 82}%`, height: `${REEL_GRID.h / 3 * 82}%`,
+                  }}><WildMultiplier value={bonus.wildMultipliers[col] || 1} /></div>
+                </div>
+              ) : null))}
               {!spinning && bonus.wildMultipliers.map((multiplier, col) => {
                 // Show whenever the reel expanded a wild — every expansion gets
                 // a label (×1 is math's baseline, still shown for consistency).

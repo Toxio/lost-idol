@@ -132,7 +132,7 @@ export const po: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'Po naciśnięciu przycisku "Autoplay" gra przechodzi w tryb automatyczny z ograniczoną liczbą obrotów. Podczas automatycznej gry wewnątrz przycisku "Stop auto" będzie wyświetlane odliczanie pozostałych obrotów, a gdy osiągnie zero, funkcja automatycznej gry zostanie automatycznie zakończona. W dowolnym momencie gracz może wyłączyć automatyczną grę, naciskając przycisk "Stop auto".',
   info_rtp_title: "Zwrot dla gracza",
-  info_rtp_body: "Średni RTP gry wynosi 95%.",
+  info_rtp_body: "Średni RTP gry wynosi 96%.",
   info_disclaimer_title: "Zastrzeżenie",
   info_disclaimer_body: "Wszelkie usterki unieważniają wszystkie wygrane i rozgrywki. Wymagane jest stabilne połączenie z internetem. W przypadku rozłączenia załaduj grę ponownie, aby dokończyć nieukończone rundy. Oczekiwany zwrot jest obliczany na podstawie wielu rozgrywek. Wyświetlanie gry nie odzwierciedla żadnego fizycznego urządzenia i służy wyłącznie celom ilustracyjnym. Wygrane są rozliczane na podstawie kwoty otrzymanej z serwera zdalnej gry, a nie zdarzeń w przeglądarce.\n\nTM i © 2026 Engine.",
   replay_play: "Odtwórz",

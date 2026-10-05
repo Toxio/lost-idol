@@ -25,26 +25,6 @@ export function BonusFeature({
   const modal = (bonus.phase === "intro" && introReady) || bonus.phase === "summary";
   return (
     <>
-      <div className="bonus-status" role="status">
-        <div className="bonus-status__section">
-          <span className="bonus-status__label">{bonusText.title}</span>
-          <strong className="bonus-status__value">
-            {bonus.current}
-            <span className="bonus-status__total"> / {bonus.total}</span>
-          </strong>
-        </div>
-        <div className="bonus-status__section">
-          <span className="bonus-status__label">{bonusText.win}</span>
-          <strong className="bonus-status__value">
-            <CurrencyAmount
-              value={bonus.totalWin}
-              currency={currency}
-              precision={precision}
-              trimZeros
-            />
-          </strong>
-        </div>
-      </div>
       {modal &&
         createPortal(
           <div className="smp-modal-backdrop bonus-backdrop">

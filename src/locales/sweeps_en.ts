@@ -9,7 +9,7 @@ import { en } from './en';
  * Any key not overridden here falls back to `en`.
  */
 export const sweeps_en: Partial<typeof en> = {
-  info_ctrl_bonus_desc: "Opens the bonus selection window. Select a Free Spins or Wild Spin card to see its rules and total amount. Use − / + to change the base amount; this also updates the main control and symbol win amounts. Selecting a card does not start a round. For modes above 2×, the bottom action button opens a separate confirmation showing the mode, multiplier and total amount. Only Confirm play starts the feature; Cancel or × returns without starting it. Close (×) leaves the window without starting a feature. This button is unavailable during a round, free spins or Autoplay.",
+  info_ctrl_bonus_desc: "Choose Wild Spin or 5 / 10 / 15 Free Spins. The card shows the required multiple of the base play amount. Review the total and confirm to start. Selecting a card alone does not start the feature. Unavailable during a round, Free Spins or Autoplay.",
   menu_paytable: 'Win Table',
   info_paylines_title: 'Winning Lines and Rules',
   buy_bonus_title: 'Get bonus',
@@ -53,16 +53,16 @@ export const sweeps_en: Partial<typeof en> = {
 
   info_howtobet_title: 'How to Play',
   info_howtobet_1:
-    'To start a round, press the "Spin" button or select one of the available play options.',
+    "Choose a play amount from the amount menu, then press Spin. Selecting an amount does not start a round. The displayed amount applies to all 10 winning lines.",
 
   info_paylines_body_1:
-    'All wins are awarded for matching symbol combinations. Except for Scatter symbols, winning combinations must appear on consecutive reels from left to right, beginning with the first reel and following an active winning line.',
+    "Matching symbols must occupy consecutive reels from the leftmost reel along a numbered path. The idol awards from 2 symbols; other regular symbols from 3. WILD substitutes for regular symbols, not BONUS doors or Scatter scarabs.",
   info_paylines_body_2:
-    "Only the highest matching combination on each winning line is awarded. Wins from all winning lines are added together, along with star wins. Win Table multipliers apply to the total selected play amount; it is not divided by the number of lines. Wild multipliers greater than ×1 on a winning line are added together.",
+    "Only the highest combination on each line awards coins. Awards on different lines are added. The table shows amounts for the selected play amount. The monkey multiplier applies only to winning lines through its final cell.",
 
   info_ctrl_bet_label: 'Play Options',
   info_ctrl_bet_desc:
-    "Press the amount to open Play Options. Select an amount tile or use − / +, then press Confirm. Closing this window also applies the selected amount. The main arrows change the play amount directly. The bonus window and Win Table use the same selected amount. Changes are disabled while a round or Autoplay is active.",
+    "Press the play amount to open a sliding list. Select an amount to apply it and close the list. The main \u2212 / + buttons step through the same options. Changes are unavailable during a round or Autoplay.",
 
   info_balance_desc: "Shows the current coin balance. The Won display shows the round win. These are status displays, not buttons.",
 

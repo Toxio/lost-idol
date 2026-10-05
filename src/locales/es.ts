@@ -127,7 +127,7 @@ export const es: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'En modo de giro automático, el juego funciona automáticamente durante un número limitado de giros. La cuenta regresiva se muestra en el botón «Detener auto». El jugador puede desactivar el giro automático en cualquier momento.',
   info_rtp_title: 'Retorno al jugador',
-  info_rtp_body: 'El RTP promedio del juego es del 95 %.',
+  info_rtp_body: 'El RTP promedio del juego es del 96 %.',
   info_disclaimer_title: "Aviso legal",
   info_disclaimer_body: "Cualquier mal funcionamiento anula todas las ganancias y jugadas. Se requiere una conexión a Internet estable. En caso de desconexión, recarga el juego para finalizar las rondas incompletas. La devolución esperada se calcula a lo largo de muchas jugadas. La visualización del juego no representa ningún dispositivo físico y es solo con fines ilustrativos. Las ganancias se liquidan según el importe recibido del Servidor de Juegos Remoto y no según los eventos en el navegador.\n\nTM y © 2026 Engine.",
   replay_play: "Reproducir",

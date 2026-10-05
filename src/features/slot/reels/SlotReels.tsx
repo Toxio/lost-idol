@@ -10,7 +10,7 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { useApplication } from "@pixi/react";
 import type { Container } from "pixi.js";
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useLayoutEffect, useReducer, useRef } from "react";
 
 import { getSpinSpeedPreset, type SpinSpeedPreset } from "./constants";
 import type { Reel, ReelTween, SlotReelsProps, WinHighlight } from "./types";
@@ -24,6 +24,7 @@ import { useWildIdleAnimation } from "./wild/useWildIdleAnimation";
 import { useWinLinesSetup } from "./winCycle/useWinLinesSetup";
 
 export function SlotReels({
+  collectorOverlayVisible = false,
   spinSpeed,
   spinning,
   targetMatrix,
@@ -53,6 +54,8 @@ export function SlotReels({
   const finalWinAmountRef = useRef<number | null>(winAmount);
   const targetMatrixRef = useRef<number[][] | null>(null);
   const matrixRef = useRef(matrix);
+  const collectorOverlayVisibleRef = useRef(collectorOverlayVisible);
+  useLayoutEffect(() => { collectorOverlayVisibleRef.current = collectorOverlayVisible; }, [collectorOverlayVisible]);
 
   // ── Scene state (created/destroyed by useReelsScene) ──
   const reelsRef = useRef<Reel[]>([]);
@@ -271,6 +274,7 @@ export function SlotReels({
   });
 
   useReelsScene({
+    collectorOverlayVisibleRef,
     app,
     isInitialised,
     onAssetsLoaded,

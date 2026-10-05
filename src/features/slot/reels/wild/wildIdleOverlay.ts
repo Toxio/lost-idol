@@ -54,7 +54,10 @@ export function attachWildIdleColumnOverlays(
     const absX = gridX + col * cellW + cellW / 2;
     const absY = gridY + row * cellH + cellH / 2;
     layoutWildIdleInCell(spine, absX, absY, cellW, cellH);
-    spine.state.setAnimation(0, 'idle', true);
+    const idle = spine.state.setAnimation(0, 'idle', true);
+    // Restoring the standing monkey after a win must start with the rest,
+    // not immediately repeat the chest beat that just finished.
+    idle.trackTime = 2.25;
     spine.update(0);
     overlay.addChild(spine);
     ctx.wildIdleSpinesRef.current.push({ spine, col, row });
@@ -70,6 +73,12 @@ export function syncAllWildIdleOverlays(
   ctx: WildIdleOverlayContext,
 ): void {
   if (!source?.length) return;
+  ctx.wildIdleSpinesRef.current = ctx.wildIdleSpinesRef.current.filter(entry => {
+    if (source[entry.col]?.[entry.row] === WILD_SERVER_IDX) return true;
+    entry.spine.removeFromParent();
+    entry.spine.destroy();
+    return false;
+  });
   for (let col = 0; col < REEL_COUNT; col++) {
     attachWildIdleColumnOverlays(col, source, ctx);
   }

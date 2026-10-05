@@ -131,7 +131,7 @@ export const fi: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'Kun "Autoplay" on päällä, peli suorittaa automaattisesti ennalta määritetyn määrän pyöräytyksiä. Jäljellä olevien pyöräytysten määrä näytetään "Stop Auto" -painikkeessa. Kun laskuri saavuttaa nollan, automaattipeli päättyy. Pelaaja voi pysäyttää automaattipelin milloin tahansa painamalla "Stop Auto" -painiketta.',
   info_rtp_title: "Palautusprosentti (RTP)",
-  info_rtp_body: "Tämän pelin teoreettinen palautusprosentti (RTP) on 95 %.",
+  info_rtp_body: "Tämän pelin teoreettinen palautusprosentti (RTP) on 96 %.",
   info_disclaimer_title: "Vastuuvapauslauseke",
   info_disclaimer_body: "Kaikki häiriöt mitätöivät voitot ja pelit. Vakaa internetyhteys vaaditaan. Jos yhteys katkeaa, lataa peli uudelleen viimeistelläksesi keskeneräiset kierrokset. Odotettu tuotto lasketaan monista pelikerroista. Pelin näyttö ei vastaa mitään fyysistä laitetta ja on vain havainnollistava. Voitot maksetaan Remote Game Serverin lähettämän summan mukaan, ei selaimen tapahtumien perusteella.\n\nTM ja © 2026 Engine.",
   replay_play: "Toista",

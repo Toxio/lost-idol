@@ -1,3 +1,5 @@
+import multiplierStone from '@/assets/symbols/lost-idol/multiplier-stone/sheet.webp';
+import collectorSmoke from '@/assets/reel/collector-smoke.webp';
 import {
   glassImg,
   gobletImg,
@@ -13,6 +15,8 @@ import {
 } from '@/assets/symbols/images';
 
 const ALL_HTML_IMAGES: string[] = [
+  collectorSmoke,
+  multiplierStone,
   glassImg,
   gobletImg,
   heelsImg,

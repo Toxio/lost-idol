@@ -1,6 +1,6 @@
 import { RotateCw, Square, Zap } from "lucide-react";
 import { t } from "@/utils/i18n";
-import { useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 import clsx from "clsx";
 import buyBonusButtonImg from "@/assets/buttons/buy-bonus-jade.webp";
 import { play as playSound } from "@/audio/soundManager";
@@ -8,21 +8,14 @@ import autoSpinImg from "@/assets/buttons/auto_spin.webp";
 import spinImg from "@/assets/buttons/spin.webp";
 import spinArrowsImg from "@/assets/buttons/spin_arrows.webp";
 import spinStopImg from "@/assets/buttons/spin_stop.webp";
-import turbo1Img from "@/assets/buttons/turbo1.webp";
-import turbo2Img from "@/assets/buttons/turbo2.webp";
-import turboMaxImg from "@/assets/buttons/turbo.webp";
-import {
-  AutoSpinModal,
-  DEFAULT_AUTOPLAY_SETTINGS,
-  type AutoplaySettingsState,
-  type AutoplayStartOptions,
-} from "../modals";
+import type { AutoplayStartOptions } from "../modals";
+import { AutoplayMenu } from './AutoplayMenu';
 
 interface SlotSideControlsProps {
   bonusGame?: boolean;
   spinning: boolean;
   controlsDisabled: boolean;
-  spinSpeed: 1 | 2 | 3;
+  spinSpeed: 1 | 2;
   autoSpinActive: boolean;
   autoSpinRemaining: number | null;
   autoplayDisabled?: boolean;
@@ -36,16 +29,9 @@ interface SlotSideControlsProps {
   onBuyBonus?: () => void;
 }
 
-const SPEED_LABELS: Record<1 | 2 | 3, string> = {
-  1: "Normal speed (~2.6 s)",
-  2: "Fast speed (~1.25 s)",
-  3: "Maximum turbo speed",
-};
-
-const TURBO_ICONS: Record<1 | 2 | 3, string> = {
-  1: turbo1Img,
-  2: turbo2Img,
-  3: turboMaxImg,
+const SPEED_LABELS: Record<1 | 2, string> = {
+  1: "Normal speed",
+  2: "Fast speed",
 };
 
 export function SlotSideControls({
@@ -58,16 +44,16 @@ export function SlotSideControls({
   autoplayDisabled = false,
   turboDisabled = false,
   insufficientFunds,
-  currency,
   onSpin,
   onAutoSpinStart,
   onAutoSpinStop,
   onSpeedCycle,
   onBuyBonus,
 }: SlotSideControlsProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [autoplaySettings, setAutoplaySettings] =
-    useState<AutoplaySettingsState>(DEFAULT_AUTOPLAY_SETTINGS);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const autoSpinButton = useRef<HTMLButtonElement>(null);
+  const menuId = useId();
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
   const spinDisabled = controlsDisabled && !spinning;
   const spinShowStop = spinning || autoSpinActive;
 
@@ -76,7 +62,7 @@ export function SlotSideControls({
     if (autoSpinActive) {
       onAutoSpinStop();
     } else {
-      setModalOpen(true);
+      setMenuOpen(open => !open);
     }
   };
 
@@ -143,6 +129,9 @@ export function SlotSideControls({
             "smp-side-btn--autospin",
             autoSpinActive && "smp-side-btn--active",
           )}
+          ref={autoSpinButton}
+          aria-expanded={menuOpen && !controlsDisabled && !bonusGame && !autoplayDisabled && !autoSpinActive}
+          aria-controls={menuOpen ? menuId : undefined}
           onClick={handleAutoSpinClick}
           disabled={bonusGame || (controlsDisabled && !autoSpinActive) || autoplayDisabled}
           aria-label={autoSpinActive ? `Stop autoplay · ${badge === "∞" ? "Unlimited spins" : `${badge} spins remaining`}` : "Start auto spin"}
@@ -174,7 +163,7 @@ export function SlotSideControls({
 
         <button
           type="button"
-          className="smp-side-btn smp-side-btn--small"
+          className="smp-side-btn smp-side-btn--small smp-side-btn--speed"
           onClick={() => {
             playSound("ui_button");
             onSpeedCycle();
@@ -184,19 +173,12 @@ export function SlotSideControls({
           aria-pressed={spinSpeed > 1}
           title={SPEED_LABELS[spinSpeed]}
         >
-          <Zap className="smp-desktop-icon" aria-hidden="true" /><span className="smp-desktop-speed">{spinSpeed > 1 ? `${spinSpeed}×` : ""}</span>
-          <img src={TURBO_ICONS[spinSpeed]} alt="" draggable={false} />
+          <Zap className="smp-speed-icon" aria-hidden="true" />
         </button>
       </div>
 
-      {modalOpen && (
-        <AutoSpinModal
-          settings={autoplaySettings}
-          onSettingsChange={setAutoplaySettings}
-          onStart={onAutoSpinStart}
-          onClose={() => setModalOpen(false)}
-          currency={currency}
-        />
+      {menuOpen && !controlsDisabled && !bonusGame && !autoplayDisabled && !autoSpinActive && (
+        <AutoplayMenu id={menuId} anchor={autoSpinButton} onClose={closeMenu} onStart={onAutoSpinStart} />
       )}
     </div>
   );

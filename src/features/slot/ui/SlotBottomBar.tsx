@@ -1,5 +1,5 @@
 import { Menu, Minus, Plus } from "lucide-react";
-import { lazy, Suspense, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useId, useRef, useState, type ReactNode } from "react";
 import { useTime } from "react-timer-hook";
 import balanceIcon from "@/assets/buttons/balance.webp";
 import betBackImg from "@/assets/buttons/bet/bet_back.webp";
@@ -9,7 +9,7 @@ import { QuickSound } from './QuickSound';
 import { t } from "@/utils/i18n";
 import { CurrencyAmount } from "@/components/CurrencyAmount";
 import { indexOfBetLevel } from "@/api/rgs";
-import { BetSettingsModal } from "../modals";
+import { BetMenu } from "./BetMenu";
 
 const MenuModal = lazy(() =>
   import("../menu").then((m) => ({ default: m.MenuModal })),
@@ -40,7 +40,10 @@ export function SlotBottomBar({
 }: SlotBottomBarProps) {
   const { hours, minutes } = useTime();
   const currentTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-  const [modalOpen, setModalOpen] = useState(false);
+  const [betMenuOpen, setBetMenuOpen] = useState(false);
+  const betAnchor = useRef<HTMLButtonElement>(null);
+  const betMenuId = useId();
+  const closeBetMenu = useCallback(() => setBetMenuOpen(false), []);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const betIndex = indexOfBetLevel(quickBets, betAmount);
@@ -94,10 +97,11 @@ export function SlotBottomBar({
             <button
               type="button"
               className="smp-bottom-balance-icon-btn"
-              onClick={() => {
+              onClick={(event) => {
                 if (!disabled) {
                   playSound("ui_button");
-                  setModalOpen(true);
+                  betAnchor.current = event.currentTarget;
+                  setBetMenuOpen(open => !open);
                 }
               }}
               disabled={disabled}
@@ -158,13 +162,16 @@ export function SlotBottomBar({
               <button
                 type="button"
                 className="smp-bottom-bet-amount smp-bottom-bet-amount--clickable"
-                onClick={() => {
+                onClick={(event) => {
                   if (!disabled) {
                     playSound("ui_button");
-                    setModalOpen(true);
+                    betAnchor.current = event.currentTarget;
+                  setBetMenuOpen(open => !open);
                   }
                 }}
                 disabled={disabled}
+                aria-expanded={betMenuOpen && !disabled}
+                aria-controls={betMenuOpen ? betMenuId : undefined}
                 data-smp-bet-button
                 aria-label={t("info_ctrl_bet_label")}
               >
@@ -202,14 +209,16 @@ export function SlotBottomBar({
         </Suspense>
       )}
 
-      {modalOpen && (
-        <BetSettingsModal
+      {betMenuOpen && !disabled && (
+        <BetMenu
+          id={betMenuId}
+          anchor={betAnchor}
           quickBets={quickBets}
           currentBet={betAmount}
           currency={currency}
           precision={precision}
-          onConfirm={onBetChange}
-          onClose={() => setModalOpen(false)}
+          onSelect={onBetChange}
+          onClose={closeBetMenu}
         />
       )}
     </>

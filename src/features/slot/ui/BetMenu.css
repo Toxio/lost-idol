@@ -1,0 +1,18 @@
+.smp-bet-menu {
+  display: flex;
+  flex-direction: column;
+  width: min(320px, calc(100vw - 16px));
+}
+.smp-bet-menu__title { flex-shrink: 0; }
+.smp-bet-menu .smp-bet-menu__options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 264px;
+  padding: 3px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #68896c #102c21;
+}
+.smp-bet-menu__options button { min-width: 0; padding-inline: 6px; flex-shrink: 0; }
+.smp-bet-menu__options button[aria-pressed="true"] { background: #396c47; border-color: #b9d9a5; color: #fff2c9; }

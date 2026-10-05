@@ -5,7 +5,7 @@ import { defineSymbolSpine } from './symbolSpineFactory';
 
 // Legacy API name retains the existing math symbol ID 2.
 const symbol = defineSymbolSpine({
-  name: 'lost-idol-gold-satchel',
+  name: 'lost-idol-banana-chest-v2',
   jsonUrl,
   atlasUrl,
   images: { 'sheet.webp': sheetUrl },

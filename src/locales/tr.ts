@@ -130,7 +130,7 @@ export const tr: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     '"Otomatik Oyun" düğmesine basıldığında oyun, sınırlı sayıda döndürmeyle otomatik moda girer. Otomatik Oyun sırasında "Otomatik durdur" düğmesinin içinde kalan döndürme sayısının geri sayımı olur ve sıfıra ulaştığında Otomatik Oyun özelliği otomatik olarak sonlandırılır. Oyuncu istediği zaman "Otomatik durdur" düğmesine basarak Otomatik Oyun özelliğini devre dışı bırakabilir.',
   info_rtp_title: 'Oyuncuya Dönüş',
-  info_rtp_body: "Oyunun ortalama RTP'si %95'dır.",
+  info_rtp_body: "Oyunun ortalama RTP'si %96'dır.",
   info_disclaimer_title: "Feragatname",
   info_disclaimer_body: "Herhangi bir arıza tüm kazançları ve oyunları geçersiz kılar. Sürekli bir internet bağlantısı gereklidir. Bağlantı kesilirse, tamamlanmamış turları bitirmek için oyunu yeniden yükleyin. Beklenen getiri birçok oyun üzerinden hesaplanır. Oyun ekranı herhangi bir fiziksel cihazı temsil etmez ve yalnızca gösterim amaçlıdır. Kazançlar Uzak Oyun Sunucusu'ndan alınan tutara göre ödenir ve tarayıcı içindeki olaylara göre değerlendirilmez.\n\nTM ve © 2026 Engine.",
   replay_play: "Oynat",

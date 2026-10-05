@@ -1,0 +1,4 @@
+Tool: built-in image_gen (imagegen skill), transparent background.
+Reference: lost-idol-frame.webp
+Prompt:
+Create ONE game UI attachment asset matching this reference reel frame. A low wide horizontal status plaque, aspect ratio 6:1, frontal straight-on. Weathered golden wood rails wrapped in brown vine and tiny jungle leaves at the ends, antique gold fittings, a small emerald on each end. Dark forest green opaque interior, generously blank and unobstructed for two dynamically rendered status counters side by side. No text, no numbers, no logo. Thin carved central vertical divider. This sits attached above the existing slot reel frame, with bottom edge straight and small attachment feet. Isolated on fully transparent background, tightly fill canvas, no other objects. Match reference hand-painted detailed adventurous jungle game art, warm wood and gold not massive palace stone. Output a clean production-ready wide transparent PNG.

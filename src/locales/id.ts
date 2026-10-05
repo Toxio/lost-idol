@@ -128,7 +128,7 @@ export const id: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'Ketika tombol "Putar Otomatis" ditekan, game masuk ke mode otomatis dengan jumlah putaran yang terbatas. Selama Putar Otomatis, akan ada hitung mundur dari jumlah putaran yang tersisa di dalam tombol "Hentikan otomatis" dan ketika mencapai nol, fitur Putar Otomatis akan secara otomatis berakhir. Kapan saja, pemain dapat menonaktifkan fitur Putar Otomatis dengan menekan tombol "Hentikan otomatis".',
   info_rtp_title: 'Kembalian ke Pemain',
-  info_rtp_body: 'RTP rata-rata game adalah 95%.',
+  info_rtp_body: 'RTP rata-rata game adalah 96%.',
   info_disclaimer_title: "Sanggahan",
   info_disclaimer_body: "Malfungsi apa pun akan membatalkan semua kemenangan dan permainan. Diperlukan koneksi internet yang stabil. Jika terjadi pemutusan, muat ulang permainan untuk menyelesaikan ronde yang belum selesai. Pengembalian yang diharapkan dihitung berdasarkan banyak permainan. Tampilan permainan bukan representasi perangkat fisik apa pun dan hanya bersifat ilustratif. Kemenangan diselesaikan berdasarkan jumlah yang diterima dari Server Permainan Jarak Jauh, bukan berdasarkan peristiwa di peramban.\n\nTM dan © 2026 Engine.",
   replay_play: "Putar",

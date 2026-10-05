@@ -1,31 +1,23 @@
 import { SetupPoseBoundsProvider, Spine } from '@esotericsoftware/spine-pixi-v8';
 import { Assets, type Ticker } from 'pixi.js';
 
-import wildAtlasUrl from '@/assets/symbols/lost-idol/monkey/symbol.atlas.txt?url';
-import wildJsonUrl from '@/assets/symbols/lost-idol/monkey/symbol.json?url';
-import wildPngUrl from '@/assets/symbols/lost-idol/monkey/sheet.webp?url';
+import wildAtlasUrl from '@/assets/symbols/lost-idol/monkey/monkey-wait-v4.atlas.txt?url';
+import wildJsonUrl from '@/assets/symbols/lost-idol/monkey/monkey-wait-v4.json?url';
+import wildPngUrl from '@/assets/symbols/lost-idol/monkey/monkey-wait-v4.webp?url';
 
-import wildTextUrl from '@/assets/symbols/lost-idol/monkey/text.webp?url';
-import wildWinJsonUrl from '@/assets/symbols/lost-idol/monkey/win-saved.json?url';
-import wildWinAtlasUrl from '@/assets/symbols/lost-idol/monkey/win-saved.atlas.txt?url';
-import wildWinSheetUrl from '@/assets/symbols/lost-idol/monkey/win-saved.webp?url';
 
-export const WILD_SKEL_ALIAS = 'wildSymbolSpineJson';
-export const WILD_ATLAS_ALIAS = 'wildSymbolSpineAtlas';
-const WILD_WIN_SKEL_ALIAS = 'wildSavedWinJson';
-const WILD_WIN_ATLAS_ALIAS = 'wildSavedWinAtlas';
+export const WILD_SKEL_ALIAS = 'wildWaitingMonkeyFourV8Json';
+export const WILD_ATLAS_ALIAS = 'wildWaitingMonkeyFourV7Atlas';
+const WILD_WIN_SKEL_ALIAS = WILD_SKEL_ALIAS;
+const WILD_WIN_ATLAS_ALIAS = 'wildWaitingMonkeyFourV7Atlas';
+
+const wildInstances = new WeakSet<Spine>();
+export const isWildSpine = (spine: Spine): boolean => wildInstances.has(spine);
 
 let registered = false;
 
 export function registerWildSpineAssets(): void {
   if (registered) return;
-  Assets.add({ alias: WILD_WIN_SKEL_ALIAS, src: wildWinJsonUrl });
-  Assets.add({
-    alias: WILD_WIN_ATLAS_ALIAS,
-    src: wildWinAtlasUrl,
-    parser: 'spineTextureAtlasLoader',
-    data: { images: { 'win-saved.webp': wildWinSheetUrl } },
-  });
   Assets.add({ alias: WILD_SKEL_ALIAS, src: wildJsonUrl });
   Assets.add({
     alias: WILD_ATLAS_ALIAS,
@@ -33,8 +25,7 @@ export function registerWildSpineAssets(): void {
     parser: 'spineTextureAtlasLoader',
     data: {
       images: {
-        'sheet.webp': wildPngUrl,
-        'text.webp': wildTextUrl,
+        'monkey-wait-v4.webp': wildPngUrl,
       },
     },
   });
@@ -114,12 +105,14 @@ export function createWildSpineShowThenIdle(
     boundsProvider: new SetupPoseBoundsProvider(),
     ticker,
   });
+  wildInstances.add(spine);
   applyWildShowThenIdleLoop(spine, showAnim, mixSec);
   return spine;
 }
 
 export function createWildSpine(options?: CreateWildSpineOptions): Spine {
   const spine = createWildSpineInstance(options?.ticker);
+  wildInstances.add(spine);
   const anim = options?.animation ?? 'wild1';
   spine.state.setAnimation(0, anim, options?.loop ?? true);
   spine.update(0);

@@ -18,6 +18,7 @@ const CONNECTION_LOST_DELAY_MS = 2500;
 function App() {
   const {
     splashVisible,
+    loadError,
     loadProgress,
     bundleReady,
     hub,
@@ -43,7 +44,7 @@ function App() {
 
   return (
     <>
-      <SplashScreen progress={loadProgress} visible={splashVisible} />
+      <SplashScreen progress={loadProgress} visible={splashVisible} error={loadError} />
       {bundleReady ? (
         <Suspense fallback={null}>
           <GameScreen

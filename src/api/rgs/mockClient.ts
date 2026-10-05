@@ -1,11 +1,6 @@
 import bonusBuys from "@/config/bonusBuys.json";
 import { displayAmountToApi } from "@/utils/currency";
-import {
-  REEL_COUNT,
-  ROW_COUNT,
-  symbolIdToName,
-} from "@/features/slot/player/symbolMap";
-import type { Book, BookEvent } from "@/features/slot/player/bookEvents";
+import type { Book } from "@/features/slot/player/bookEvents";
 import { RgsError, RGS_ERROR } from "./errors";
 import type {
   AuthenticateResponse,
@@ -28,94 +23,20 @@ const MOCK_BET_LEVELS_DISPLAY = [
   40, 50, 60, 80, 100, 120, 160, 200, 250, 500, 750, 1000,
 ];
 const MOCK_DEFAULT_BET_DISPLAY = 1;
-const SYMBOL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
-function randomSymbolId(): number {
-  return SYMBOL_IDS[Math.floor(Math.random() * SYMBOL_IDS.length)];
-}
-
-function randomBoardIds(): number[][] {
-  return Array.from({ length: REEL_COUNT }, () =>
-    Array.from({ length: ROW_COUNT }, () => randomSymbolId()),
-  );
-}
-
-function revealEvent(matrix: number[][]): BookEvent {
-  return {
-    index: 0,
-    type: "reveal",
-    board: matrix.map((reel) =>
-      reel.map((id) => ({ name: symbolIdToName(id) })),
-    ),
-    gameType: "basegame",
-    anticipation: [0, 0, 0, 0, 0],
-  };
-}
-
-async function buildMockBook(mode?: string): Promise<Book> {
-  if (__TEST_TOOLS_ENABLED__ && bonusBuys.some((plan) => plan.mode === mode)) {
-    const fixtures = await import("./buyBonusFixtures.json");
-    const fixture = (fixtures.default as Record<string, { payoutMultiplier: number }>)[mode!] as Book;
-    return { ...fixture, id: Date.now(), payoutMultiplier: fixture.payoutMultiplier! / 100 };
+/** Dev server samples calibrated payout weights; offline previews use visual fixtures. */
+async function buildMockBook(mode = 'base'): Promise<Book> {
+  if (import.meta.env.DEV) {
+    const response = await fetch(`/__calibrated-math?mode=${encodeURIComponent(mode)}`);
+    if (!response.ok) throw new Error('Calibrated local math is unavailable. Generate the math preview library.');
+    const sample = await response.json() as Book;
+    return { ...sample, id: Date.now(), payoutMultiplier: (sample.payoutMultiplier ?? 0) / 100 };
   }
-  if (__TEST_TOOLS_ENABLED__ && new URLSearchParams(window.location.search).get("bonus") === "1") {
-    const { default: fixture } = await import("./bonusFixture.json");
-    return { ...fixture, id: Date.now(), payoutMultiplier: fixture.payoutMultiplier / 100 } as Book;
-  }
-  const roll = Math.random();
-  let matrix = randomBoardIds();
-  const events: BookEvent[] = [];
-  let payoutMultiplier = 0;
-
-  if (roll < 0.35) {
-    const symbol = [1, 2, 3, 4][Math.floor(Math.random() * 4)];
-    matrix = matrix.map((reel, i) => {
-      const next = [...reel];
-      next[1] = i < 3 ? symbol : next[1];
-      return next;
-    });
-    payoutMultiplier = 2;
-    events.push(revealEvent(matrix));
-    events.push({
-      index: 1,
-      type: "winInfo",
-      totalWin: 200,
-      wins: [{ symbol: symbolIdToName(symbol), count: 3, win: 200, line: 1 }],
-    });
-    events.push({ index: 2, type: "setTotalWin", amount: 200 });
-    events.push({ index: 3, type: "finalWin", amount: 200 });
-  } else if (roll < 0.45) {
-    matrix[1] = [9, 9, 9];
-    const wildMultiplier = [2, 3, 5, 10][Math.floor(Math.random() * 4)];
-    const reveal = revealEvent(matrix) as BookEvent & {
-      board: { name: string; wild?: boolean; multiplier?: number }[][];
-    };
-    reveal.board[1] = reveal.board[1].map((cell) => ({
-      ...cell,
-      wild: true,
-      multiplier: wildMultiplier,
-    }));
-    events.push(reveal);
-    events.push({
-      index: 1,
-      type: "expandingWild",
-      expandingWild: [0, 9, 0, 0, 0],
-    });
-    events.push({ index: 2, type: "setTotalWin", amount: 0 });
-    events.push({ index: 3, type: "finalWin", amount: 0 });
-  } else {
-    events.push(revealEvent(matrix));
-    events.push({ index: 1, type: "setTotalWin", amount: 0 });
-    events.push({ index: 2, type: "finalWin", amount: 0 });
-  }
-
-  return { id: Date.now(), payoutMultiplier, events };
+  const { default: samples } = await import('./collectorBooks.json');
+  const pool = (samples as unknown as Record<string, Book[]>)[mode] ?? samples.base;
+  const sample = pool[Math.floor(Math.random() * pool.length)] as Book;
+  return { ...sample, id: Date.now(), payoutMultiplier: (sample.payoutMultiplier ?? 0) / 100 };
 }
 
-/**
- * Local stand-in for RGS while math + ACP session are not ready.
- * Speaks the same client interface so `useRgsSession` does not branch on transport.
- */
 export function createMockRgsClient(currency = "USD"): RgsClient {
   let balanceAmount = displayAmountToApi(MOCK_DISPLAY_BALANCE);
   const betLevels = MOCK_BET_LEVELS_DISPLAY.map(displayAmountToApi);

@@ -130,7 +130,7 @@ export const de: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'Im Autospin-Modus läuft das Spiel automatisch für eine begrenzte Anzahl von Spins. Der Countdown wird in der „Stop Auto"-Taste angezeigt. Der Spieler kann den Autospin jederzeit durch Drücken der „Stop Auto"-Taste deaktivieren.',
   info_rtp_title: 'Rückzahlungsquote',
-  info_rtp_body: 'Der durchschnittliche RTP des Spiels beträgt 95 %.',
+  info_rtp_body: 'Der durchschnittliche RTP des Spiels beträgt 96 %.',
   info_disclaimer_title: "Haftungsausschluss",
   info_disclaimer_body: "Fehlfunktionen machen alle Gewinne und Spielrunden ungültig. Eine stabile Internetverbindung ist erforderlich. Bei einem Verbindungsabbruch laden Sie das Spiel neu, um nicht abgeschlossene Runden zu beenden. Die erwartete Rendite wird über viele Spielrunden berechnet. Die Spielanzeige entspricht keinem physischen Gerät und dient nur zur Veranschaulichung. Gewinne werden gemäß dem vom Remote Game Server empfangenen Betrag und nicht anhand von Ereignissen im Browser abgerechnet.\n\nTM und © 2026 Engine.",
   replay_play: "Abspielen",

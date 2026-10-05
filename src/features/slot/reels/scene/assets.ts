@@ -1,7 +1,7 @@
+import heelsImg from '@/assets/symbols/lost-idol/treasure-map/reel-static.webp';
 import { Texture } from 'pixi.js';
 
 import {
-  heelsImg,
   glassImg,
   gobletImg,
   lipsImg,
@@ -15,13 +15,14 @@ import {
 } from '@/assets/symbols/images';
 /** Moving and resting symbols use the same Lost Idol artwork. */
 export function resolveSymbolTexture(alias: string): Texture {
+  if (alias === 'collector-empty') return Texture.EMPTY;
   return Texture.from(alias);
 }
 
 export const ALL_ASSETS = [
   { alias: 'heels', src: heelsImg },
   { alias: 'sym-bonus-door', src: scatterImg },
-  { alias: 'sym-rose', src: roseImg },
+  { alias: 'sym-fire2', src: roseImg },
   { alias: 'sym-paying-scatter', src: starImg },
   { alias: 'sym-goblet', src: gobletImg },
   { alias: 'sym-seven', src: sevenImg },
@@ -40,7 +41,7 @@ const SYMBOL_MAP: Record<number, string> = {
   1: 'sym-seven',
   2: 'sym-lips',
   3: 'sym-parfume',
-  4: 'sym-rose',
+  4: 'sym-fire2',
   5: 'sym-glass',
   6: 'sym-lipstick',
   7: 'sym-goblet',
@@ -53,6 +54,7 @@ const SYMBOL_MAP: Record<number, string> = {
 const SYMBOL_ALIASES = Object.values(SYMBOL_MAP);
 
 export function symbolAlias(serverIdx: number): string {
+  if (serverIdx === -1) return 'collector-empty';
   return SYMBOL_MAP[serverIdx] ?? 'sym-seven';
 }
 

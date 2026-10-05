@@ -1,0 +1,1 @@
+Remove baked checkerboard from idol2.png. Preserve 16 frames, statue, pedestal, equal 4x4 cells and emerald glow. True alpha. Tool: image_gen.

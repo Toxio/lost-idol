@@ -1,0 +1,244 @@
+/* Side branding leaves the full stage height available to the reels. */
+@media (min-width: 901px), (orientation: landscape) {
+  :root .main-screen .smp-wrapper.smp-wrapper--feature {
+    --smp-extra-header: 0px;
+    --smp-title-height: 0px;
+    --smp-title-gap: 0px;
+    --smp-logo-col-width: clamp(110px, 10vw, 150px);
+    --smp-controls-col-width: clamp(160px, 15vw, 230px);
+    --smp-canvas-width: min(1800px,
+      calc(100vw - var(--smp-logo-col-width) - var(--smp-controls-col-width) - 32px),
+      calc((100svh - var(--smp-extra-header) - 100px) * 1641 / 1022));
+  }
+  .main-screen .smp-stage-grid { position: relative; }
+  .main-screen .smp-logo-col { padding-top: 0; }
+  .main-screen .smp-reels-col > .smp-logo {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: var(--smp-controls-col-width);
+    height: auto;
+    margin: 0;
+    scale: 1;
+    translate: none;
+    animation: desktop-logo-sway 5s ease-in-out infinite;
+  }
+  :root .main-screen .smp-feature-plaque {
+    position: absolute;
+    top: calc(40px + var(--smp-controls-col-width) * .3);
+    right: 0;
+    width: var(--smp-controls-col-width);
+    height: clamp(160px, 13vw, 180px);
+    margin: 0;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .main-screen .smp-feature-plaque::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    z-index: 0;
+    background: radial-gradient(ellipse at top, #204e2e, #08231b 75%);
+  }
+  .main-screen .smp-feature-plaque::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    border: 30px solid transparent;
+    border-image: url('../../../assets/reel/lost-idol-frame.webp') 20% 11% / 30px stretch;
+  }
+  .main-screen .smp-feature-plaque > img { display: none; }
+  :root .main-screen .smp-feature-plaque__content {
+    inset: 26px 16px;
+    z-index: 2;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 6px;
+  }
+  .main-screen .smp-feature-plaque__section { gap: 4px; }
+  .main-screen .smp-feature-plaque__section + .smp-feature-plaque__section {
+    border-top: 1px solid #b8994566;
+    padding-top: 6px;
+  }
+  :root .main-screen .smp-feature-plaque__section > span { font-size: 9px; }
+  :root .main-screen .smp-feature-plaque__section > strong { font-size: 20px; }
+  :root .main-screen .smp-feature-plaque__section > .smp-feature-plaque__formula {
+    font-size: 13px;
+    white-space: normal;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop {
+    width: 100%;
+    min-width: 0;
+    height: 94px;
+    aspect-ratio: auto;
+    padding: 18px 24px;
+    font-size: clamp(12px, 1.2vw, 17px);
+  }
+  :root .main-screen .smp-wrapper .smp-buy-bonus-button--desktop .smp-buy-bonus-label {
+    max-width: 6ch;
+    margin-inline: auto;
+    white-space: normal;
+    line-height: 1.25;
+    text-align: center;
+  }
+}
+/* Compact landscape players share the side layout, at their own scale. */
+@media (max-width: 900px) and (orientation: landscape) {
+  :root .main-screen .smp-wrapper.smp-wrapper--feature {
+    --smp-logo-col-width: clamp(48px, 12vw, 90px);
+    --smp-controls-col-width: clamp(66px, 17vw, 140px);
+    --smp-stage-gap: 4px;
+    --smp-canvas-width: min(
+      calc(100vw - var(--smp-logo-col-width) - var(--smp-controls-col-width) - 16px),
+      calc((100svh - 48px) * 1641 / 1022));
+    padding-top: 0;
+  }
+  :root .main-screen .smp-stage-grid {
+    width: fit-content;
+    grid-template-columns: var(--smp-logo-col-width) var(--smp-canvas-width) var(--smp-controls-col-width);
+    gap: 4px;
+  }
+  :root .main-screen .smp-reels-col > .smp-logo { top: 4px; }
+  :root .main-screen .smp-feature-plaque {
+    top: calc(12px + var(--smp-controls-col-width) * .3);
+    height: var(--smp-controls-col-width);
+  }
+  .main-screen .smp-feature-plaque::before { inset: 7px; }
+  .main-screen .smp-feature-plaque::after { border-width: 12px; border-image-width: 12px; }
+  :root .main-screen .smp-feature-plaque__content { inset: 10px 7px; gap: 2px; }
+  :root .main-screen .smp-feature-plaque__section { gap: 2px; padding-top: 0; }
+  :root .main-screen .smp-feature-plaque__section > span { font-size: clamp(4px, .9vw, 8px); }
+  :root .main-screen .smp-feature-plaque__section > strong { font-size: clamp(10px, 2vw, 17px); }
+  :root .main-screen .smp-feature-plaque__section > .smp-feature-plaque__formula { font-size: clamp(6px, 1.4vw, 12px); }
+  :root .main-screen .smp-wrapper .smp-buy-bonus-button--desktop {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 8px;
+    font-size: 7px;
+  }
+}
+@keyframes desktop-logo-sway {
+  0%, 100% { transform: rotate(-3deg) translateY(2px); }
+  50% { transform: rotate(3deg) translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .main-screen .smp-reels-col > .smp-logo { animation: none; }
+}
+
+/* Desktop button: preserve the corners and gem instead of stretching the banner. */
+@media (min-width: 901px) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop {
+    height: auto;
+    aspect-ratio: 3 / 2;
+    min-height: 84px;
+    padding: 22px 14px 16px;
+    display: grid;
+    place-items: center;
+  }
+  :root .main-screen .smp-buy-bonus-button--desktop .smp-buy-bonus-artwork {
+    display: none;
+  }
+  :root .main-screen .smp-buy-bonus-button--desktop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border: 20px solid transparent;
+    border-image-source: url('../../../assets/buttons/buy-bonus-jade.webp');
+    border-image-slice: 80 150 70 150 fill;
+    border-image-width: 25px 23px 22px;
+    border-image-repeat: stretch;
+  }
+  :root .main-screen .smp-wrapper .smp-buy-bonus-button--desktop .smp-buy-bonus-label {
+    font-size: clamp(11px, 1.05vw, 16px);
+    line-height: 1.2;
+    max-width: 6ch;
+    text-wrap: balance;
+  }
+}
+
+/* Dedicated desktop counter artwork, matching the mobile plaque. */
+@media (min-width: 901px), (orientation: landscape) {
+  :root .main-screen .smp-feature-plaque {
+    height: auto;
+    aspect-ratio: 5 / 4;
+  }
+  :root .main-screen .smp-feature-plaque::before { display: none; }
+  :root .main-screen .smp-feature-plaque::after {
+    border: 0;
+    border-image: none;
+    background: url('../../../assets/reel/lost-idol-feature-plaque-desktop.webp') center / contain no-repeat;
+  }
+  :root .main-screen .smp-feature-plaque__content {
+    inset: 20% 18% 20%;
+    gap: 15%;
+    grid-template-rows: 1fr 1fr;
+  }
+  :root .main-screen .smp-feature-plaque__section + .smp-feature-plaque__section {
+    border-top: 0;
+    padding-top: 0;
+  }
+}
+
+/* Two-state speed toggle, shared by desktop and mobile. */
+.smp-side-btn--speed .smp-speed-icon {
+  display: block;
+  width: 62%;
+  height: 62%;
+  color: #acc6b4;
+  fill: transparent;
+  transition: color 150ms ease, fill 150ms ease, filter 150ms ease;
+}
+.smp-side-btn--speed[aria-pressed="true"] .smp-speed-icon {
+  color: #a6f1b7;
+  fill: #a6f1b7;
+  filter: drop-shadow(0 0 5px #58d78c80);
+}
+
+/* Short landscape embeds (including 400 × 225): compact two-line bonus button. */
+@media (max-width: 900px) and (max-height: 320px) and (orientation: landscape) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop {
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+    min-height: 0;
+    aspect-ratio: auto;
+    padding: 7px 4px 5px;
+    font-size: 7px;
+    line-height: 1.2;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop .smp-buy-bonus-label {
+    font-size: 7px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    max-width: 6ch;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: normal;
+    text-align: center;
+  }
+  :root .main-screen .smp-logo-col .smp-buy-bonus-button--desktop .smp-buy-bonus-artwork {
+    display: none;
+  }
+  :root .main-screen .smp-logo-col .smp-buy-bonus-button--desktop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border: 7px solid transparent;
+    border-image: url('../../../assets/buttons/buy-bonus-jade.webp') 80 150 70 150 fill / 8px 7px 7px stretch;
+  }
+}

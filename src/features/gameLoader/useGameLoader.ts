@@ -10,15 +10,28 @@ import {
 
 export function useGameLoader() {
   const [splashVisible, setSplashVisible] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
   const [bundleReady, setBundleReady] = useState(false);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
-  const [spinSpeed, setSpinSpeed] = useState<1 | 2 | 3>(1);
+  const [spinSpeed, setSpinSpeed] = useState<1 | 2>(1);
   const insufficientFundsRef = useRef<() => void>(() => {});
 
   const hub = useRgsSession({
     onInsufficientFunds: () => insufficientFundsRef.current(),
   });
+
+  useEffect(() => {
+    const failed = () => setLoadError(true);
+    window.addEventListener('game-assets-error', failed);
+    return () => window.removeEventListener('game-assets-error', failed);
+  }, []);
+
+  useEffect(() => {
+    if (assetsLoaded) { setLoadError(false); return; }
+    const timer = window.setTimeout(() => setLoadError(true), 60000);
+    return () => window.clearTimeout(timer);
+  }, [assetsLoaded]);
 
   const connectionSettled =
     hub.status === 'ready' ||
@@ -31,7 +44,7 @@ export function useGameLoader() {
     void import('./GameScreen').then(() => {
       if (cancelled) return;
       setBundleReady(true);
-    });
+    }).catch(() => { if (!cancelled) setLoadError(true); });
 
     return () => {
       cancelled = true;
@@ -78,6 +91,7 @@ export function useGameLoader() {
 
   return {
     splashVisible,
+    loadError,
     loadProgress,
     bundleReady,
     hub,

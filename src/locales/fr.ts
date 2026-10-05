@@ -126,7 +126,7 @@ export const fr: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'En mode jeu automatique, le jeu tourne automatiquement pour un nombre limité de tours. Le compte à rebours est affiché dans le bouton « Stop auto ». Le joueur peut désactiver le jeu automatique à tout moment.',
   info_rtp_title: 'Retour au joueur',
-  info_rtp_body: 'Le RTP moyen du jeu est de 95 %.',
+  info_rtp_body: 'Le RTP moyen du jeu est de 96 %.',
   info_disclaimer_title: "Avertissement",
   info_disclaimer_body: "Tout dysfonctionnement annule les gains et les parties. Une connexion Internet stable est requise. En cas de déconnexion, rechargez le jeu pour terminer les tours non complétés. Le retour attendu est calculé sur de nombreuses parties. L'affichage du jeu ne représente aucun appareil physique et sert uniquement à titre d'illustration. Les gains sont réglés selon le montant reçu du Serveur de Jeu Distant et non selon les événements dans le navigateur.\n\nTM et © 2026 Engine.",
   replay_play: "Lancer",

@@ -16,6 +16,7 @@ export interface SettledSymbolEntry {
   col: number;
   row: number;
   baseY: number;
+  serverIdx: number;
 }
 
 export interface SettledOverlayContext {
@@ -68,7 +69,7 @@ export function attachSettledColumnOverlays(
     if (hasSettledSpineAt(ctx.settledSymbolSpinesRef.current, col, row)) continue;
 
     const serverIdx = source[col][row];
-    if (serverIdx === undefined || serverIdx === WILD_SERVER_IDX) continue;
+    if (serverIdx === undefined || serverIdx < 0 || serverIdx === WILD_SERVER_IDX) continue;
 
     const spine = createSettledSymbolSpine(symbolAlias(serverIdx));
     if (!spine) continue;
@@ -77,7 +78,7 @@ export function attachSettledColumnOverlays(
     const absY = gridY + row * cellH + cellH / 2;
     layoutSpineInCell(spine, absX, absY, cellW, cellH);
     overlay.addChild(spine);
-    ctx.settledSymbolSpinesRef.current.push({ spine, col, row, baseY: spine.position.y });
+    ctx.settledSymbolSpinesRef.current.push({ spine, col, row, baseY: spine.position.y, serverIdx });
 
     const sym = ctx.reelsRef.current[col]?.symbols[settledStripIndexForRow(row)];
     if (sym) setSlotSymbolVisibility(sym, false);
@@ -90,6 +91,12 @@ export function syncAllSettledOverlays(
   ctx: SettledOverlayContext,
 ): void {
   if (!source?.length) return;
+  ctx.settledSymbolSpinesRef.current = ctx.settledSymbolSpinesRef.current.filter(entry => {
+    if (source[entry.col]?.[entry.row] === entry.serverIdx) return true;
+    entry.spine.removeFromParent();
+    entry.spine.destroy();
+    return false;
+  });
   for (let col = 0; col < REEL_COUNT; col++) {
     attachSettledColumnOverlays(col, source, ctx);
   }

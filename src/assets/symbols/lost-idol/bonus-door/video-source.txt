@@ -1,0 +1,1 @@
+Extracted from src/assets/transition/bonus-portal.mp4, first 3 seconds, 16 frames. Crop 400x616 at (448,0), resized 166x256, transparent padding to 256x256.

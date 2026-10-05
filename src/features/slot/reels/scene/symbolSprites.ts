@@ -4,7 +4,7 @@ import { resolveSymbolTexture } from './assets';
 import type { SlotSymbol } from '../types';
 
 const SYMBOL_FIT = 0.82;
-const WILD_SYMBOL_FIT = SYMBOL_FIT;
+const WILD_SYMBOL_FIT = SYMBOL_FIT * 1.8;
 const WILD_SPRITE_SHIFT_RIGHT_PX = 0;
 
 function symbolFit(alias: string): number {

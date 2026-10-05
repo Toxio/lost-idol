@@ -3,11 +3,11 @@ import { Spine } from '@esotericsoftware/spine-pixi-v8';
 import {
   createGlassSpine,
   createGobletSpine,
-  createHeelsSpine,
+  createHeelsSetupPose,
   createLipsSpine,
   createLipstickSpine,
   createParfumeSpine,
-  createRoseSpine,
+  createRoseSetupPose,
   createScatterSpine,
   createSevenSpine,
   createStarSpine,
@@ -42,8 +42,8 @@ export function createSettledSymbolSpine(alias: string): Spine | null {
       return createSettledWinPose(createLipsSpine);
     case 'sym-parfume':
       return createSettledWinPose(createParfumeSpine);
-    case 'sym-rose':
-      return createSettledWinPose(createRoseSpine);
+    case 'sym-fire2':
+      return freezeSpine(createRoseSetupPose());
     case 'sym-glass':
       return createSettledWinPose(createGlassSpine);
     case 'sym-lipstick':
@@ -51,11 +51,11 @@ export function createSettledSymbolSpine(alias: string): Spine | null {
     case 'sym-goblet':
       return createSettledWinPose(createGobletSpine);
     case 'heels':
-      return createSettledWinPose(createHeelsSpine);
+      return freezeSpine(createHeelsSetupPose());
     case 'sym-bonus-door':
       return createSettledWinPose(createScatterSpine);
     case 'sym-paying-scatter':
-      return createSettledWinPose(createStarSpine, 14 / 8);
+      return createSettledWinPose(createStarSpine);
     default:
       return null;
   }

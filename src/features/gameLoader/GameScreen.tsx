@@ -5,8 +5,8 @@ import { SlotMachinePixi } from '@/features/slot/SlotMachinePixi';
 export type GameScreenProps = {
   hidden?: boolean;
   hub: SlotSessionState;
-  spinSpeed: 1 | 2 | 3;
-  onSpinSpeedChange: (speed: 1 | 2 | 3) => void;
+  spinSpeed: 1 | 2;
+  onSpinSpeedChange: (speed: 1 | 2) => void;
   onAssetsLoaded?: () => void;
   onRegisterInsufficientFunds?: (handler: () => void) => void;
 };

@@ -13,22 +13,21 @@ export const VISIBLE_ROWS = 3;
 /** Virtual loop length (must be > VISIBLE_ROWS + 1). */
 export const REEL_SIZE = 10;
 
-/** 1 = normal (~2.6s), 2 = fast (~1.25s), 3 = turbo (very short). */
-export type SpinSpeedLevel = 1 | 2 | 3;
+/** 1 = normal, 2 = accelerated (midpoint of the former fast and turbo modes). */
+export type SpinSpeedLevel = 1 | 2;
 
 export interface SpinSpeedPreset {
   minSpin: number;
   stopBase: number;
   stopStep: number;
   reelVelocity: number;
-  /** Post-stop column bounce — disabled on turbo (level 3). */
+  /** Whether to animate the post-stop column bounce. */
   settleBounce: boolean;
 }
 
 export const SPIN_SPEED_PRESETS: Record<SpinSpeedLevel, SpinSpeedPreset> = {
   1: { minSpin: 700, stopBase: 600, stopStep: 360, reelVelocity: 22, settleBounce: true },
-  2: { minSpin: 320, stopBase: 295, stopStep: 170, reelVelocity: 34, settleBounce: true },
-  3: { minSpin: 100, stopBase: 90, stopStep: 65, reelVelocity: 52, settleBounce: false },
+  2: { minSpin: 210, stopBase: 192.5, stopStep: 117.5, reelVelocity: 43, settleBounce: true },
 };
 
 export function getSpinSpeedPreset(level: SpinSpeedLevel): SpinSpeedPreset {

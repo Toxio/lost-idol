@@ -5,7 +5,7 @@ import { formatMoney } from '@/utils/currency';
 import { indexOfBetLevel } from '@/api/rgs';
 import { play as playSound } from '@/audio/soundManager';
 import plans from '@/config/bonusBuys.json';
-import { wildImg } from '@/assets/symbols/images';
+import wildImg from '@/assets/bonus-buy/leaping-monkey.webp';
 import fs1 from '@/assets/bonus-buy/portal-5.webp';
 import fs2 from '@/assets/bonus-buy/portal-10.webp';
 import fs3 from '@/assets/bonus-buy/portal-15.webp';

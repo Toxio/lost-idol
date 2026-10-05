@@ -126,7 +126,7 @@ export const vi: Record<TranslationKey, string> = {
   info_responsible_autoplay_desc:
     'Khi nút "Tự động" được nhấn, trò chơi vào chế độ tự động với số lần quay giới hạn. Trong khi Tự động, sẽ có đếm ngược số lần quay còn lại bên trong nút "Dừng tự động" và khi đạt đến không, tính năng Tự động sẽ tự động chấm dứt. Bất kỳ lúc nào, người chơi có thể vô hiệu hóa tính năng Tự động bằng cách nhấn nút "Dừng tự động".',
   info_rtp_title: 'Tỷ lệ hoàn trả cho người chơi',
-  info_rtp_body: 'RTP trung bình của trò chơi là 95%.',
+  info_rtp_body: 'RTP trung bình của trò chơi là 96%.',
   info_disclaimer_title: "Miễn trừ trách nhiệm",
   info_disclaimer_body: "Mọi trục trặc sẽ vô hiệu hóa mọi tiền thắng và lượt chơi. Yêu cầu kết nối internet ổn định. Trong trường hợp mất kết nối, tải lại trò chơi để hoàn thành các lượt chơi chưa xong. Tỷ lệ hoàn trả kỳ vọng được tính trên nhiều lượt chơi. Màn hình trò chơi không đại diện cho bất kỳ thiết bị vật lý nào và chỉ mang tính minh họa. Tiền thắng được tính theo số tiền nhận từ Máy chủ trò chơi từ xa, không dựa trên sự kiện trong trình duyệt.\n\nTM và © 2026 Engine.",
   replay_play: "Phát lại",

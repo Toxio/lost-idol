@@ -1,4 +1,6 @@
 import bonusBuys from "@/config/bonusBuys.json";
+import type { CollectorAction } from '@/features/slot/player/bookEvents';
+import { COLLECTOR_TRANSITION, collectorJumps } from '@/features/slot/player/collectorTransition';
 import {
   buildRoundFrames,
   type RoundFrame,
@@ -88,6 +90,9 @@ const EMPTY_BONUS: BonusState = {
 
 export interface SlotSessionState {
   roundBusy: boolean;
+  collector: CollectorAction | null;
+  collectorMoving: boolean;
+  collectorWinAmount: number | null;
   bonus: BonusState;
   continueBonus: () => void;
   handleWinPresentationComplete: () => void;
@@ -181,6 +186,9 @@ export function useRgsSession({
   const [quickBets, setQuickBets] = useState<number[]>([]);
   const [betAmount, setBetAmount] = useState(0);
   const [spinning, setSpinning] = useState(false);
+  const [collector, setCollector] = useState<CollectorAction | null>(null);
+  const [collectorMoving, setCollectorMoving] = useState(false);
+  const [collectorWinAmount, setCollectorWinAmount] = useState<number | null>(null);
   const [targetMatrix, setTargetMatrix] = useState<number[][] | null>(null);
   const [winAmount, setWinAmount] = useState<number | null>(null);
   const [winLines, setWinLines] = useState<WinLine[]>([]);
@@ -236,22 +244,34 @@ export function useRgsSession({
 
   const applyVisual = useCallback(
     (visual: SpinVisualResult, asTarget: boolean) => {
+      setCollector(visual.collector ?? null);
       if (asTarget) {
-        setTargetMatrix(visual.matrix);
+        // Withhold the stop target until the in-spin jump has finished.
+        setTargetMatrix(visual.collector && collectorJumps(visual.collector) ? null : visual.matrix);
         if (!spinningRef.current) setMatrix(visual.matrix);
       } else {
         setMatrix(visual.matrix);
         setTargetMatrix(null);
       }
-      setWinLines(visual.winLines);
+      // BONUS awards free spins without a cash payline, but still needs a reveal cycle.
+      const bonusCount = visual.matrix.flat().filter(symbol => symbol === 10).length;
+      const bonusReveal = frameRef.current?.awardedFreeSpins && bonusCount > 0
+        && !visual.winLines.some(line => line.symbol === 10 && line.line === 0);
+      const presentationLines = bonusReveal
+        ? [...visual.winLines, { symbol: 10, line: 0, count: bonusCount, winAmount: 0 }]
+        : visual.winLines;
+      setWinLines(asTarget && visual.collector ? [] : presentationLines);
       setExpandingWild(visual.expandingWild);
-      setWinAmount(visual.winAmount);
-      setSpinOdd(visual.spinOdd);
+      setWinAmount(asTarget && visual.collector ? null : visual.winAmount);
+      setSpinOdd(asTarget && visual.collector ? null : visual.spinOdd);
     },
     [],
   );
 
   const clearPreviousSpinResult = useCallback(() => {
+    setCollector(null);
+    setCollectorMoving(false);
+    setCollectorWinAmount(null);
     setWinAmount(null);
     setWinLines([]);
     setExpandingWild([...EMPTY_EXPANDING_WILD]);
@@ -394,6 +414,10 @@ export function useRgsSession({
       spinningRef.current = true;
       setSpinning(true);
       applyVisual(frame.visual, true);
+      setCollectorMoving(Boolean(frame.visual.collector && collectorJumps(frame.visual.collector)));
+      setCollectorWinAmount(frame.visual.collector
+        ? Math.max(0, frame.totalWin - frame.visual.winAmount)
+        : null);
       if (frame.freeSpin > 0)
         setBonus({
           purchased: purchasedBonusRef.current,
@@ -602,7 +626,7 @@ export function useRgsSession({
 
   const handleWinPresentationComplete = useCallback(() => {
     const frame = frameRef.current;
-    if (!frame || spinningRef.current || presentedRef.current) return;
+    if (!frame || spinningRef.current || collectorMoving || presentedRef.current) return;
     presentedRef.current = true;
     if (frame.awardedFreeSpins > 0) {
       bonusBaseWinRef.current = frame.totalWin;
@@ -624,7 +648,7 @@ export function useRgsSession({
       }));
       setWinAmount(frame.totalWin);
     }
-  }, [showFrame]);
+  }, [showFrame, collectorMoving]);
 
   const continueBonus = useCallback(() => {
     if (spinningRef.current || !presentedRef.current) return;
@@ -644,6 +668,10 @@ export function useRgsSession({
     setSpinning(false);
     setTargetMatrix(null);
     const frame = frameRef.current;
+    if (frame?.visual.collector) {
+      applyVisual(frame.visual, false);
+      setCollectorWinAmount(frame.totalWin);
+    }
     if (frame?.freeSpin)
       setBonus((prev) => ({
         ...prev,
@@ -654,12 +682,25 @@ export function useRgsSession({
       (!framesRef.current.length && !frame.freeSpin && !frame.awardedFreeSpins)
     )
       void finishRound();
-  }, [finishRound]);
+  }, [finishRound, applyVisual]);
+
+  useEffect(() => {
+    if (!collectorMoving) return;
+    const frame = frameRef.current;
+    const timer = window.setTimeout(() => {
+      if (!frame || frameRef.current !== frame) return;
+      // Reels are still spinning: only now allow them to settle on the final board.
+      setCollectorMoving(false);
+      setTargetMatrix(frame.visual.matrix);
+    }, COLLECTOR_TRANSITION.duration);
+    return () => window.clearTimeout(timer);
+  }, [collectorMoving]);
 
   // Losing bonus spins have no win-cycle callback to advance them.
   useEffect(() => {
     if (
       !roundBusy ||
+      collectorMoving ||
       spinning ||
       winLines.length ||
       bonus.phase === "intro" ||
@@ -670,6 +711,7 @@ export function useRgsSession({
     return () => window.clearTimeout(timer);
   }, [
     roundBusy,
+    collectorMoving,
     spinning,
     winLines.length,
     bonus.phase,
@@ -688,6 +730,9 @@ export function useRgsSession({
 
   return {
     roundBusy,
+    collector,
+    collectorMoving,
+    collectorWinAmount,
     bonus,
     continueBonus,
     handleWinPresentationComplete,

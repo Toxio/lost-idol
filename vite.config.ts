@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import type { Plugin } from "vite";
 import { defineConfig } from "vite";
 import JavaScriptObfuscator from "javascript-obfuscator";
+import { calibratedMath } from './dev/calibratedMath';
 
 // Obfuscate ONLY our own application chunks, as the very last build step.
 //
@@ -72,6 +73,9 @@ function dropEagerPixiPreload(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig(({ command, mode, isPreview }) => ({
+  server: {
+    host: true,
+  },
   // Compile-time gate: URL parameters cannot enable test tools in a release.
   define: {
     __TEST_TOOLS_ENABLED__: JSON.stringify(
@@ -81,7 +85,7 @@ export default defineConfig(({ command, mode, isPreview }) => ({
   // ACP serves the built frontend from a hashed subpath, so all asset URLs must
   // be relative. Without this, /assets/*.js would 404 in the ACP player.
   base: "./",
-  plugins: [react(), obfuscateAppChunks(), dropEagerPixiPreload()],
+  plugins: [react(), calibratedMath(), obfuscateAppChunks(), dropEagerPixiPreload()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

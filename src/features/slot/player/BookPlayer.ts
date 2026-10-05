@@ -3,7 +3,7 @@ import {
   getPaylineForLineId,
   isScatterWinLine,
 } from '@/config/paylines';
-import type { Book, BookEvent, SpinVisualResult } from './bookEvents';
+import type { Book, BookEvent, SpinVisualResult, CollectorAction } from './bookEvents';
 import {
   boardToMatrix,
   decodeExpandingWild,
@@ -57,6 +57,14 @@ type BookEventHandler = (
 ) => Promise<void>;
 
 const handlers: Record<string, BookEventHandler> = {
+  collectorWild: async (event, ctx) => {
+    const action = event as unknown as CollectorAction & { matrix?: number[][] };
+    if (action.wild && action.matrix) {
+      ctx.result.collector = { ...action, initialMatrix: ctx.result.matrix.map(reel => [...reel]) };
+      ctx.result.matrix = action.matrix;
+    }
+    ctx.result.expandingWild = [...EMPTY_EXPANDING_WILD];
+  },
   reveal: async (event, ctx) => {
     const matrix = boardToMatrix((event as BookRevealEvent).board);
     if (matrix) ctx.result.matrix = matrix;
@@ -122,7 +130,7 @@ export async function playBook(
   }
   // Only fall back to derived wilds if math did not emit them explicitly.
   const gotExplicitWilds = ctx.result.expandingWild.some((v) => v !== 0);
-  if (!gotExplicitWilds && ctx.result.winLines.length > 0) {
+  if (!events.some(event => event.type === 'collectorWild') && !gotExplicitWilds && ctx.result.winLines.length > 0) {
     ctx.result.expandingWild = deriveExpandingWild(
       ctx.result.matrix,
       ctx.result.winLines,
