@@ -1,3 +1,4 @@
+import { BonusButtonLabel } from './ui/BonusButtonLabel';
 import bonusBoost from '@/config/bonusBoost.json';
 import { BonusBoostButton } from './ui/BonusBoostButton';
 import { TreasuryFeature, type TreasuryProgress } from './treasury/TreasuryFeature';
@@ -276,7 +277,7 @@ export function SlotMachinePixi({
                 onClick={() => { playSound("ui_button"); setBuyBonusOpen(true); }}
               >
                 <img className="smp-buy-bonus-artwork" src={buyBonusButtonImg} alt="" draggable={false} />
-                <span className="smp-buy-bonus-label">{t("buy_bonus_title").split(/\s+/).map((word, index) => <span className="smp-desktop-button-line" key={index}>{word}</span>)}</span>
+                <span className="smp-buy-bonus-label"><BonusButtonLabel text={t("buy_bonus_title")} stacked /></span>
               </button>
             )}
             {!replay && !bonusActive && !jurisdiction.disabledBuyFeature && <BonusBoostButton desktop enabled={boostEnabled} cost={betAmount * bonusBoost.cost} currency={currency} precision={precision} disabled={controlsDisabled || spinning || autoplay.autoSpinEnabled} onToggle={() => setBoostEnabled(!boostEnabled)} />}

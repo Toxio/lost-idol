@@ -66,7 +66,7 @@ export function BetMenu({ id, anchor, onClose, quickBets, currentBet, currency, 
         onSelect(amount);
         onClose();
         anchor.current?.focus();
-      }}><CurrencyAmount value={amount * costMultiplier} currency={currency} precision={Number.isInteger(amount * costMultiplier) ? 0 : precision + (costMultiplier !== 1 ? 1 : 0)} fitToWidth /></button>)}
+      }}><CurrencyAmount value={amount * costMultiplier} currency={currency} precision={Number.isInteger(amount * costMultiplier) ? 0 : precision} fitToWidth /></button>)}
     </div>
   </div>, document.body);
 }

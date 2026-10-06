@@ -181,7 +181,7 @@ export function SlotBottomBar({
                 <CurrencyAmount
                   value={betAmount * costMultiplier}
                   currency={currency}
-                  precision={precision + (costMultiplier !== 1 ? 1 : 0)}
+                  precision={precision}
                   fitToWidth
                 />
               </button>

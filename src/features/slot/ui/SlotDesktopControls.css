@@ -72,3 +72,24 @@
   .main-screen .smp-wrapper--bonus { --smp-extra-header: 40px; --smp-bonus-header-height: 40px; }
   .main-screen .smp-wrapper--bonus .bonus-status { min-height: 40px; padding-block: 4px; }
 }
+
+/* Enlarge visually without increasing the dock height or shifting adjacent controls. */
+@media (min-width: 901px), (orientation: landscape) {
+  .main-screen .smp-bottom-bar,
+  .main-screen .smp-bottom-bar .smp-side-controls { overflow: visible; }
+  .main-screen .smp-bottom-bar .smp-side-btn--spin {
+    position: relative;
+    z-index: 2;
+    scale: 1.55;
+    transform-origin: center;
+    margin-inline: 12px;
+  }
+}
+
+/* The same left-hand bonus layout is used on compact landscape screens. */
+@media (max-width: 900px) and (orientation: landscape) {
+  .main-screen .smp-bottom-bar .smp-side-btn--spin {
+    scale: 1.4;
+    margin-inline: 0;
+  }
+}

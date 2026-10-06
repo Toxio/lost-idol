@@ -1,3 +1,4 @@
+import { BonusButtonLabel } from './BonusButtonLabel';
 import { RotateCw, Square, Zap } from "lucide-react";
 import { t } from "@/utils/i18n";
 import { useCallback, useId, useRef, useState } from "react";
@@ -81,7 +82,7 @@ export function SlotSideControls({
     <div className="smp-side-controls" aria-label="Game controls">
       {onBuyBonus && <button type="button" className="smp-buy-bonus-button" disabled={buyBonusDisabled || controlsDisabled || autoSpinActive || spinning} onClick={onBuyBonus}>
         <img className="smp-buy-bonus-artwork" src={buyBonusButtonImg} alt="" draggable={false} />
-        <span className="smp-buy-bonus-label">{t('buy_bonus_title')}</span>
+        <span className="smp-buy-bonus-label"><BonusButtonLabel text={t('buy_bonus_title')} /></span>
       </button>}
       {boostControl}
       <button

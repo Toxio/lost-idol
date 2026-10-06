@@ -4,7 +4,7 @@
     --smp-extra-header: 0px;
     --smp-title-height: 0px;
     --smp-title-gap: 0px;
-    --smp-logo-col-width: clamp(110px, 10vw, 150px);
+    --smp-logo-col-width: clamp(160px, 14vw, 210px);
     --smp-controls-col-width: clamp(160px, 15vw, 230px);
     --smp-canvas-width: min(1800px,
       calc(100vw - var(--smp-logo-col-width) - var(--smp-controls-col-width) - 32px),
@@ -240,5 +240,16 @@
     pointer-events: none;
     border: 7px solid transparent;
     border-image: url('../../../assets/buttons/buy-bonus-jade.webp') 80 150 70 150 fill / 8px 7px 7px stretch;
+  }
+}
+
+/* Give desktop reels the space reclaimed from the bonus action column. */
+@media (min-width: 901px) {
+  :root .main-screen .smp-wrapper.smp-wrapper--feature {
+    --smp-logo-col-width: clamp(125px, 10vw, 160px);
+    --smp-controls-col-width: clamp(145px, 12vw, 190px);
+    --smp-canvas-width: min(1800px,
+      calc(100vw - var(--smp-logo-col-width) - var(--smp-controls-col-width) - 32px),
+      calc((100svh - var(--smp-extra-header) - 90px) * 1641 / 1022));
   }
 }
