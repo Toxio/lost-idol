@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { t } from "@/utils/i18n";
 import { createPortal } from "react-dom";
 import { scatterImg } from "@/assets/symbols/images";
@@ -11,16 +12,23 @@ import "./BonusFeature.css";
 export function BonusFeature({
   bonus,
   introReady = true,
+  autoContinue = false,
   currency,
   precision,
   onContinue,
 }: {
   bonus: BonusState;
   introReady?: boolean;
+  autoContinue?: boolean;
   currency: string;
   precision: number;
   onContinue: () => void;
 }) {
+  useEffect(() => {
+    if (!autoContinue || !((bonus.phase === "intro" && introReady) || bonus.phase === "summary")) return;
+    const timer = window.setTimeout(onContinue, 2200);
+    return () => window.clearTimeout(timer);
+  }, [autoContinue, bonus.phase, introReady, onContinue]);
   if (bonus.phase === "idle") return null;
   const modal = (bonus.phase === "intro" && introReady) || bonus.phase === "summary";
   return (

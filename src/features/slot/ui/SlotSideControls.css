@@ -291,7 +291,10 @@
 .smp-side-btn__autospin-count {
   color: #ffe58b;
   font-size: clamp(10px, 1.5vw, 16px);
-  font-weight: 900;
+  font-family: var(--game-font), sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: normal;
   line-height: 1;
   text-align: center;
   font-variant-numeric: tabular-nums;

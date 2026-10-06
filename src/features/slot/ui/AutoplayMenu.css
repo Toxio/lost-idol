@@ -1,8 +1,10 @@
 .smp-autoplay-menu {
   position: fixed;
   z-index: 190;
-  width: min(300px, calc(100vw - 16px));
+  width: min(360px, calc(100vw - 16px));
   box-sizing: border-box;
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
   padding: 14px;
   border: 1px solid #b7a46566;
   border-radius: 12px;
@@ -17,9 +19,28 @@
 .smp-autoplay-menu__counts button {
   min-height: 44px; padding: 0; border: 1px solid #b9d9a533;
   border-radius: 7px; background: #214632; color: inherit;
-  font: inherit; font-size: 14px; cursor: pointer;
+  font-family: var(--game-font), sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: normal;
+  cursor: pointer;
 }
 .smp-autoplay-menu__counts button:hover { background: #326448; }
 .smp-autoplay-menu__counts button:focus-visible { outline: 2px solid #a8efbd; outline-offset: 2px; }
 @keyframes smp-autoplay-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .smp-autoplay-menu { animation: none; } }
+
+.smp-autoplay-menu__bonus { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; margin-bottom: 12px; padding: 10px 0; border: 0; background: transparent; color: #fff0ba; font: inherit; font-size: 12px; cursor: pointer; }
+.smp-autoplay-menu__toggle { width: 38px; height: 22px; border-radius: 12px; background: #354c40; border: 1px solid #92ad80; flex-shrink: 0; }
+.smp-autoplay-menu__toggle::after { content: ''; display: block; width: 16px; height: 16px; margin: 2px; border-radius: 50%; background: #ffe7a2; transition: transform 150ms; }
+.smp-autoplay-menu__bonus[aria-checked="true"] .smp-autoplay-menu__toggle { background: #32754a; }
+.smp-autoplay-menu__bonus[aria-checked="true"] .smp-autoplay-menu__toggle::after { transform: translateX(16px); }
+.smp-autoplay-menu__bonus:focus-visible { outline: 2px solid #a8efbd; outline-offset: 2px; }
+
+.smp-autoplay-menu__rounds { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 12px; }
+.smp-autoplay-menu__counts button[aria-pressed="true"] { background: #477745; border-color: #e3c56d; color: #fff0ba; }
+.smp-autoplay-menu__limits { border: 0; padding: 0; margin: 0 0 12px; }
+.smp-autoplay-menu__limits legend { font-size: 11px; margin-bottom: 7px; }
+.smp-autoplay-menu__start { width: 100%; min-height: 44px; border: 1px solid #c6a75c; border-radius: 7px; background: #2b6340; color: #fff0ba; font: inherit; font-weight: bold; cursor: pointer; }

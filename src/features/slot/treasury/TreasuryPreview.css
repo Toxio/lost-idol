@@ -4,7 +4,10 @@
 .treasury-chests { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 1% 5%; padding: 0 8% 2%; }
 .treasury-chest { position: relative; min-height: 0; min-width: 0; border: 0; padding: 0; background: transparent; cursor: pointer; color: #ffebac; display: flex; flex-direction: column; align-items: center; }
 .treasury-chest-art { display: block; height: 80%; max-width: 100%; aspect-ratio: 1; background-size: 400% 400%; background-position: 0 0; background-repeat: no-repeat; filter: drop-shadow(0 4px 4px #0008); }
-.treasury-chest:not(:disabled):hover { filter: drop-shadow(0 0 8px #b3ff7b88); }
+.treasury-chest:not(:disabled):hover .treasury-chest-art,
+.treasury-chest:not(:disabled):focus-visible .treasury-chest-art {
+  filter: brightness(1.15) drop-shadow(0 0 7px #c4ff9be6) drop-shadow(0 0 18px #66e982b3) drop-shadow(0 4px 4px #0008);
+}
 .treasury-chest:focus-visible { outline: 2px solid #b6ff92; outline-offset: -2px; border-radius: 8px; }
 .treasury-chest:disabled { cursor: default; }
 .treasury-chest.is-open .treasury-chest-art { background-position: 66.6667% 66.6667%; }
@@ -22,7 +25,7 @@
 .smp-canvas:has(.treasury-reel-surface) > .smp-wild-multiplier { visibility: hidden; }
 
 /* Extend to the same backing bounds as createReelFrame (100/65), beneath its carved edges. */
-.treasury-reel-surface::before { content: ""; position: absolute; inset: -5.542% -3.729% -4.311%; z-index: -1; background: #10251b url("../../../assets/treasury/temple-wall-v2.webp") center / cover no-repeat; border-radius: 12px; }
+.treasury-reel-surface::before { content: ""; position: absolute; inset: -5.542% -3.729% -4.311%; z-index: -1; background: #52634a url("../../../assets/treasury/temple-wall-selected.png") center / cover no-repeat; border-radius: 12px; }
 /* Match the Pixi frame's nine-slice dimensions at the 1641 × 1022 design size. */
 .treasury-frame { position: absolute; inset: 0; z-index: 9; pointer-events: none; border: 0 solid transparent; border-image-slice: 110 170 100 170 fill; border-image-width: 10.763209% 10.359537% 9.784736% 10.359537%; border-image-repeat: stretch; }
 .treasury-transition { overflow: hidden; }
@@ -39,3 +42,10 @@
 .treasury-instruction-glyphs svg { height: 100%; width: auto; min-width: 0; overflow: hidden; }
 
 .treasury-auto-pick { flex: 0 0 5%; width: 100%; text-align: center; color: #fff0ba; font-size: clamp(9px, 2.4cqh, 16px); margin: 0; pointer-events: none; }
+
+/* Local contrast for labels keeps the stone behind the chests relatively light. */
+.treasury-instruction, .treasury-auto-pick { color: #fff0ba; text-shadow: 0 2px 3px #071d0e, 0 0 8px #071d0e; }
+.treasury-instruction-glyphs { filter: drop-shadow(0 2px 1px #071d0e) drop-shadow(0 0 4px #071d0e); }
+.treasury-reward { position: relative; isolation: isolate; }
+.treasury-reward-glyphs { filter: drop-shadow(0 1px 1px #071d0e); }
+.treasury-money-symbol { text-shadow: 0 1px 1px #071d0e; }

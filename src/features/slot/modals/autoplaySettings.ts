@@ -23,6 +23,10 @@ export const DEFAULT_AUTOPLAY_SETTINGS: AutoplaySettingsState = {
 };
 
 export interface AutoplayStartOptions {
+  stopOnFreeSpins?: boolean;
+  stopOnTreasury?: boolean;
+  lossMultiplier?: number | null;
+  winMultiplier?: number | null;
   count: number;
   stopAfterWin: boolean;
   stopOnWinAmount: number | null;

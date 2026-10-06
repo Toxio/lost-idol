@@ -5,6 +5,8 @@ import { useScreenWakeLock } from './useScreenWakeLock';
 
 interface UseAutoplayOptions {
   spinning: boolean;
+  freeSpinsTriggered?: boolean;
+  treasuryTriggered?: boolean;
   status: string;
   winAmount: number | null;
   winLines: { length: number };
@@ -18,6 +20,8 @@ interface UseAutoplayOptions {
 
 export interface AutoplayApi {
   autoSpin: boolean;
+  autoPickBonus: boolean;
+  autoContinueFreeSpins: boolean;
   autoSpinRemaining: number | null;
   autoSpinEnabled: boolean;
   autoplayStoppedOpen: boolean;
@@ -44,6 +48,8 @@ const NO_STOP: ResolvedStopConditions = {
 
 export function useAutoplay({
   spinning,
+  freeSpinsTriggered = false,
+  treasuryTriggered = false,
   status,
   winAmount,
   winLines,
@@ -54,6 +60,9 @@ export function useAutoplay({
   onSpinSpeedChange,
   showInsufficientFunds,
 }: UseAutoplayOptions): AutoplayApi {
+  const [bonusStops, setBonusStops] = useState({ free: false, treasury: false });
+  const bonusTriggered = (freeSpinsTriggered && bonusStops.free) || (treasuryTriggered && bonusStops.treasury);
+  const remainingRef = useRef<number | null>(null);
   const [autoSpin, setAutoSpin] = useState(false);
   const [autoSpinRemaining, setAutoSpinRemaining] = useState<number | null>(null);
   const [autoplayStoppedOpen, setAutoplayStoppedOpen] = useState(false);
@@ -84,17 +93,11 @@ export function useAutoplay({
   }, []);
 
   const decrementAndSpin = useCallback(() => {
-    let finished = false;
-    setAutoSpinRemaining((prev) => {
-      if (prev === null) return null;
-      if (prev <= 1) {
-        finished = true;
-        setAutoSpin(false);
-        return null;
-      }
-      return prev - 1;
-    });
-    if (finished) autoplayFinishedRef.current = true;
+    if (remainingRef.current !== null) {
+      remainingRef.current = Math.max(0, remainingRef.current - 1);
+      setAutoSpinRemaining(remainingRef.current);
+      if (remainingRef.current === 0) autoplayFinishedRef.current = true;
+    }
     void spin();
   }, [spin]);
 
@@ -111,24 +114,26 @@ export function useAutoplay({
         showInsufficientFunds();
         return;
       }
+      setBonusStops({ free: options.stopOnFreeSpins ?? false, treasury: options.stopOnTreasury ?? false });
       const bet = betAmount;
       sessionBetRef.current = bet;
       cumulativeWinRef.current = 0;
       cumulativeLossRef.current = 0;
       stopConditionsRef.current = {
         stopAfterWin: options.stopAfterWin,
-        stopOnWinAmount: options.stopOnWinAmount,
-        stopOnLossAmount: options.stopOnLossAmount,
+        stopOnWinAmount: options.winMultiplier != null ? options.winMultiplier * bet : options.stopOnWinAmount,
+        stopOnLossAmount: options.lossMultiplier != null ? options.lossMultiplier * bet : options.stopOnLossAmount,
       };
 
       lastOptionsRef.current = options;
       autoSpinBlockedRef.current = false;
       autoplayFinishedRef.current = false;
-      setLastAutoSpinCount(options.count);
-      setAutoSpinRemaining(options.count);
+      setLastAutoSpinCount(options.count || null);
+      remainingRef.current = options.count === 0 ? null : options.count;
+      setAutoSpinRemaining(remainingRef.current);
       setAutoSpin(true);
       onSpinSpeedChange(2);
-      window.setTimeout(decrementAndSpin, 300);
+      autoSpinTimerRef.current = window.setTimeout(() => { autoSpinTimerRef.current = null; decrementAndSpin(); }, 300);
     },
     [betAmount, cannotAffordBet, showInsufficientFunds, onSpinSpeedChange, decrementAndSpin],
   );
@@ -139,11 +144,21 @@ export function useAutoplay({
       window.clearTimeout(stoppedModalTimerRef.current);
       stoppedModalTimerRef.current = null;
     }
+    autoplayFinishedRef.current = false;
     setAutoSpin(false);
     setAutoSpinRemaining(null);
     waitingWinCycleRef.current = false;
     stopConditionsRef.current = NO_STOP;
   }, [clearPendingTimer]);
+
+  useEffect(() => {
+    if (!bonusTriggered || !autoSpin) return;
+    clearPendingTimer();
+    const timer = window.setTimeout(stop, 0);
+    return () => window.clearTimeout(timer);
+  }, [bonusTriggered, autoSpin, clearPendingTimer, stop]);
+
+  useEffect(() => () => clearPendingTimer(), [clearPendingTimer]);
 
   // Schedule next autoplay spin after current one ends.
   useEffect(() => {
@@ -154,7 +169,7 @@ export function useAutoplay({
     const hasPending = autoSpinTimerRef.current !== null;
 
     if (!spinJustEnded && !hasPending) return;
-    if (spinning || status !== 'ready') return;
+    if (spinning || status !== 'ready' || bonusTriggered) return;
 
     // Track cumulative win/loss and evaluate stop conditions once per spin completion.
     if (spinJustEnded && autoSpin && !autoplayFinishedRef.current) {
@@ -207,21 +222,23 @@ export function useAutoplay({
       if (stoppedModalTimerRef.current === null) {
         stoppedModalTimerRef.current = window.setTimeout(() => {
           stoppedModalTimerRef.current = null;
+          setAutoSpin(false);
+          setAutoSpinRemaining(null);
           setAutoplayStoppedOpen(true);
         }, 500);
       }
     }
-  }, [spinning, autoSpinEnabled, autoSpin, status, winLines.length, winAmount, clearPendingTimer]);
+  }, [spinning, autoSpinEnabled, autoSpin, status, winLines.length, winAmount, clearPendingTimer, bonusTriggered]);
 
   const onWinCycleDone = useCallback(() => {
     if (!waitingWinCycleRef.current) return;
     waitingWinCycleRef.current = false;
     if (autoplayFinishedRef.current) {
       autoplayFinishedRef.current = false;
-      window.setTimeout(() => setAutoplayStoppedOpen(true), 500);
+      stoppedModalTimerRef.current = window.setTimeout(() => { setAutoSpin(false); setAutoSpinRemaining(null); setAutoplayStoppedOpen(true); }, 500);
       return;
     }
-    window.setTimeout(decrementAndSpinRef.current, 300);
+    autoSpinTimerRef.current = window.setTimeout(() => { autoSpinTimerRef.current = null; decrementAndSpinRef.current(); }, 300);
   }, []);
 
   // Show insufficient-funds modal mid-autoplay (once per blocked transition).
@@ -256,6 +273,8 @@ export function useAutoplay({
 
   return {
     autoSpin,
+    autoContinueFreeSpins: autoSpin && !bonusStops.free && !connectionLost,
+    autoPickBonus: autoSpin && !bonusStops.treasury && !connectionLost,
     autoSpinRemaining,
     autoSpinEnabled,
     autoplayStoppedOpen,
