@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const zh: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "在 Replay 中，播放 播放已记录的回合，再次播放 再次播放。面板显示总金额、基础金额、模式倍数和赢奖。回放不会开启新回合或更改余额，金额选择和自动旋转不可用。",
   info_ctrl_windows_desc: "点击或轻触按钮进行操作。菜单标签可切换符号奖励、游戏信息和声音设置。长文本和列表可滚动。可用时点击 × 关闭窗口。禁用的控件在当前状态或达到限值时无法使用。提示提供关闭、重试或重新连接；重新连接会恢复已记录的回合。",
   info_ctrl_feature_desc: "过场结束后，点击开始免费旋转。计数器显示当前次数和总次数，奖励赢奖显示累计金额。旋转自动继续。在允许时，Spin/Stop 可缩短动画，速度按钮可调整快慢。自动旋转按钮仍显示但不可用。结束后点击继续返回主游戏。",
   info_ctrl_bonus_desc: "打开奖励选择窗口。选择免费旋转或 Wild Spin 卡片，查看规则和总费用。− / + 会同步更改主游戏和赔付表中的基础投注额。选择卡片不会开始回合；对于费用倍数大于 2× 的模式，底部按钮会打开单独的确认窗口，显示模式、倍数和总金额。只有确认购买才会启动奖励；取消或 × 返回选择窗口，不启动奖励。× 关闭窗口，不进行购买。回合、免费旋转或自动旋转期间不可用。",
+  boost_title: "奖励机会 ×5",
+  boost_rules: "大门奖励和宝库的触发概率提高至五倍。每次旋转费用为基础投注的2.5倍，奖金按基础投注计算。RTP为96%。启用时无法购买奖励。",
+  treasury_open_chests: "打开3个宝箱",
+  treasury_collected: "宝藏已收集！",
+  treasury_win: "奖金",
+  treasury_multiplier: "倍数",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "百搭旋转",
   wild_spin_rules: "以基础投注的10倍购买一次旋转。至少一个Wild扩展至整轴，倍率为×2、×3、×5或×10。无SCATTER、星星或免费旋转。不保证中奖。最高奖金为基础投注的5000倍。",
 

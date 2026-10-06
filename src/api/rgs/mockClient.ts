@@ -1,3 +1,4 @@
+import bonusBoost from '@/config/bonusBoost.json';
 import bonusBuys from "@/config/bonusBuys.json";
 import { displayAmountToApi } from "@/utils/currency";
 import type { Book } from "@/features/slot/player/bookEvents";
@@ -42,6 +43,19 @@ export function createMockRgsClient(currency = "USD"): RgsClient {
   const betLevels = MOCK_BET_LEVELS_DISPLAY.map(displayAmountToApi);
   let roundActive = false;
   let lastRound: RgsRound | null = null;
+  const storageKey = `lost-idol-local-wallet-treasury-${currency}`;
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(storageKey) ?? 'null');
+    if (saved && Number.isSafeInteger(saved.balanceAmount) && saved.balanceAmount >= 0) {
+      balanceAmount = saved.balanceAmount;
+      lastRound = saved.lastRound ?? null;
+      roundActive = Boolean(lastRound?.active);
+    }
+  } catch { /* The local wallet also works when browser storage is unavailable. */ }
+  function persist() {
+    try { sessionStorage.setItem(storageKey, JSON.stringify({ balanceAmount, lastRound })); } catch { /* Optional local persistence. */ }
+  }
+
 
   return {
     async authenticate(): Promise<AuthenticateResponse> {
@@ -84,7 +98,7 @@ export function createMockRgsClient(currency = "USD"): RgsClient {
           "Bet is not divisible by stepBet",
         );
       }
-      const plan = bonusBuys.find((item) => item.mode === params.mode);
+      const plan = params.mode === bonusBoost.mode ? bonusBoost : bonusBuys.find((item) => item.mode === params.mode);
       if (params.mode !== DEFAULT_BET_MODE && !plan) throw new RgsError(RGS_ERROR.INVALID_REQUEST, 400, "Unknown mode");
       const debit = Math.round(params.amount * (plan?.cost ?? 1));
       if (debit > balanceAmount) {
@@ -108,6 +122,7 @@ export function createMockRgsClient(currency = "USD"): RgsClient {
         mode: params.mode || DEFAULT_BET_MODE,
         state: book,
       };
+      persist();
       return {
         balance: { amount: balanceAmount, currency },
         round: lastRound,
@@ -120,6 +135,7 @@ export function createMockRgsClient(currency = "USD"): RgsClient {
       }
       roundActive = false;
       if (lastRound) lastRound = { ...lastRound, active: false };
+      persist();
       return { balance: { amount: balanceAmount, currency } };
     },
 

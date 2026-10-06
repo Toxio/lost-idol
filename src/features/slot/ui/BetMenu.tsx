@@ -12,12 +12,13 @@ interface Props {
   onClose: () => void;
   quickBets: number[];
   currentBet: number;
+  costMultiplier?: number;
   currency: string;
   precision: number;
   onSelect: (amount: number) => void;
 }
 
-export function BetMenu({ id, anchor, onClose, quickBets, currentBet, currency, precision, onSelect }: Props) {
+export function BetMenu({ id, anchor, onClose, quickBets, currentBet, currency, precision, onSelect, costMultiplier = 1 }: Props) {
   const panel = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ left: 8, top: 8 });
   useLayoutEffect(() => {
@@ -65,7 +66,7 @@ export function BetMenu({ id, anchor, onClose, quickBets, currentBet, currency, 
         onSelect(amount);
         onClose();
         anchor.current?.focus();
-      }}><CurrencyAmount value={amount} currency={currency} precision={Number.isInteger(amount) ? 0 : precision} fitToWidth /></button>)}
+      }}><CurrencyAmount value={amount * costMultiplier} currency={currency} precision={Number.isInteger(amount * costMultiplier) ? 0 : precision + (costMultiplier !== 1 ? 1 : 0)} fitToWidth /></button>)}
     </div>
   </div>, document.body);
 }

@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const hi: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Replay में चलाएँ दर्ज राउंड चलाता है और फिर से चलाएँ उसे दोहराता है। पैनल कुल राशि, मूल राशि, मोड गुणक और जीत दिखाता है। नया राउंड शुरू नहीं होता और बैलेंस नहीं बदलता। राशि चयन और ऑटोप्ले उपलब्ध नहीं हैं।",
   info_ctrl_windows_desc: "बटन पर क्लिक या टैप करें। मेनू टैब से प्रतीकों की जीत, जानकारी और ध्वनि सेटिंग देखें। लंबे लेख और सूचियाँ स्क्रॉल करें। उपलब्ध होने पर × विंडो बंद करता है। निष्क्रिय नियंत्रण वर्तमान स्थिति या सीमा पर काम नहीं करते। सूचनाएँ बंद करने, फिर कोशिश करने या दोबारा जुड़ने का विकल्प देती हैं; दोबारा जुड़ना दर्ज राउंड बहाल करता है।",
   info_ctrl_feature_desc: "ट्रांज़िशन के बाद मुफ़्त स्पिन शुरू करें। काउंटर वर्तमान स्पिन और कुल संख्या दिखाता है; बोनस जीत संचित राशि दिखाती है। स्पिन अपने आप आगे बढ़ते हैं। अनुमति होने पर Spin/Stop एनीमेशन छोटा करता है और गति बटन उसकी रफ़्तार बदलता है। ऑटोप्ले दिखता है लेकिन निष्क्रिय रहता है। सारांश में जारी रखें चुनकर मुख्य खेल में लौटें।",
   info_ctrl_bonus_desc: "बोनस चयन खोलता है। नियम और कुल लागत देखने के लिए मुफ़्त स्पिन या Wild Spin कार्ड चुनें। − / + मूल दाँव को मुख्य खेल और भुगतान तालिका में भी बदलता है। कार्ड चुनने से राउंड शुरू नहीं होता; 2× से अधिक लागत वाले मोड में नीचे का बटन अलग पुष्टि विंडो खोलता है जिसमें मोड, गुणक और कुल राशि दिखती है। खरीद की पुष्टि पर ही बोनस शुरू होता है; रद्द करें या × बिना शुरू किए वापस लौटता है। × बिना खरीद के बंद करता है। राउंड, मुफ़्त स्पिन या ऑटोप्ले के दौरान उपलब्ध नहीं है।",
+  boost_title: "बोनस की संभावना ×5",
+  boost_rules: "दरवाज़े वाले बोनस और खजाने की संभावना पाँच गुनी। हर स्पिन की लागत मूल दाँव की 2.5 गुना है; भुगतान मूल दाँव से तय होते हैं। RTP 96%। चालू होने पर बोनस खरीद उपलब्ध नहीं है।",
+  treasury_open_chests: "3 संदूक खोलें",
+  treasury_collected: "खज़ाना मिल गया!",
+  treasury_win: "जीत",
+  treasury_multiplier: "गुणक",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "वाइल्ड स्पिन",
   wild_spin_rules: "मूल दाँव के 10 गुना में एक स्पिन। कम से कम एक Wild ×2, ×3, ×5 या ×10 गुणक के साथ पूरी रील पर फैलता है। SCATTER, सितारे या मुफ़्त स्पिन नहीं हैं। जीत की गारंटी नहीं है। अधिकतम जीत: मूल दाँव का 5000 गुना।",
 

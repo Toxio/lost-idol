@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const id: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Di Replay, Putar menampilkan ronde tercatat dan Putar Ulang mengulanginya. Panel menampilkan jumlah total, jumlah dasar, pengali mode, dan hadiah. Tidak memulai ronde baru atau mengubah saldo. Pilihan jumlah dan putar otomatis tidak tersedia.",
   info_ctrl_windows_desc: "Klik atau ketuk tombol. Tab menu menampilkan hadiah simbol, informasi, dan suara. Gulir teks dan daftar panjang. × menutup jendela jika tersedia. Kontrol nonaktif tidak dapat digunakan pada keadaan atau batas saat ini. Notifikasi menawarkan tutup, coba lagi, atau sambungkan ulang; menyambungkan ulang memulihkan ronde yang tercatat.",
   info_ctrl_feature_desc: "Setelah transisi, mulai putaran gratis. Penghitung menunjukkan putaran saat ini dan jumlah total; kemenangan bonus menunjukkan akumulasi hadiah. Putaran berjalan otomatis. Spin/Stop mempersingkat animasi jika diizinkan; Kecepatan mengubah lajunya. Putar otomatis tetap terlihat tetapi nonaktif. Lanjutkan menutup ringkasan.",
   info_ctrl_bonus_desc: "Membuka pilihan bonus. Pilih putaran gratis atau Wild Spin untuk melihat aturan dan total biaya. − / + mengubah taruhan dasar juga di layar utama dan tabel hadiah. Memilih kartu belum memulai ronde; untuk mode di atas 2×, tombol bawah membuka konfirmasi terpisah dengan mode, pengali, dan total. Hanya konfirmasi pembelian yang memulai bonus; Batal atau × kembali tanpa memulai. × menutup tanpa membeli. Tidak tersedia saat ronde, putaran gratis, atau putar otomatis.",
+  boost_title: "PELUANG BONUS ×5",
+  boost_rules: "Meningkatkan lima kali lipat peluang bonus pintu dan Treasury. Putaran berbiaya 2,5 kali taruhan dasar; pembayaran memakai taruhan dasar. RTP 96%. Pembelian bonus dinonaktifkan.",
+  treasury_open_chests: "Buka 3 peti",
+  treasury_collected: "Harta terkumpul!",
+  treasury_win: "Kemenangan",
+  treasury_multiplier: "Pengali",
+  treasury_buy_rules: "For 9\u00d7 the base bet, open 3 of 6 chests. Cash rewards add up; each emerald adds +1 to the total multiplier. Maximum payout: 40\u00d7 the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "Putaran Wild",
   wild_spin_rules: "Satu putaran seharga 10× taruhan dasar. Setidaknya satu Wild meluas ke seluruh gulungan dengan pengali ×2, ×3, ×5 atau ×10. Tanpa SCATTER, bintang atau putaran gratis. Kemenangan tidak dijamin. Kemenangan maksimum: 5000× taruhan dasar.",
 

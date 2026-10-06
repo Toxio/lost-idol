@@ -27,6 +27,8 @@ interface SlotSideControlsProps {
   onAutoSpinStop: () => void;
   onSpeedCycle: () => void;
   onBuyBonus?: () => void;
+  buyBonusDisabled?: boolean;
+  boostControl?: import("react").ReactNode;
 }
 
 const SPEED_LABELS: Record<1 | 2, string> = {
@@ -49,6 +51,8 @@ export function SlotSideControls({
   onAutoSpinStop,
   onSpeedCycle,
   onBuyBonus,
+  buyBonusDisabled,
+  boostControl,
 }: SlotSideControlsProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const autoSpinButton = useRef<HTMLButtonElement>(null);
@@ -75,10 +79,11 @@ export function SlotSideControls({
 
   return (
     <div className="smp-side-controls" aria-label="Game controls">
-      {onBuyBonus && <button type="button" className="smp-buy-bonus-button" disabled={controlsDisabled || autoSpinActive || spinning} onClick={onBuyBonus}>
+      {onBuyBonus && <button type="button" className="smp-buy-bonus-button" disabled={buyBonusDisabled || controlsDisabled || autoSpinActive || spinning} onClick={onBuyBonus}>
         <img className="smp-buy-bonus-artwork" src={buyBonusButtonImg} alt="" draggable={false} />
         <span className="smp-buy-bonus-label">{t('buy_bonus_title')}</span>
       </button>}
+      {boostControl}
       <button
         type="button"
         className={clsx(

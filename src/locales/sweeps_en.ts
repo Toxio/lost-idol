@@ -9,6 +9,7 @@ import { en } from './en';
  * Any key not overridden here falls back to `en`.
  */
 export const sweeps_en: Partial<typeof en> = {
+  treasury_buy_rules: 'For 9× the base play amount, open 3 of 6 chests. Coin rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum reward: 200× the base play amount. RTP: 96%. The opening play only triggers the Treasury.',
   info_ctrl_bonus_desc: "Choose Wild Spin or 5 / 10 / 15 Free Spins. The card shows the required multiple of the base play amount. Review the total and confirm to start. Selecting a card alone does not start the feature. Unavailable during a round, Free Spins or Autoplay.",
   menu_paytable: 'Win Table',
   info_paylines_title: 'Winning Lines and Rules',

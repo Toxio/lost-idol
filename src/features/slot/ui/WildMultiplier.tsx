@@ -1,21 +1,29 @@
+import { formatTrimmedAmount, formatMoney } from '@/utils/currency';
 import glyphs from '@/assets/big-win/lost-idol-glyphs.webp';
 
-const regions: Record<string, [number, number, number, number]> = {
-  X: [709, 326, 139, 143],
-  '0': [30, 477, 134, 138], '1': [178, 477, 91, 138],
-  '2': [292, 477, 121, 138], '3': [430, 477, 118, 138],
-  '4': [558, 477, 130, 138], '5': [701, 477, 113, 138],
-  '6': [827, 477, 122, 138], '7': [963, 477, 107, 138],
-  '8': [1079, 477, 128, 138], '9': [1215, 477, 130, 138],
-};
+import { glyphRegions as regions, GLYPH_ATLAS_WIDTH, GLYPH_ATLAS_HEIGHT } from '@/assets/big-win/glyphRegions';
 
-export function WildMultiplier({ value }: { value: number }) {
-  return <span className="smp-wild-glyphs" aria-label={`×${value}`}>
-    {[...`X${value}`].map((char, index) => {
-      const [x, y, width, height] = regions[char];
+export function GameNumberGlyphs({ text, className, label = text }: { text: string; className?: string; label?: string }) {
+  return <span className={className} role="img" aria-label={label}>
+    {[...text].map((char, index) => {
+      if (char === ' ') return <span key={index} aria-hidden="true" style={{ flex: '0 0 0.4em' }} />;
+      const region = regions[char];
+      if (!region) return null;
+      const [x, y, width, height] = region;
       return <svg key={index} viewBox={`${x} ${y} ${width} ${height}`} aria-hidden="true" style={{ aspectRatio: `${width}/${height}` }}>
-        <image href={glyphs} width="1371" height="771" />
+        <image href={glyphs} width={GLYPH_ATLAS_WIDTH} height={GLYPH_ATLAS_HEIGHT} />
       </svg>;
     })}
+  </span>;
+}
+
+export function WildMultiplier({ value }: { value: number }) {
+  return <GameNumberGlyphs text={`X${value}`} className="smp-wild-glyphs" label={`×${value}`} />;
+}
+
+export function GameMoneyGlyphs({ value, currency, precision }: { value: number; currency: string; precision: number }) {
+  const amount = formatTrimmedAmount(value, precision).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+  return <span className="treasury-money" role="img" aria-label={formatMoney(value, currency, precision)}>
+    <GameNumberGlyphs className="treasury-reward-glyphs" text={amount} />
   </span>;
 }

@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const ko: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Replay에서 재생는 기록된 라운드를 재생하고 다시 재생은 다시 재생합니다. 총액, 기본 금액, 모드 배수, 당첨액이 표시됩니다. 새 라운드가 시작되거나 잔액이 바뀌지 않습니다. 금액 선택과 자동 플레이는 사용할 수 없습니다.",
   info_ctrl_windows_desc: "버튼을 클릭하거나 터치하세요. 메뉴 탭에서 심볼 당첨표, 정보, 소리를 선택합니다. 긴 글과 목록은 스크롤할 수 있습니다. ×가 있으면 창을 닫을 수 있습니다. 비활성화된 조작은 현재 상태나 한도에서 사용할 수 없습니다. 알림은 닫기, 다시 시도, 재연결을 제공합니다. 재연결하면 기록된 라운드를 복원합니다.",
   info_ctrl_feature_desc: "전환 후 무료 스핀 시작을 누르세요. 카운터는 현재 스핀과 총 횟수, 보너스 당첨액은 누적 금액을 보여 줍니다. 스핀은 자동 진행됩니다. 허용될 때 Spin/Stop으로 애니메이션을 단축하고 속도 버튼으로 빠르기를 바꿀 수 있습니다. 자동 플레이 버튼은 보이지만 비활성화됩니다. 요약 화면에서 계속을 누르면 메인 게임으로 돌아갑니다.",
   info_ctrl_bonus_desc: "보너스 선택 창을 엽니다. 무료 스핀 또는 Wild Spin 카드를 선택하면 규칙과 총액이 표시됩니다. − / +는 기본 베팅액을 메인 게임과 배당표에도 함께 반영합니다. 카드 선택만으로 라운드가 시작되지 않으며, 2× 초과 모드는 하단 버튼으로 모드, 배수, 총액을 표시하는 별도 확인 창을 엽니다. 구매 확인을 눌러야 시작하며, 취소 또는 ×는 시작하지 않고 돌아갑니다. ×는 구매 없이 닫습니다. 라운드, 무료 스핀, 자동 플레이 중에는 사용할 수 없습니다.",
+  boost_title: "보너스 확률 ×5",
+  boost_rules: "문 보너스와 보물창고 확률이 다섯 배입니다. 스핀 비용은 기본 베팅의 2.5배이며 지급액은 기본 베팅 기준입니다. RTP 96%. 활성화 중에는 보너스 구매가 불가능합니다.",
+  treasury_open_chests: "상자 3개를 여세요",
+  treasury_collected: "보물을 획득했습니다!",
+  treasury_win: "당첨금",
+  treasury_multiplier: "배수",
+  treasury_buy_rules: "For 9\u00d7 the base bet, open 3 of 6 chests. Cash rewards add up; each emerald adds +1 to the total multiplier. Maximum payout: 40\u00d7 the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "와일드 스핀",
   wild_spin_rules: "기본 베팅의 10배로 1회 스핀합니다. 최소 하나의 Wild가 릴 전체로 확장되며 ×2, ×3, ×5 또는 ×10 배수가 적용됩니다. SCATTER, 별 및 무료 스핀은 없습니다. 당첨은 보장되지 않습니다. 최대 당첨금은 기본 베팅의 5000배입니다.",
 

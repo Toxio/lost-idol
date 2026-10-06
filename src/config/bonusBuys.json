@@ -22,5 +22,11 @@
     "kind": "wild_spin",
     "spins": 1,
     "cost": 10
+  },
+  {
+    "mode": "treasury",
+    "kind": "treasury",
+    "spins": 0,
+    "cost": 9
   }
 ]

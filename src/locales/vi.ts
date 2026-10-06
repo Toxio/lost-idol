@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const vi: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Trong Replay, Phát lại phát vòng đã ghi và Phát lại lần nữa phát lại. Bảng hiển thị tổng tiền, tiền cơ bản, hệ số chế độ và tiền thắng. Không bắt đầu vòng mới hay thay đổi số dư. Không thể chọn mức tiền hoặc tự động quay.",
   info_ctrl_windows_desc: "Nhấp hoặc chạm nút để thao tác. Các thẻ menu hiển thị thưởng biểu tượng, thông tin và âm thanh. Cuộn văn bản và danh sách dài. × đóng cửa sổ khi có. Điều khiển bị vô hiệu hóa không dùng được ở trạng thái hoặc giới hạn hiện tại. Thông báo có đóng, thử lại hoặc kết nối lại; kết nối lại khôi phục vòng đã ghi.",
   info_ctrl_feature_desc: "Sau chuyển cảnh, chọn bắt đầu lượt quay miễn phí. Bộ đếm hiển thị lượt hiện tại và tổng số; tiền thắng tính năng hiển thị phần tích lũy. Các lượt tự động tiếp diễn. Spin/Stop rút ngắn hoạt ảnh khi được phép; Tốc độ đổi nhịp chạy. Nút tự động quay vẫn hiện nhưng bị vô hiệu hóa. Tiếp tục đóng màn hình tổng kết.",
   info_ctrl_bonus_desc: "Mở cửa sổ chọn thưởng. Chọn lượt quay miễn phí hoặc Wild Spin để xem luật và tổng chi phí. − / + đổi mức cược cơ bản đồng thời trên màn hình chính và bảng trả thưởng. Chọn thẻ chưa bắt đầu vòng; với chế độ trên 2×, nút dưới mở xác nhận riêng hiển thị chế độ, hệ số và tổng tiền. Chỉ xác nhận mua mới bắt đầu; Hủy hoặc × quay lại mà không bắt đầu. × đóng mà không mua. Không khả dụng trong vòng chơi, lượt miễn phí hoặc tự động quay.",
+  boost_title: "CƠ HỘI THƯỞNG ×5",
+  boost_rules: "Tăng gấp năm cơ hội thưởng cửa và Kho báu. Mỗi lượt có giá 2,5 lần cược cơ bản; tiền thưởng tính theo cược cơ bản. RTP 96%. Không thể mua thưởng khi bật.",
+  treasury_open_chests: "Mở 3 rương",
+  treasury_collected: "Đã thu thập kho báu!",
+  treasury_win: "Tiền thắng",
+  treasury_multiplier: "Hệ số nhân",
+  treasury_buy_rules: "For 9\u00d7 the base bet, open 3 of 6 chests. Cash rewards add up; each emerald adds +1 to the total multiplier. Maximum payout: 40\u00d7 the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "Vòng quay Wild",
   wild_spin_rules: "Một vòng quay với giá 10× cược cơ bản. Ít nhất một Wild mở rộng toàn bộ cuộn với hệ số ×2, ×3, ×5 hoặc ×10. Không có SCATTER, ngôi sao hay vòng quay miễn phí. Không đảm bảo thắng. Thắng tối đa: 5000× cược cơ bản.",
 

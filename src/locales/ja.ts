@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const ja: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Replay では 再生 で記録済みのラウンドを再生し、もう一度再生 で再度再生します。合計額、基本額、モード倍率、獲得額を表示します。新しいラウンドは開始せず、残高も変わりません。金額選択とオートプレイは利用できません。",
   info_ctrl_windows_desc: "ボタンはクリックまたはタップで操作します。メニューのタブでシンボル配当、情報、音を切り替えます。長い文章や一覧はスクロールできます。× がある画面は閉じられます。無効な操作は現在の状態や上限では使えません。通知では閉じる、再試行、再接続を選べます。再接続すると記録済みのラウンドを復元します。",
   info_ctrl_feature_desc: "画面切り替え後にフリースピン開始を選びます。カウンターは現在の回数と総回数、ボーナス獲得額は累計を表示します。スピンは自動で進みます。許可される場合は Spin/Stop で演出を短縮でき、速度ボタンで速さを変えられます。オートプレイは表示されたまま無効になります。終了画面で続行を選ぶとメインゲームに戻ります。",
   info_ctrl_bonus_desc: "ボーナス選択画面を開きます。フリースピンまたは Wild Spin のカードでルールと合計額を確認できます。− / + はメイン画面と配当表の基本ベット額も変更します。カード選択だけでは開始せず、2×を超えるモードでは、下のボタンからモード、倍率、合計額を示す確認画面が開きます。購入を確定した場合のみ開始します。キャンセルまたは×で開始せずに戻ります。× は購入せず閉じます。ラウンド、フリースピン、オートプレイ中は利用できません。",
+  boost_title: "ボーナス確率 ×5",
+  boost_rules: "ドアボーナスと宝物庫の出現確率が5倍。スピン費用は基本ベットの2.5倍、配当は基本ベットに基づきます。RTP 96%。有効時はボーナス購入不可。",
+  treasury_open_chests: "宝箱を3つ開けてください",
+  treasury_collected: "お宝を獲得！",
+  treasury_win: "獲得額",
+  treasury_multiplier: "倍率",
+  treasury_buy_rules: "For 9\u00d7 the base bet, open 3 of 6 chests. Cash rewards add up; each emerald adds +1 to the total multiplier. Maximum payout: 40\u00d7 the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "ワイルドスピン",
   wild_spin_rules: "基本ベットの10倍で1回スピン。少なくとも1つのWildがリール全体に拡大し、×2、×3、×5、×10のいずれかの倍率が付きます。SCATTER、星、フリースピンはありません。配当は保証されません。最大配当は基本ベットの5000倍です。",
 

@@ -7,15 +7,7 @@
     #e8c040 68%,
     #d4a028 100%
   );
-  --smp-footer-win-gradient: linear-gradient(
-    180deg,
-    #fffff5 0%,
-    #fff4c8 10%,
-    #ffe866 28%,
-    #f5c830 52%,
-    #d4a020 74%,
-    #9a6810 100%
-  );
+
 
   width: 100%;
   max-width: var(--smp-stage-width);
@@ -213,7 +205,9 @@
 
 /* Gradient applied to child spans when balance uses smp-currency-pair structure. */
 .smp-bottom-balance .smp-bottom-value .smp-currency-pair__symbol,
-.smp-bottom-balance .smp-bottom-value .smp-currency-pair__amount {
+.smp-bottom-balance .smp-bottom-value .smp-currency-pair__amount,
+.smp-bottom-bar .smp-bottom-win-value .smp-currency-pair__symbol,
+.smp-bottom-bar .smp-bottom-win-value .smp-currency-pair__amount {
   background-image: var(--smp-footer-amount-gradient);
   background-clip: text;
   -webkit-background-clip: text;
@@ -314,16 +308,6 @@
 .smp-bottom-win-value .smp-currency-pair {
   font: inherit;
   letter-spacing: inherit;
-}
-
-.smp-bottom-win-value .smp-currency-pair,
-.smp-bottom-win-value .smp-currency-pair__symbol,
-.smp-bottom-win-value .smp-currency-pair__amount {
-  background-image: var(--smp-footer-win-gradient);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
 }
 
 .smp-bottom-win-value:not(.smp-bottom-win-value--active) .smp-currency-pair {

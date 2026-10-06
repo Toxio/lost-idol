@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const tr: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Replay ekranında Oynat kayıtlı turu oynatır, Tekrar Oynat tekrarlar. Toplam tutar, temel tutar, mod çarpanı ve kazanç gösterilir. Yeni tur başlamaz, bakiye değişmez. Tutar seçimi ve otomatik oyun kullanılamaz.",
   info_ctrl_windows_desc: "Düğmelere tıklayın veya dokunun. Menü sekmeleri sembol kazançlarını, bilgileri ve sesi gösterir. Uzun metinleri ve listeleri kaydırın. × uygun pencereleri kapatır. Devre dışı kontroller mevcut durumda veya sınıra ulaşıldığında kullanılamaz. Bildirimler kapatma, yeniden deneme veya bağlanma sunar; yeniden bağlanma kayıtlı turu geri yükler.",
   info_ctrl_feature_desc: "Geçişten sonra ücretsiz dönüşleri başlatın. Sayaç mevcut dönüşü ve toplamı, bonus kazancı biriken kazancı gösterir. Dönüşler otomatik ilerler. İzin verildiğinde Spin/Stop animasyonu kısaltır; Hız tempoyu değiştirir. Otomatik oyun görünür ancak devre dışıdır. Devam özeti kapatır.",
   info_ctrl_bonus_desc: "Bonus seçimini açar. Kuralları ve toplam tutarı görmek için ücretsiz dönüş veya Wild Spin kartını seçin. − / + temel bahsi ana oyunda ve kazanç tablosunda da değiştirir. Kart seçimi tur başlatmaz: 2× üzerindeki modlarda alttaki düğme mod, çarpan ve toplam tutarı gösteren ayrı bir onay açar. Yalnızca satın alma onayı bonusu başlatır; İptal veya × başlatmadan geri döner. × satın almadan kapatır. Tur, ücretsiz dönüşler veya otomatik oyun sırasında kullanılamaz.",
+  boost_title: "BONUS ŞANSI ×5",
+  boost_rules: "Kapı bonusu ve Hazine şansını beş katına çıkarır. Tur ücreti temel bahsin 2,5 katıdır; kazançlar temel bahis üzerinden hesaplanır. RTP %96. Etkinken bonus satın alınamaz.",
+  treasury_open_chests: "3 sandık aç",
+  treasury_collected: "Hazine toplandı!",
+  treasury_win: "Kazanç",
+  treasury_multiplier: "Çarpan",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "Wild Turu",
   wild_spin_rules: "Temel bahsin 10 katına bir tur. En az bir Wild, ×2, ×3, ×5 veya ×10 çarpanıyla tüm makaraya yayılır. SCATTER, yıldız veya ücretsiz tur yoktur. Kazanç garanti değildir. En yüksek kazanç: temel bahsin 5000 katı.",
 

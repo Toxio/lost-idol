@@ -13,6 +13,6 @@ for(const [mode,books] of Object.entries(samples)) for(const book of books) for(
   assert.equal(f.visual.matrix.flat().filter(v=>v===9).length,1);
   assert.equal(f.visual.collector.underlyingMatrix.flat().filter(v=>v===9).length,0);
  }
- assert.ok(Math.abs(frames.reduce((s,f)=>s+f.visual.winAmount,0)-book.payoutMultiplier*bet/100)<0.00001);
+ assert.ok(Math.abs(frames.reduce((s,f)=>s+f.visual.winAmount+(f.treasury?.amount ?? 0)*bet,0)-book.payoutMultiplier*bet/100)<0.00001);
 }
 console.log('Collector playback: frame counts, no expansion, single wild, payout scaling passed');

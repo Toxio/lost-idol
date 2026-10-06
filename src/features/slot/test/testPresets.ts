@@ -1,3 +1,4 @@
+import treasuryBooks from './treasuryBooks.json';
 import bonusFixture from "@/api/rgs/bonusFixture.json";
 import collectorBooks from '@/api/rgs/collectorBooks.json';
 import { boardToMatrix } from "@/features/slot/player/bookEvents";
@@ -61,13 +62,14 @@ const WIN_SPINE_ANIM_PRESETS: TestPreset[] = [
     preset: winAnimMidRowFive(1, 100),
   },
   {
-    id: "win-anim-lips",
-    label: "Win anim · Treasure",
-    subtitle: "Spine · Line 1 · ×5",
+    id: "treasury-double",
+    label: "Сокровищница · Изумруд ×10",
+    subtitle: "Барабаны 2, 3, 4 · 3 открытия из 6",
     iconSymbol: 2,
-    badge: "×5",
+    badge: "3",
     badgeColor: "#d8c18a",
-    preset: winAnimMidRowFive(2, 95),
+    rewardLabel: "Вход в сокровищницу",
+    preset: { matrix: buildMatrix([]), winLines: [], winAmount: 0, book: treasuryBooks['double'] },
   },
   {
     id: "win-anim-parfume",
@@ -216,23 +218,14 @@ export const TEST_PRESETS: TestPreset[] = [
     },
   },
   {
-    id: "lips-3",
-    label: "3× Treasure",
-    subtitle: "Line 1 · Small win",
+    id: "treasury-cash",
+    label: "Сокровищница · Денежные награды",
+    subtitle: "Барабаны 2, 3, 4 · 3 открытия из 6",
     iconSymbol: 2,
-    badge: "×3",
+    badge: "3",
     badgeColor: "#d8c18a",
-    preset: {
-      matrix: buildMatrix([
-        [4, 2, 1],
-        [5, 2, 11],
-        [7, 2, 6],
-        [3, 11, 4],
-        [1, 5, 3],
-      ]),
-      winLines: [wl(2, 1, 3, 8)],
-      winAmount: 8,
-    },
+    rewardLabel: "Вход в сокровищницу",
+    preset: { matrix: buildMatrix([]), winLines: [], winAmount: 0, book: treasuryBooks['cash'] },
   },
   {
     id: "seven-v",
@@ -325,24 +318,14 @@ export const TEST_PRESETS: TestPreset[] = [
     },
   },
   {
-    id: "wild-3-line1",
-    label: "3× Monkey Wild + Treasure row",
-    subtitle: "Line 1 · Triple wild · Line 2 · Treasure ×5 (top)",
-    iconSymbol: 9,
-    badge: "×3",
+    id: "treasury-multiplier",
+    label: "Сокровищница · Изумруд ×2",
+    subtitle: "Барабаны 2, 3, 4 · 3 открытия из 6",
+    iconSymbol: 2,
+    badge: "3",
     badgeColor: "#d8c18a",
-    preset: {
-      matrix: buildMatrix([
-        [2, 3, 11],
-        [9, 2, 6],
-        [2, 9, 3],
-        [2, 7, 9],
-        [2, 8, 11],
-      ]),
-      winLines: [wl(2, 2, 5, 60)],
-      winAmount: 95,
-      expandingWild: [0, 9, 9, 9, 0],
-    },
+    rewardLabel: "Вход в сокровищницу",
+    preset: { matrix: buildMatrix([]), winLines: [], winAmount: 0, book: treasuryBooks['multiplier'] },
   },
   {
     id: "big-win-20x",

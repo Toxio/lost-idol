@@ -70,7 +70,7 @@ export function bigWinAmountTickUpDurationMs(targetAmount: number): number {
 }
 
 export function startBigWinAmountTickUp(
-  label: Text,
+  label: { text: string },
   targetAmount: number,
   ticker: Ticker,
   options?: {

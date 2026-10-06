@@ -51,7 +51,7 @@ function resolveLocale(): string {
   return LOCALES[lang] ? lang : "en";
 }
 
-const locale = resolveLocale();
+export const locale = resolveLocale();
 const params = getGameUrlParams();
 const base = LOCALES[locale] ?? en;
 const overrides = params.social ? SWEEPS_OVERRIDES[locale] ?? SWEEPS_OVERRIDES.en : null;

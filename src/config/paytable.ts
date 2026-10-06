@@ -32,7 +32,6 @@ export const ACCESSORY_IDS = [
 /** `game_config.py` `paytable` — seven / lips / parfume / rose / accessories. */
 const LINE_PAYTABLE: Readonly<Record<number, PaytableMultipliers>> = {
   [SEVEN_ID]: { 5: 500, 4: 25, 3: 5, 2: 1 },
-  [LIPS_ID]: { 5: 70, 4: 12, 3: 4 },
   [PARFUME_ID]: { 5: 70, 4: 12, 3: 4 },
   [ROSE_ID]: { 5: 20, 4: 4, 3: 2 },
   [GLASS_ID]: { 5: 15, 4: 3, 3: 1 },

@@ -1,3 +1,4 @@
+import { createBonusDoorLabel } from '@/animation/symbols/bonusDoorLabel';
 import { Container, Sprite } from 'pixi.js';
 
 import { resolveSymbolTexture } from './assets';
@@ -20,6 +21,7 @@ export function createSymbolSprite(alias: string, cw: number, ch: number): SlotS
   const sprite = new Sprite(resolveSymbolTexture(alias));
   fitSprite(sprite, cw, ch, symbolFit(alias), symbolXShift(alias));
   container.addChild(sprite);
+  updateBonusLabel(sprite, alias);
   return { container, sprite, alias };
 }
 
@@ -41,6 +43,7 @@ export function fitSprite(
 export function updateSymbol(sym: SlotSymbol, alias: string, cw: number, ch: number): void {
   sym.sprite.texture = resolveSymbolTexture(alias);
   fitSprite(sym.sprite, cw, ch, symbolFit(alias), symbolXShift(alias));
+  updateBonusLabel(sym.sprite, alias);
   sym.alias = alias;
 }
 
@@ -56,4 +59,16 @@ export function setSlotSymbolVisibility(sym: SlotSymbol | undefined, visible: bo
   sym.container.visible = visible;
   sym.sprite.visible = visible;
   if (visible) sym.sprite.alpha = 1;
+}
+
+function updateBonusLabel(sprite: Sprite, alias: string): void {
+  const previous = sprite.getChildByLabel('bonus-door-label');
+  if (alias !== 'sym-bonus-door') {
+    previous?.destroy();
+    return;
+  }
+  const label = previous ?? sprite.addChild(createBonusDoorLabel());
+  label.label = 'bonus-door-label';
+  label.scale.set(sprite.texture.width / 256, sprite.texture.height / 256);
+  label.position.set(0, sprite.texture.height * 102 / 256);
 }

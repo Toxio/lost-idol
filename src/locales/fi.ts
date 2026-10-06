@@ -1,10 +1,31 @@
 import type {  TranslationKey } from "./en";
 
 export const fi: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Replay-tilassa Toista näyttää tallennetun kierroksen ja Toista uudelleen toistaa sen. Paneelissa näkyvät kokonaismäärä, perusmäärä, tilakerroin ja voitto. Toisto ei aloita uutta kierrosta eikä muuta saldoa. Summan valinta ja automaattipeli eivät ole käytössä.",
   info_ctrl_windows_desc: "Napsauta tai napauta painikkeita. Välilehdet näyttävät symbolivoitot, tiedot ja ääniasetukset. Vieritä pitkiä tekstejä ja luetteloita. × sulkee ikkunan, kun saatavilla. Pois käytöstä olevat säätimet eivät toimi nykyisessä tilassa tai rajalla. Ilmoituksista voi sulkea, yrittää uudelleen tai yhdistää uudelleen; yhdistäminen palauttaa tallennetun kierroksen.",
   info_ctrl_feature_desc: "Käynnistä ilmaiskierrokset siirtymän jälkeen. Laskuri näyttää nykyisen kierroksen ja kokonaismäärän; bonusvoitto näyttää kertyneet voitot. Kierrokset etenevät automaattisesti. Spin/Stop lyhentää animaatiota, kun sallittu; Nopeus muuttaa tahtia. Automaattipeli näkyy, mutta ei ole käytettävissä. Jatka sulkee yhteenvedon.",
   info_ctrl_bonus_desc: "Avaa bonusvalinnan. Valitse ilmaiskierrokset tai Wild Spin nähdäksesi säännöt ja kokonaishinnan. − / + muuttaa peruspanosta myös pääpelissä ja voittotaulukossa. Kortin valinta ei aloita kierrosta: yli 2× tiloissa alareunan painike avaa erillisen vahvistuksen, jossa näkyvät tila, kerroin ja kokonaissumma. Vasta ostovahvistus käynnistää bonuksen; Peruuta tai × palaa aloittamatta. × sulkee ilman ostoa. Ei käytettävissä kierroksen, ilmaiskierrosten tai automaattipelin aikana.",
+  boost_title: "BONUSMAHDOLLISUUS ×5",
+  boost_rules: "Viisinkertaistaa ovibonuksen ja aarrekammion mahdollisuuden. Kierros maksaa 2,5 peruspanosta. Voitot lasketaan peruspanoksesta. RTP 96 %. Bonuksen osto on pois käytöstä.",
+  treasury_open_chests: "Avaa 3 arkkua",
+  treasury_collected: "Aarre kerätty!",
+  treasury_win: "Voitto",
+  treasury_multiplier: "Kerroin",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "Wild-kierros",
   wild_spin_rules: "Yksi kierros 10× peruspanoksella. Vähintään yksi Wild laajenee koko kelalle kertoimella ×2, ×3, ×5 tai ×10. Ei SCATTER-symboleja, tähtiä tai ilmaiskierroksia. Voittoa ei taata. Enimmäisvoitto: 5000× peruspanos.",
 

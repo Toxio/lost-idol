@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const es: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "En Replay, Reproducir reproduce la ronda registrada y Reproducir de nuevo la repite. Se muestran importe total, importe base, multiplicador del modo y premio. No inicia otra ronda ni cambia el saldo. La selección del importe y el juego automático no están disponibles.",
   info_ctrl_windows_desc: "Haz clic o toca los botones. Las pestañas muestran premios de símbolos, información y sonido. Desplaza los textos y listas largos. × cierra las ventanas donde esté disponible. Los controles desactivados no se pueden usar en ese estado o al alcanzar un límite. Los avisos permiten cerrar, reintentar o reconectar; reconectar restaura la ronda registrada.",
   info_ctrl_feature_desc: "Tras la transición, pulsa «Iniciar giros gratis». El contador muestra el giro actual y el total; el premio del bono muestra lo acumulado. Los giros avanzan automáticamente. Spin/Stop acorta la animación cuando se permite; Velocidad cambia el ritmo. El juego automático permanece visible pero desactivado. «Continuar» cierra el resumen.",
   info_ctrl_bonus_desc: "Abre la selección de bonos. Elige giros gratis o Wild Spin para ver las reglas y el coste total. − / + cambia la apuesta base también en el juego principal y la tabla de premios. Elegir una tarjeta no inicia una ronda: en modos superiores a 2×, el botón inferior abre una confirmación aparte con modo, multiplicador e importe total. Solo confirmar la compra inicia el bono; Cancelar o × vuelve sin iniciarlo. × cierra sin comprar. No disponible durante una ronda, giros gratis o juego automático.",
+  boost_title: "5× OPCIÓN DE BONUS",
+  boost_rules: "Quintuplica la probabilidad del bonus de puertas y del Tesoro. Cada giro cuesta 2,5 veces la apuesta base; los premios usan la apuesta base. RTP 96%. La compra de bonus queda desactivada.",
+  treasury_open_chests: "Abre 3 cofres",
+  treasury_collected: "¡Tesoro recogido!",
+  treasury_win: "Premio",
+  treasury_multiplier: "Multiplicador",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "Giro Wild",
   wild_spin_rules: "Un giro por 10× la apuesta base. Al menos un Wild se expande por todo su carrete con un multiplicador ×2, ×3, ×5 o ×10. Sin SCATTER, estrellas ni giros gratis. No se garantiza un premio. Premio máximo: 5000× la apuesta base.",
 

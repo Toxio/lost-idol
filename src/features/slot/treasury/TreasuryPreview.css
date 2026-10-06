@@ -1,0 +1,41 @@
+.treasury-reel { position: absolute; z-index: 8; overflow: visible; container-type: size; font-family: var(--game-font), sans-serif; color: #ffe6a0; }
+.treasury-reel-surface { position: absolute; inset: 0; isolation: isolate; display: flex; flex-direction: column; align-items: stretch; }
+.treasury-instruction { flex: 0 0 8%; margin: 0; display: grid; place-items: center; font-size: clamp(9px, 4cqh, 22px); text-align: center; }
+.treasury-chests { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 1% 5%; padding: 0 8% 2%; }
+.treasury-chest { position: relative; min-height: 0; min-width: 0; border: 0; padding: 0; background: transparent; cursor: pointer; color: #ffebac; display: flex; flex-direction: column; align-items: center; }
+.treasury-chest-art { display: block; height: 80%; max-width: 100%; aspect-ratio: 1; background-size: 400% 400%; background-position: 0 0; background-repeat: no-repeat; filter: drop-shadow(0 4px 4px #0008); }
+.treasury-chest:not(:disabled):hover { filter: drop-shadow(0 0 8px #b3ff7b88); }
+.treasury-chest:focus-visible { outline: 2px solid #b6ff92; outline-offset: -2px; border-radius: 8px; }
+.treasury-chest:disabled { cursor: default; }
+.treasury-chest.is-open .treasury-chest-art { background-position: 66.6667% 66.6667%; }
+.treasury-chest.is-opening .treasury-chest-art { animation: treasury-open 1000ms steps(1, end) both; }
+.treasury-reward { display: flex; justify-content: center; align-items: center; height: 18%; opacity: 0; }
+.treasury-reward-glyphs { display: inline-flex; align-items: center; justify-content: center; gap: 2px; height: 100%; }
+.treasury-reward-glyphs svg { height: 100%; width: auto; overflow: hidden; }
+.treasury-reward.is-visible { opacity: 1; animation: treasury-reward 350ms ease-out; }
+.treasury-transition { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+@keyframes treasury-open { 0% { background-position: 0 0; } 10% { background-position: 33.3333% 0; } 20% { background-position: 66.6667% 0; } 30% { background-position: 100% 0; } 40% { background-position: 0 33.3333%; } 50% { background-position: 33.3333% 33.3333%; } 60% { background-position: 66.6667% 33.3333%; } 70% { background-position: 100% 33.3333%; } 80% { background-position: 0 66.6667%; } 90% { background-position: 33.3333% 66.6667%; } 100% { background-position: 66.6667% 66.6667%; } }
+@keyframes treasury-reward { from { transform: translateY(10px); filter: brightness(1.8); } to { transform: translateY(0); filter: brightness(1); } }
+@media (prefers-reduced-motion: reduce) { .treasury-chest.is-opening .treasury-chest-art, .treasury-reward.is-visible { animation: none; } }
+/* Collector labels can extend beyond their cells; hide them only while chests cover the grid. */
+.smp-canvas:has(.treasury-reel-surface) > .smp-collector-layer,
+.smp-canvas:has(.treasury-reel-surface) > .smp-wild-multiplier { visibility: hidden; }
+
+/* Extend to the same backing bounds as createReelFrame (100/65), beneath its carved edges. */
+.treasury-reel-surface::before { content: ""; position: absolute; inset: -5.542% -3.729% -4.311%; z-index: -1; background: #10251b url("../../../assets/treasury/temple-wall-v2.webp") center / cover no-repeat; border-radius: 12px; }
+/* Match the Pixi frame's nine-slice dimensions at the 1641 × 1022 design size. */
+.treasury-frame { position: absolute; inset: 0; z-index: 9; pointer-events: none; border: 0 solid transparent; border-image-slice: 110 170 100 170 fill; border-image-width: 10.763209% 10.359537% 9.784736% 10.359537%; border-image-repeat: stretch; }
+.treasury-transition { overflow: hidden; }
+
+.treasury-instruction { font-family: var(--game-font), sans-serif; font-weight: 400; color: #d9c993; letter-spacing: .06em; line-height: 1; }
+
+.treasury-reward { width: 100%; min-width: 0; }
+.treasury-money { display: flex; align-items: center; justify-content: center; height: 100%; max-width: 100%; gap: 3px; font-size: clamp(10px, 4cqh, 30px); }
+.treasury-money > .treasury-reward-glyphs { min-width: 0; }
+.treasury-money .treasury-reward-glyphs svg { min-width: 0; }
+.treasury-money-symbol { flex-shrink: 0; font-size: .7em; font-weight: 900; color: #f4da79; }
+
+.treasury-instruction-glyphs { display: inline-flex; align-items: center; justify-content: center; height: clamp(12px, 4.5cqh, 32px); max-width: 94%; gap: 1px; }
+.treasury-instruction-glyphs svg { height: 100%; width: auto; min-width: 0; overflow: hidden; }
+
+.treasury-auto-pick { flex: 0 0 5%; width: 100%; text-align: center; color: #fff0ba; font-size: clamp(9px, 2.4cqh, 16px); margin: 0; pointer-events: none; }

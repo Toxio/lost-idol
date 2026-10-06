@@ -1,3 +1,4 @@
+import { decodeTreasury, type TreasuryAward } from '../treasury/treasuryModel';
 import type {
   Book,
   BookEvent,
@@ -10,6 +11,7 @@ import { symbolNameToId } from "./symbolMap";
 const WILD_SYMBOL_ID = 9;
 
 export interface RoundFrame {
+  treasury?: TreasuryAward;
   visual: SpinVisualResult;
   freeSpin: number;
   totalFreeSpins: number;
@@ -50,7 +52,9 @@ export async function buildRoundFrames(
     const visual = await playBookToSpinResult({ events: spinEvents }, bet, {
       fallbackMatrix: fallback,
     });
-    totalWin += visual.winAmount;
+    const treasuryEvent = group.events.find(e => e.type === 'treasury');
+    const treasury = treasuryEvent ? decodeTreasury(treasuryEvent as Record<string, unknown>) : undefined;
+    totalWin += visual.winAmount + (treasury?.amount ?? 0) * bet;
     const cumulative = group.events
       .filter((e) => e.type === "setTotalWin" || e.type === "finalWin")
       .at(-1);
@@ -74,6 +78,7 @@ export async function buildRoundFrames(
       return Number(wild?.multiplier ?? 0);
     });
     frames.push({
+      treasury,
       visual,
       freeSpin: group.freeSpin,
       totalFreeSpins: group.total,

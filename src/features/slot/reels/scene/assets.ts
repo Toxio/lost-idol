@@ -58,6 +58,8 @@ export function symbolAlias(serverIdx: number): string {
   return SYMBOL_MAP[serverIdx] ?? 'sym-seven';
 }
 
+const SPIN_FILLER_ALIASES = SYMBOL_ALIASES.filter(alias => alias !== 'sym-lips');
+
 export function randomAlias(): string {
-  return SYMBOL_ALIASES[Math.floor(Math.random() * SYMBOL_ALIASES.length)];
+  return SPIN_FILLER_ALIASES[Math.floor(Math.random() * SPIN_FILLER_ALIASES.length)];
 }

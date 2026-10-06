@@ -1,10 +1,31 @@
 import type {  TranslationKey } from './en';
 
 export const de: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "Im Replay startet Abspielen die aufgezeichnete Runde; Erneut abspielen wiederholt sie. Angezeigt werden Gesamtbetrag, Grundbetrag, Modusmultiplikator und Gewinn. Replay startet keine neue Runde und ändert das Guthaben nicht. Betragsauswahl und Autoplay sind nicht verfügbar.",
   info_ctrl_windows_desc: "Klicke oder tippe auf Schaltflächen. Die Menüreiter zeigen Symbolgewinne, Informationen und Toneinstellungen. Lange Texte und Listen lassen sich scrollen. × schließt verfügbare Fenster. Deaktivierte Elemente sind im aktuellen Zustand oder an einer Grenze nicht nutzbar. Meldungen bieten Schließen, Erneut versuchen oder Neu verbinden; die Verbindung stellt die gespeicherte Runde wieder her.",
   info_ctrl_feature_desc: "Wähle nach dem Übergang „Freispiele starten“. Der Zähler zeigt den aktuellen Spin und die Gesamtzahl, der Bonusgewinn die gesammelten Gewinne. Spins laufen automatisch. Spin/Stop verkürzt die Animation, sofern erlaubt; die Geschwindigkeitstaste ändert das Tempo. Autoplay bleibt sichtbar, aber deaktiviert. „Weiter“ beendet die Zusammenfassung.",
   info_ctrl_bonus_desc: "Öffnet die Bonusauswahl. Wähle Freispiele oder Wild Spin, um Regeln und Gesamtkosten zu sehen. − / + ändert den Grundeinsatz auch im Hauptspiel und in der Gewinntabelle. Die Kartenauswahl startet keine Runde. Bei Modi über 2× öffnet die untere Schaltfläche eine zusätzliche Bestätigung mit Modus, Multiplikator und Gesamtbetrag. Erst die Kaufbestätigung startet den Bonus; Abbrechen oder × kehrt ohne Start zurück. × schließt ohne Kauf. Während einer Runde, Freispielen oder Autoplay nicht verfügbar.",
+  boost_title: "5× BONUSCHANCE",
+  boost_rules: "Verfünffacht die Chance auf Türbonus und Schatzkammer. Ein Dreh kostet den 2,5-fachen Basiseinsatz; Gewinne basieren auf dem Basiseinsatz. RTP 96%. Bonuskauf ist dabei deaktiviert.",
+  treasury_open_chests: "Öffne 3 Truhen",
+  treasury_collected: "Schatz gesammelt!",
+  treasury_win: "Gewinn",
+  treasury_multiplier: "Multiplikator",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "Wild-Spin",
   wild_spin_rules: "Eine Drehung für den 10-fachen Basiseinsatz. Mindestens ein Wild erweitert sich auf die gesamte Walze mit ×2, ×3, ×5 oder ×10. Keine SCATTER, Sterne oder Freispiele. Ein Gewinn ist nicht garantiert. Maximalgewinn: 5000× Basiseinsatz.",
 

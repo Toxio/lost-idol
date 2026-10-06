@@ -1,10 +1,31 @@
 import type {  TranslationKey } from "./en";
 
 export const ar: Record<TranslationKey, string> = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   info_ctrl_replay_desc: "في Replay، يعرض تشغيل الجولة المسجّلة ويعيد إعادة التشغيل تشغيلها. تعرض اللوحة المبلغ الإجمالي والأساسي ومضاعف النمط والربح. لا تبدأ جولة جديدة ولا يتغير الرصيد. اختيار المبلغ واللعب التلقائي غير متاحين.",
   info_ctrl_windows_desc: "انقر الأزرار أو المسها. تعرض تبويبات القائمة أرباح الرموز والمعلومات والصوت. مرّر النصوص والقوائم الطويلة. يغلق × النافذة حيث يتوفر. لا يمكن استخدام العناصر المعطّلة في الحالة الحالية أو عند بلوغ حد. تتيح الإشعارات الإغلاق أو إعادة المحاولة أو الاتصال مجددًا؛ يعيد الاتصال الجولة المسجّلة.",
   info_ctrl_feature_desc: "بعد الانتقال، اختر بدء اللفات المجانية. يعرض العداد اللفة الحالية والعدد الإجمالي، وتعرض أرباح المكافأة المجموع المتراكم. تتتابع اللفات تلقائيًا. يختصر Spin/Stop الحركة عند السماح بذلك، ويغيّر زر السرعة وتيرتها. يبقى اللعب التلقائي ظاهرًا ولكنه معطّل. اختر متابعة في الملخص للعودة إلى اللعبة الرئيسية.",
   info_ctrl_bonus_desc: "يفتح نافذة اختيار المكافأة. اختر بطاقة اللفات المجانية أو Wild Spin لرؤية القواعد والتكلفة الإجمالية. يغيّر − / + الرهان الأساسي أيضًا في اللعبة الرئيسية وجدول الأرباح. اختيار البطاقة لا يبدأ جولة؛ في الأنماط التي تتجاوز 2× يفتح الزر السفلي تأكيدًا منفصلًا يعرض النمط والمضاعف والمبلغ الإجمالي. تأكيد الشراء وحده يبدأ المكافأة؛ الإلغاء أو × يعود دون البدء. يغلق × النافذة دون شراء. غير متاح أثناء الجولة أو اللفات المجانية أو اللعب التلقائي.",
+  boost_title: "فرصة المكافأة ×5",
+  boost_rules: "يزيد خمسة أضعاف فرصة مكافأة الأبواب والخزينة. تكلفة الدورة 2.5 من الرهان الأساسي، والأرباح تُحسب من الرهان الأساسي. العائد النظري 96%. شراء المكافأة غير متاح عند التفعيل.",
+  treasury_open_chests: "افتح 3 صناديق",
+  treasury_collected: "تم جمع الكنز!",
+  treasury_win: "الربح",
+  treasury_multiplier: "المضاعف",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "دورة Wild",
   wild_spin_rules: "دورة واحدة بتكلفة 10× الرهان الأساسي. يمتد رمز Wild واحد على الأقل عبر البكرة بالكامل بمضاعف ×2 أو ×3 أو ×5 أو ×10. لا توجد رموز SCATTER أو نجوم أو دورات مجانية. الفوز غير مضمون. أقصى فوز: 5000× الرهان الأساسي.",
 

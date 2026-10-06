@@ -22,6 +22,7 @@ interface SlotBottomBarProps {
   precision: number;
   winAmount: number | null;
   betAmount: number;
+  costMultiplier?: number;
   quickBets: number[];
   disabled: boolean;
   onBetChange: (amount: number) => void;
@@ -34,6 +35,7 @@ export function SlotBottomBar({
   precision,
   winAmount,
   betAmount,
+  costMultiplier = 1,
   quickBets,
   disabled,
   onBetChange,
@@ -177,9 +179,9 @@ export function SlotBottomBar({
               >
                 <span className="smp-desktop-bet-label">{t("bet_title")}</span>
                 <CurrencyAmount
-                  value={betAmount}
+                  value={betAmount * costMultiplier}
                   currency={currency}
-                  precision={precision}
+                  precision={precision + (costMultiplier !== 1 ? 1 : 0)}
                   fitToWidth
                 />
               </button>
@@ -215,6 +217,7 @@ export function SlotBottomBar({
           anchor={betAnchor}
           quickBets={quickBets}
           currentBet={betAmount}
+          costMultiplier={costMultiplier}
           currency={currency}
           precision={precision}
           onSelect={onBetChange}

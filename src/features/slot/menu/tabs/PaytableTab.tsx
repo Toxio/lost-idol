@@ -41,7 +41,7 @@ const SYMBOL_IMAGE: Record<number, string> = {
   11: starImg,
 };
 
-const BOTTOM_LINE_IDS = [SEVEN_ID, PARFUME_ID, LIPS_ID, ROSE_ID] as const;
+const BOTTOM_LINE_IDS = [SEVEN_ID, PARFUME_ID, ROSE_ID] as const;
 
 interface PaytableTabProps {
   betAmount: number;
@@ -83,9 +83,20 @@ export function PaytableTab({
       <div className="smp-pt-specials">
         <div className="smp-pt-special-card">
           <div className="smp-pt-special-body">
+            <img src={SYMBOL_IMAGE[LIPS_ID]} alt={t('paytable_treasury_title')} className="smp-pt-special-img" draggable={false} />
+            <div className="smp-pt-special-info">
+              <div className="smp-pt-special-tag">{t('paytable_treasury_title')}</div>
+              <div className="smp-pt-payout-line"><span className="smp-pt-payout-mult">3</span><span className="smp-pt-payout-val">{t('paytable_treasury_status')}</span></div>
+            </div>
+          </div>
+          <p className="smp-pt-special-note">{t('paytable_treasury_note')}</p>
+
+        </div>
+        <div className="smp-pt-special-card">
+          <div className="smp-pt-special-body">
             <img
               src={SYMBOL_IMAGE[STAR_SCATTER_ID]}
-              alt="Star Scatter"
+              alt="Scarab SCATTER"
               className="smp-pt-special-img"
               draggable={false}
             />
@@ -133,12 +144,12 @@ export function PaytableTab({
           <div className="smp-pt-special-body">
             <img
               src={SYMBOL_IMAGE[DOLLAR_SCATTER_ID]}
-              alt="Scatter"
+              alt="BONUS"
               className="smp-pt-special-img"
               draggable={false}
             />
             <div className="smp-pt-special-info">
-              <div className="smp-pt-special-tag">{t("paytable_scatter")}</div>
+              <div className="smp-pt-special-tag">BONUS</div>
               <div className="smp-pt-special-payouts">
                 {Object.entries(SCATTER_FREE_SPINS).map(([count, spins]) => (
                   <div className="smp-pt-payout-line" key={count}>

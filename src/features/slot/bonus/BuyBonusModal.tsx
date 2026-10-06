@@ -5,6 +5,7 @@ import { formatMoney } from '@/utils/currency';
 import { indexOfBetLevel } from '@/api/rgs';
 import { play as playSound } from '@/audio/soundManager';
 import plans from '@/config/bonusBuys.json';
+import treasuryImg from '@/assets/symbols/lost-idol/gold-satchel/symbol.webp';
 import wildImg from '@/assets/bonus-buy/leaping-monkey.webp';
 import fs1 from '@/assets/bonus-buy/portal-5.webp';
 import fs2 from '@/assets/bonus-buy/portal-10.webp';
@@ -62,7 +63,7 @@ export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose
       && bets.includes(confirmation.stake) && confirmedTotal <= balance;
     return <Modal title={t('buy_bonus_confirm')} className="buy-bonus-modal buy-bonus-confirmation" size="narrow" onClose={closeDialog}>
       <div className="buy-bonus-confirmation__summary">
-        <strong>{confirmedPlan?.kind === 'wild_spin' ? t('wild_spin_title') : `${confirmedPlan?.spins} ${t('bonus_title')}`}</strong>
+        <strong>{confirmedPlan?.kind === 'treasury' ? t('paytable_treasury_title') : confirmedPlan?.kind === 'wild_spin' ? t('wild_spin_title') : `${confirmedPlan?.spins} ${t('bonus_title')}`}</strong>
         <div>{t('bet_title')}: {money(confirmation.stake)} × {confirmation.cost}</div>
         <div>{t('buy_bonus_cost')}: <strong>{money(confirmedTotal)}</strong></div>
       </div>
@@ -85,16 +86,16 @@ export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose
         {plans.map((item, i) => <button type="button" key={item.mode} className="buy-bonus-card"
           aria-pressed={i === selected} onClick={() => { playSound('ui_button'); setSelected(i); }}>
           <div className={`buy-bonus-art${item.kind === 'free_spins' ? ' buy-bonus-art--portal' : ''}`}>
-            <img src={item.kind === 'free_spins' ? freeSpinArt[item.spins] : wildImg} alt="" draggable={false} />
+            <img src={item.kind === 'free_spins' ? freeSpinArt[item.spins] : item.kind === 'treasury' ? treasuryImg : wildImg} alt="" draggable={false} />
           </div>
           <div className="buy-bonus-card-copy">
-            <strong>{item.kind === 'wild_spin' ? 'WILD' : item.spins}</strong>
-            <span>{t(item.kind === 'wild_spin' ? 'wild_spin_title' : 'bonus_title')}</span>
+            <strong>{item.kind === 'treasury' ? '3 / 6' : item.kind === 'wild_spin' ? 'WILD' : item.spins}</strong>
+            <span>{t(item.kind === 'treasury' ? 'paytable_treasury_title' : item.kind === 'wild_spin' ? 'wild_spin_title' : 'bonus_title')}</span>
             <b>{money(stake * item.cost)}</b>
           </div>
         </button>)}
       </div>
-      <p className="buy-bonus-rules">{t(plan.kind === 'wild_spin' ? 'wild_spin_rules' : 'buy_bonus_rules')}</p>
+      <p className="buy-bonus-rules">{t(plan.kind === 'treasury' ? 'treasury_buy_rules' : plan.kind === 'wild_spin' ? 'wild_spin_rules' : 'buy_bonus_rules')}</p>
     </div>
     <div className="buy-bonus-stake">
       <button type="button" disabled={index <= 0} onClick={() => step(-1)} aria-label={`${t('bet_title')} −`}><span className="buy-bonus-step-icon" aria-hidden="true" /></button>

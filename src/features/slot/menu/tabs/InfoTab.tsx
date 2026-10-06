@@ -60,6 +60,15 @@ export function InfoTab({ minBet, maxBet, currency, precision }: InfoTabProps) {
         <p className="smp-info-body">{t('paytable_star_note')}</p>
       </section>
       <section className="smp-info-section">
+        <h3 className="smp-info-section-title">{t('paytable_treasury_title')}</h3>
+        <p className="smp-info-body">{t('paytable_treasury_note')}</p>
+        <p className="smp-info-body">{t('treasury_buy_rules')}</p>
+      </section>
+      <section className="smp-info-section">
+        <h3 className="smp-info-section-title">{t("boost_title")}</h3>
+        <p className="smp-info-body">{t("boost_rules")}</p>
+      </section>
+      <section className="smp-info-section">
         <h3 className="smp-info-section-title">{t("buy_bonus_title")}</h3>
         {bonusBuys.map((plan) => <p className="smp-info-body" key={plan.mode}>
           {plan.kind === "wild_spin" ? t("wild_spin_title") : `${plan.spins} · ${t("bonus_title")}`} — {t("buy_bonus_cost")}: {plan.cost}× {t("bet_title")}

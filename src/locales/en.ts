@@ -1,8 +1,30 @@
 export const en = {
+  autospin_rules: "STOP RULES",
+  autospin_stop_free: "STOP ON FREE SPINS",
+  autospin_stop_treasury: "STOP ON TREASURY",
+  autospin_loss_limit: "STOP IF LOSS REACHES",
+  autospin_win_limit: "STOP IF SINGLE WIN ≥",
+  autospin_off: "OFF",
+
+  autospin_stop_bonus: "STOP ON BONUS",
+  treasury_auto_pick: "Choose a chest · Auto pick in {seconds}s",
+  treasury_auto_opening: "Opening automatically",
+
+  paytable_treasury_title: "TREASURY",
+  paytable_treasury_status: "3 picks",
+  paytable_treasury_note: "Exactly 3 chests, one on each of reels 2, 3 and 4 in any row, open the Treasury in the base game. Chests only appear on these reels, at most one per reel. Chests do not pay on lines; the Treasury does not trigger in respins or Free Spins. Choose 3 of 6 chests to collect cash prizes and emeralds. At most one emerald can appear in your 3 picks. It sets the multiplier to ×2, ×3, ×5 or ×10 and multiplies all cash prizes, including earlier picks. WILD does not replace trigger chests. BONUS doors separately award Free Spins.",
+
   "info_ctrl_bonus_desc": "Choose Wild Spin or a 5 / 10 / 15 Free Spins package. The card shows its price as a multiple of the base bet. Press Buy, review the total cost and confirm to start. Selecting a card alone does not buy the feature. Unavailable during a round, Free Spins or Autoplay.",
   "info_ctrl_feature_desc": "After the transition, select Start free spins to begin the awarded feature. The counter shows the current spin and total awarded spins; Feature win shows the accumulated win. Spins advance automatically. Spin/Stop can shorten the current animation when allowed, and Speed changes its speed. Autoplay remains visible but disabled. Select Continue on the final summary to return to the main game.",
   "info_ctrl_windows_desc": "Tap or click controls. Amount and Autoplay menus close when you select an option, click outside or press Escape. Scroll long lists and information. Close other windows with ×. Disabled controls are unavailable in the current game state.",
   "info_ctrl_replay_desc": "In Replay, select Play to view the recorded round and Play Again to watch it again after completion. The panel shows the total amount, base amount, mode multiplier and recorded win. Replay does not start a new round or change the balance; amount selection and Autoplay are unavailable.",
+  boost_title: "5× BONUS CHANCE",
+  boost_rules: "Increases fivefold the chance of both the door bonus and Treasury. Each spin costs 2.5× the base bet; payouts use the base bet. RTP is 96%. Bonus Buy is unavailable while enabled.",
+  treasury_open_chests: "Open 3 chests",
+  treasury_collected: "Treasure collected!",
+  treasury_win: "Win",
+  treasury_multiplier: "Multiplier",
+  treasury_buy_rules: "For 9× the base bet, open 3 of 6 chests. Cash rewards add up. At most one emerald sets the total multiplier to ×2, ×3, ×5 or ×10. Maximum payout: 200× the base bet. Purchase RTP: 96%. The opening spin only triggers the Treasury and awards no other payouts.",
   wild_spin_title: "Wild Spin",
   wild_spin_rules: "For 10× the base bet, a single Wild is guaranteed, followed by 3 respins at no extra cost. Stones add +1 to its multiplier, up to ×20. A win is not guaranteed. Maximum round win: 5000× the base bet.",
   buy_bonus_title: "Buy bonus",
@@ -77,7 +99,7 @@ export const en = {
     "Choose a bet from the amount menu, then press Spin. Selecting a bet does not start a round. The displayed bet is the total for all 10 paylines.",
   info_paylines_title: 'Paylines and Rules',
   info_paylines_body_1:
-    "Follow each numbered path from the leftmost reel. Matching symbols must occupy consecutive reels on that path. The idol pays from 2 matching symbols; other regular symbols pay from 3. WILD substitutes for regular symbols, not BONUS doors or Scatter scarabs.",
+    "Follow each numbered path from the leftmost reel. Matching symbols must occupy consecutive reels on that path. The idol pays from 2 matching symbols; other regular symbols pay from 3. WILD substitutes for regular symbols, not Treasury chests, BONUS doors or Scatter scarabs.",
   info_paylines_body_2:
     "Only the highest matching combination on each line pays. Wins on different lines are added. Paytable displays amounts for the selected total bet. The monkey multiplier affects only winning lines through its final position.",
   info_paylines_body_3:

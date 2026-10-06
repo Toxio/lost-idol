@@ -18,7 +18,7 @@
   text-shadow: var(--modal-title-shadow);
 }
 .buy-bonus-content { min-height: 0; overflow-y: auto; scrollbar-width: thin; }
-.buy-bonus-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 4px; }
+.buy-bonus-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; padding: 4px; }
 .buy-bonus-card { padding: 0; min-width: 0; overflow: hidden; border: 2px solid #a96966; border-radius: 18px; background: #07140d; color: #ffe092; font: inherit; cursor: pointer; }
 .buy-bonus-modal .buy-bonus-card::after {
   z-index: 1;
@@ -216,7 +216,7 @@
   .buy-bonus-modal .smp-modal-title { font-size: 0.85rem; margin: 0 0 4px; flex-shrink: 0; }
   .buy-bonus-modal .smp-modal-close { width: 24px; height: 24px; top: 6px; right: 8px; font-size: 0.8rem; }
   .buy-bonus-content { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
-  .buy-bonus-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 2px; flex-shrink: 0; }
+  .buy-bonus-cards { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; padding: 2px; flex-shrink: 0; }
   .buy-bonus-card { flex-direction: column; border-radius: 8px; }
   .buy-bonus-art { width: 100%; height: 30px; aspect-ratio: auto; }
   .buy-bonus-card-copy { width: 100%; gap: 1px; padding: 2px 2px 4px; }
@@ -360,3 +360,9 @@
 
 /* Portal cards retain the complete generated artwork at every viewport. */
 .buy-bonus-art--portal img { width: 100%; height: 100%; object-fit: contain; transform: none; }
+
+@media (max-width: 600px) {
+  .buy-bonus-card:last-child { grid-column: 1 / -1; display: flex; align-items: center; }
+  .buy-bonus-card:last-child .buy-bonus-art { width: 40%; max-height: 100px; }
+  .buy-bonus-card:last-child .buy-bonus-card-copy { flex: 1; }
+}

@@ -1,17 +1,11 @@
-import { Assets, Container, Graphics, Sprite, Rectangle, Texture, type Ticker } from 'pixi.js';
+import { Assets, Container, Graphics, Sprite, Rectangle, Texture, Text, type Ticker } from 'pixi.js';
 import plaqueUrl from '@/assets/big-win/lost-idol-plaque.webp?url';
 import glyphUrl from '@/assets/big-win/lost-idol-glyphs.webp?url';
-import { createBigWinAmountLabel, formatBigWinAmount, type BigWinAnimationName } from './bigWinSpine';
+import { formatBigWinAmount, type BigWinAnimationName } from './bigWinSpine';
 
 export const loadLostIdolBigWin = () => Assets.load([plaqueUrl, glyphUrl]);
 
-// Pixel regions from the supplied Lost Idol alphabet sheet.
-const glyphs: Record<string, [number, number, number, number]> = {
-  B: [194, 29, 128, 143], I: [1120, 29, 88, 143], G: [841, 29, 139, 143],
-  M: [288, 177, 156, 145], E: [599, 29, 122, 143], A: [40, 29, 149, 143],
-  S: [1095, 177, 116, 145], U: [255, 326, 147, 143], P: [711, 177, 119, 145],
-  R: [967, 177, 128, 145], W: [538, 326, 171, 143], N: [444, 177, 133, 145],
-};
+import { glyphRegions as glyphs } from '@/assets/big-win/glyphRegions';
 function createGlyphTitle(text: string, maxWidth: number): Container {
   const line = new Container();
   const source = Assets.get<Texture>(glyphUrl).source;
@@ -22,12 +16,66 @@ function createGlyphTitle(text: string, maxWidth: number): Container {
     const sprite = new Sprite(new Texture({ source, frame: new Rectangle(left, top, width, height) }));
     sprite.position.set(x, 0);
     line.addChild(sprite);
-    x += width - 8;
+    x += width + 3;
   }
   const scale = Math.min(0.85, maxWidth / x);
   line.scale.set(scale);
   line.pivot.set(x / 2, 72);
   return line;
+}
+
+/** Reuses atlas textures and sprites while the payout counts up. */
+class GlyphAmountLabel extends Container {
+  private value = '';
+  private textures = new Map<string, Texture>();
+  private characters: (Sprite | Text)[] = [];
+
+  constructor() {
+    super();
+    this.once('destroyed', () => {
+      this.textures.forEach(texture => texture.destroy(false));
+      this.textures.clear();
+    });
+  }
+
+  get text() { return this.value; }
+  set text(value: string) {
+    if (value === this.value) return;
+    this.value = value;
+    let x = 0;
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i];
+      const region = glyphs[char];
+      let child: Sprite | Text | undefined = this.characters[i];
+      if (child && (Boolean(region) !== (child instanceof Sprite))) {
+        child.destroy();
+        child = undefined;
+      }
+      if (region) {
+        let texture = this.textures.get(char);
+        if (!texture) {
+          texture = new Texture({ source: Assets.get<Texture>(glyphUrl).source,
+            frame: new Rectangle(...region) });
+          this.textures.set(char, texture);
+        }
+        if (!child) child = this.addChild(new Sprite(texture));
+        (child as Sprite).texture = texture;
+      } else {
+        // Currency symbols not present in the atlas retain their original meaning.
+        if (!child) child = this.addChild(new Text({ text: char, style: {
+          fontFamily: 'Arial, sans-serif', fontSize: 130, fontWeight: 'bold',
+          fill: '#f4d17e', stroke: { color: '#49331b', width: 3 },
+        } }));
+        (child as Text).text = char;
+      }
+      this.characters[i] = child;
+      child.visible = true;
+      child.position.set(x, 0);
+      x += child.width + 3;
+    }
+    for (let i = value.length; i < this.characters.length; i++) this.characters[i].visible = false;
+    this.pivot.set(Math.max(0, x - 3) / 2, 72);
+  }
 }
 
 export function createLostIdolBigWin(tier: BigWinAnimationName, ticker: Ticker, width: number, height: number, amount: number, currency: string, precision: number) {
@@ -43,14 +91,11 @@ export function createLostIdolBigWin(tier: BigWinAnimationName, ticker: Ticker, 
   const title = createGlyphTitle(`${tier.toUpperCase()} WIN`, width * 0.51);
   title.y = -height * 0.085;
   panel.addChild(title);
-  const amountLabel = createBigWinAmountLabel();
-  amountLabel.anchor.set(0.5);
+  const amountLabel = new GlyphAmountLabel();
   amountLabel.y = height * 0.045;
-  amountLabel.style.fontSize = 92;
-  amountLabel.style.fill = '#fff0ba';
-  amountLabel.style.stroke = { color: '#153d25', width: 5, join: 'round' };
   amountLabel.text = formatBigWinAmount(amount, precision, currency);
-  if (amountLabel.width > width * 0.48) amountLabel.scale.set(width * 0.48 / amountLabel.width);
+  // Fix the scale using the final payout so digits do not grow/shrink during counting.
+  amountLabel.scale.set(Math.min(92 / 144, width * 0.48 / amountLabel.width));
   panel.addChild(amountLabel);
   // Gem centers in the generated plaque, normalized to the full artwork.
   const gemPositions = [[0.5, 0.16, 1.3], [0.14, 0.416, 0.8], [0.86, 0.416, 0.8], [0.5, 0.754, 0.75]];

@@ -1,3 +1,4 @@
+import { createBonusDoorLabel } from './bonusDoorLabel';
 import staticUrl from '@/assets/symbols/lost-idol/bonus-door/symbol.webp?url';
 import atlasUrl from '@/assets/symbols/lost-idol/bonus-door/symbol.atlas.txt?url';
 import jsonUrl from '@/assets/symbols/lost-idol/bonus-door/symbol.json?url';
@@ -48,6 +49,7 @@ export const createScatterSpine = (options?: CreateSymbolSpineOptions) => {
       light.stroke({ width, alpha, color, cap: 'round', join: 'round' });
     }
   };
+  spine.addChild(createBonusDoorLabel());
   return spine;
 };
 export const SCATTER_SKEL_ALIAS = symbol.skelAlias;

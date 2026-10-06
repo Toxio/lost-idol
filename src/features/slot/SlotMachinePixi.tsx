@@ -1,3 +1,6 @@
+import bonusBoost from '@/config/bonusBoost.json';
+import { BonusBoostButton } from './ui/BonusBoostButton';
+import { TreasuryFeature, type TreasuryProgress } from './treasury/TreasuryFeature';
 import { FlaskConical } from "lucide-react";
 import { REEL_GRID, REEL_COUNT } from "./reels/constants";
 import { t } from "@/utils/i18n";
@@ -33,6 +36,7 @@ import "./ui/SlotQuickSound.css";
 import "./ui/SlotBetStepper.css";
 import "./ui/SlotBonusButton.css";
 import "./ui/SlotDesktopLayout.css";
+import "./ui/BonusBoostButton.css";
 import buyBonusButtonImg from "@/assets/buttons/buy-bonus-jade.webp";
 import { SlotReels } from "./reels";
 import { TestModal } from "./test/TestModal";
@@ -56,6 +60,7 @@ export function SlotMachinePixi({
   onAssetsLoaded,
   onRegisterInsufficientFunds,
 }: SlotMachinePixiProps) {
+  const [treasuryProgress, setTreasuryProgress] = useState<TreasuryProgress | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<PixiApplication | null>(null);
   const [buyBonusOpen, setBuyBonusOpen] = useState(false);
@@ -76,7 +81,11 @@ export function SlotMachinePixi({
   }, [onRegisterInsufficientFunds, showInsufficientFunds]);
 
   const {
+    boostEnabled,
+    setBoostEnabled,
     roundBusy,
+    treasury,
+    continueTreasury,
     collector,
     collectorMoving,
     bonus,
@@ -133,7 +142,8 @@ export function SlotMachinePixi({
           ? winAmount
           : null;
   const stakePool = balance;
-  const cannotAffordBet = !canAffordStake(betAmount, stakePool);
+  const spinCost = betAmount * (boostEnabled ? bonusBoost.cost : 1);
+  const cannotAffordBet = !canAffordStake(spinCost, stakePool);
   const hasWin = displayedWinAmount !== null && displayedWinAmount > 0;
 
   const requestStopSpin = useCallback(() => {
@@ -194,10 +204,12 @@ export function SlotMachinePixi({
 
   const autoplay = useAutoplay({
     spinning: spinning || roundBusy,
+    freeSpinsTriggered: bonusActive,
+    treasuryTriggered: Boolean(treasury),
     status,
     winAmount,
     winLines: bonus.total > 0 ? [] : winLines,
-    betAmount,
+    betAmount: spinCost,
     cannotAffordBet,
     connectionLost,
     spin,
@@ -241,13 +253,15 @@ export function SlotMachinePixi({
               onAutoSpinStart={autoplay.start}
               onAutoSpinStop={autoplay.stop}
               onSpeedCycle={handleSpeedCycle}
+              buyBonusDisabled={boostEnabled}
+              boostControl={!bonusActive && !jurisdiction.disabledBuyFeature ? <BonusBoostButton enabled={boostEnabled} cost={betAmount * bonusBoost.cost} currency={currency} precision={precision} disabled={controlsDisabled || spinning || autoplay.autoSpinEnabled} onToggle={() => setBoostEnabled(!boostEnabled)} /> : undefined}
               onBuyBonus={bonusActive || jurisdiction.disabledBuyFeature ? undefined : () => setBuyBonusOpen(true)}
             />
   );
 
   return (
     <>
-      {buyBonusOpen && !roundBusy && !replay && !jurisdiction.disabledBuyFeature && <BuyBonusModal
+      {buyBonusOpen && !boostEnabled && !roundBusy && !replay && !jurisdiction.disabledBuyFeature && <BuyBonusModal
         bet={betAmount} onBetChange={setBetAmount} bets={quickBets} balance={balance} currency={currency} precision={precision}
         onClose={closeBuyBonus} onBuy={(mode, stake) => { setBuyBonusOpen(false); void buyBonus(mode, stake); }}
       />}
@@ -258,19 +272,21 @@ export function SlotMachinePixi({
               <button
                 type="button"
                 className="smp-buy-bonus-button smp-buy-bonus-button--desktop"
-                disabled={controlsDisabled || spinning || autoplay.autoSpinEnabled}
+                disabled={boostEnabled || controlsDisabled || spinning || autoplay.autoSpinEnabled}
                 onClick={() => { playSound("ui_button"); setBuyBonusOpen(true); }}
               >
                 <img className="smp-buy-bonus-artwork" src={buyBonusButtonImg} alt="" draggable={false} />
-                <span className="smp-buy-bonus-label">{t("buy_bonus_title")}</span>
+                <span className="smp-buy-bonus-label">{t("buy_bonus_title").split(/\s+/).map((word, index) => <span className="smp-desktop-button-line" key={index}>{word}</span>)}</span>
               </button>
             )}
+            {!replay && !bonusActive && !jurisdiction.disabledBuyFeature && <BonusBoostButton desktop enabled={boostEnabled} cost={betAmount * bonusBoost.cost} currency={currency} precision={precision} disabled={controlsDisabled || spinning || autoplay.autoSpinEnabled} onToggle={() => setBoostEnabled(!boostEnabled)} />}
           </div>
 
           <div className="smp-reels-col">
             <SlotLogo />
-            <FeaturePlaque bonus={bonus} collector={collector} precision={precision} pending={spinning || collectorMoving} winLines={winLines} />
+            <FeaturePlaque treasury={treasury ? (treasuryProgress?.id === treasury.id ? treasuryProgress : { id: treasury.id, revealed: 0, cash: 0, multiplier: 1, amount: 0 }) : null} bonus={bonus} collector={collector} precision={precision} pending={spinning || collectorMoving} winLines={winLines} />
             <BonusFeature
+              autoContinue={autoplay.autoContinueFreeSpins}
               introReady={bonusIntroReady}
               bonus={spinning ? { ...bonus, wildMultipliers: [] } : bonus}
               currency={currency}
@@ -334,6 +350,7 @@ export function SlotMachinePixi({
                   ×{multiplier}
                 </span>;
               })}
+              {treasury && <TreasuryFeature autoPick={autoplay.autoPickBonus} key={treasury.id} award={treasury} currency={currency} precision={precision} onProgress={setTreasuryProgress} onClose={continueTreasury} />}
             </div>
             <div
               className={`smp-mobile-win${hasWin ? " smp-mobile-win--active" : ""}`}
@@ -365,6 +382,7 @@ export function SlotMachinePixi({
             precision={precision}
             winAmount={displayedWinAmount}
             betAmount={betAmount}
+            costMultiplier={boostEnabled ? bonusBoost.cost : 1}
             quickBets={quickBets}
             disabled={roundBusy || spinning || autoplay.autoSpin}
             onBetChange={setBetAmount}
@@ -447,7 +465,7 @@ export function SlotMachinePixi({
           open={testOpen}
           onClose={() => setTestOpen(false)}
           onSelect={forceSpin}
-          disabled={spinning || roundBusy}
+          disabled={spinning || roundBusy || autoplay.autoSpinEnabled}
         />
       )}
     </>

@@ -1,3 +1,5 @@
+import bonusBoost from '@/config/bonusBoost.json';
+import type { TreasurySession } from '@/features/slot/treasury/treasuryModel';
 import bonusBuys from "@/config/bonusBuys.json";
 import type { CollectorAction } from '@/features/slot/player/bookEvents';
 import { COLLECTOR_TRANSITION, collectorJumps } from '@/features/slot/player/collectorTransition';
@@ -89,6 +91,10 @@ const EMPTY_BONUS: BonusState = {
 };
 
 export interface SlotSessionState {
+  boostEnabled: boolean;
+  setBoostEnabled: (enabled: boolean) => void;
+  treasury: TreasurySession | null;
+  continueTreasury: () => void;
   roundBusy: boolean;
   collector: CollectorAction | null;
   collectorMoving: boolean;
@@ -172,6 +178,9 @@ export function useRgsSession({
 }: UseRgsSessionOptions): SlotSessionState {
   const [roundBusy, setRoundBusy] = useState(false);
   const roundBusyRef = useRef(false);
+  const [treasury, setTreasury] = useState<TreasurySession | null>(null);
+  const treasuryRoundRef = useRef('');
+  const treasuryPendingRef = useRef(false);
   const [bonus, setBonus] = useState<BonusState>(EMPTY_BONUS);
   const framesRef = useRef<RoundFrame[]>([]);
   const frameRef = useRef<RoundFrame | null>(null);
@@ -185,6 +194,7 @@ export function useRgsSession({
   const [matrix, setMatrix] = useState<number[][]>(() => createDefaultMatrix());
   const [quickBets, setQuickBets] = useState<number[]>([]);
   const [betAmount, setBetAmount] = useState(0);
+  const [boostEnabled, setBoostEnabled] = useState(false);
   const [spinning, setSpinning] = useState(false);
   const [collector, setCollector] = useState<CollectorAction | null>(null);
   const [collectorMoving, setCollectorMoving] = useState(false);
@@ -259,7 +269,8 @@ export function useRgsSession({
         && !visual.winLines.some(line => line.symbol === 10 && line.line === 0);
       const presentationLines = bonusReveal
         ? [...visual.winLines, { symbol: 10, line: 0, count: bonusCount, winAmount: 0 }]
-        : visual.winLines;
+        : [...visual.winLines];
+      if (frameRef.current?.treasury) presentationLines.push({ symbol: 2, line: 0, count: visual.matrix.flat().filter(symbol => symbol === 2).length, winAmount: 0 });
       setWinLines(asTarget && visual.collector ? [] : presentationLines);
       setExpandingWild(visual.expandingWild);
       setWinAmount(asTarget && visual.collector ? null : visual.winAmount);
@@ -437,6 +448,10 @@ export function useRgsSession({
 
   const beginRoundPlayback = useCallback(
     async (round: RgsRound) => {
+      setBoostEnabled(round.mode === bonusBoost.mode);
+      treasuryRoundRef.current = String(round.betID ?? round.id ?? extractBook(round)?.id ?? "replay");
+      setTreasury(null);
+      treasuryPendingRef.current = false;
       purchasedBonusRef.current = bonusBuys.some(plan => plan.mode === round.mode && plan.kind === 'free_spins');
       roundBusyRef.current = true;
       setRoundBusy(true);
@@ -490,7 +505,8 @@ export function useRgsSession({
       return;
 
     if (!Number.isFinite(requestedStake) || !quickBets.length) return;
-    const plan = bonusBuys.find((item) => item.mode === mode);
+    const plan = mode === bonusBoost.mode ? bonusBoost : bonusBuys.find((item) => item.mode === mode);
+    if (boostEnabled && mode !== DEFAULT_BET_MODE && mode !== bonusBoost.mode) return;
     if (mode !== DEFAULT_BET_MODE && (!plan || jurisdiction.disabledBuyFeature)) return;
     const stake = snapToBetLevel(quickBets, requestedStake);
     if (stake !== betAmount) setBetAmount(stake);
@@ -537,12 +553,13 @@ export function useRgsSession({
     betAmount,
     quickBets,
     jurisdiction.disabledBuyFeature,
+    boostEnabled,
     onInsufficientFunds,
     clearPreviousSpinResult,
     beginRoundPlayback,
   ]);
 
-  const spin = useCallback(() => playRound(), [playRound]);
+  const spin = useCallback(() => playRound(boostEnabled ? bonusBoost.mode : DEFAULT_BET_MODE), [playRound, boostEnabled]);
   const buyBonus = useCallback((mode: string, stake: number) => playRound(mode, stake), [playRound]);
 
   const forceSpin = useCallback(
@@ -564,6 +581,7 @@ export function useRgsSession({
       if (preset.book) {
         clearPreviousSpinResult();
         void beginRoundPlayback({
+          id: `test-${crypto.randomUUID()}`,
           active: false,
           mode: DEFAULT_BET_MODE,
           amount: displayAmountToApi(stake),
@@ -624,31 +642,44 @@ export function useRgsSession({
     setRoundBusy(false);
   }, []);
 
+  const advanceAfterTreasury = useCallback(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+    if (frame.awardedFreeSpins > 0) {
+      bonusBaseWinRef.current = frame.totalWin;
+      setBonus({ phase: 'intro', purchased: purchasedBonusRef.current, current: 0,
+        total: frame.awardedFreeSpins, totalWin: 0, wildMultipliers: [] });
+    } else if (framesRef.current.length) {
+      showFrame(framesRef.current.shift()!);
+    } else if (frame.freeSpin > 0) {
+      setBonus(prev => ({ ...prev, phase: 'summary', totalWin: Math.max(0, frame.totalWin - bonusBaseWinRef.current) }));
+      setWinAmount(frame.totalWin);
+    } else if (frame.treasury) {
+      setWinAmount(frame.totalWin);
+      setCollectorWinAmount(frame.totalWin);
+      void finishRound();
+    }
+  }, [showFrame, finishRound]);
+
+  const continueTreasury = useCallback(() => {
+    if (!treasuryPendingRef.current) return;
+    treasuryPendingRef.current = false;
+    setTreasury(null);
+    advanceAfterTreasury();
+  }, [advanceAfterTreasury]);
+
   const handleWinPresentationComplete = useCallback(() => {
     const frame = frameRef.current;
     if (!frame || spinningRef.current || collectorMoving || presentedRef.current) return;
     presentedRef.current = true;
-    if (frame.awardedFreeSpins > 0) {
-      bonusBaseWinRef.current = frame.totalWin;
-      setBonus({
-        phase: "intro",
-        purchased: purchasedBonusRef.current,
-        current: 0,
-        total: frame.awardedFreeSpins,
-        totalWin: 0,
-        wildMultipliers: [],
-      });
-    } else if (framesRef.current.length) {
-      showFrame(framesRef.current.shift()!);
-    } else if (frame.freeSpin > 0) {
-      setBonus((prev) => ({
-        ...prev,
-        phase: "summary",
-        totalWin: Math.max(0, frame.totalWin - bonusBaseWinRef.current),
-      }));
-      setWinAmount(frame.totalWin);
+    if (frame.treasury) {
+      treasuryPendingRef.current = true;
+      setWinLines([]);
+      setTreasury({ ...frame.treasury, id: `${replayLockedRef.current ? "replay-" : ""}${treasuryRoundRef.current}`, bet: betAmountRef.current });
+      return;
     }
-  }, [showFrame, collectorMoving]);
+    advanceAfterTreasury();
+  }, [advanceAfterTreasury, collectorMoving]);
 
   const continueBonus = useCallback(() => {
     if (spinningRef.current || !presentedRef.current) return;
@@ -670,7 +701,7 @@ export function useRgsSession({
     const frame = frameRef.current;
     if (frame?.visual.collector) {
       applyVisual(frame.visual, false);
-      setCollectorWinAmount(frame.totalWin);
+      setCollectorWinAmount(frame.totalWin - (frame.treasury?.amount ?? 0) * betAmountRef.current);
     }
     if (frame?.freeSpin)
       setBonus((prev) => ({
@@ -679,7 +710,7 @@ export function useRgsSession({
       }));
     if (
       !frame ||
-      (!framesRef.current.length && !frame.freeSpin && !frame.awardedFreeSpins)
+      (!framesRef.current.length && !frame.freeSpin && !frame.awardedFreeSpins && !frame.treasury)
     )
       void finishRound();
   }, [finishRound, applyVisual]);
@@ -729,8 +760,12 @@ export function useRgsSession({
   }, [clearPreviousSpinResult]);
 
   return {
+    boostEnabled,
+    setBoostEnabled,
     roundBusy,
     collector,
+    treasury,
+    continueTreasury,
     collectorMoving,
     collectorWinAmount,
     bonus,
