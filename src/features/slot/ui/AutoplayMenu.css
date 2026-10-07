@@ -39,7 +39,7 @@
 .smp-autoplay-menu__bonus[aria-checked="true"] .smp-autoplay-menu__toggle::after { transform: translateX(16px); }
 .smp-autoplay-menu__bonus:focus-visible { outline: 2px solid #a8efbd; outline-offset: 2px; }
 
-.smp-autoplay-menu__rounds { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 12px; }
+.smp-autoplay-menu__rounds { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 12px; }
 .smp-autoplay-menu__counts button[aria-pressed="true"] { background: #477745; border-color: #e3c56d; color: #fff0ba; }
 .smp-autoplay-menu__limits { border: 0; padding: 0; margin: 0 0 12px; }
 .smp-autoplay-menu__limits legend { font-size: 11px; margin-bottom: 7px; }

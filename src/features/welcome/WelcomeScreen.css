@@ -1,0 +1,142 @@
+.welcome-screen { position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(12px, 3vh, 32px); padding: max(16px, env(safe-area-inset-top)) 24px max(16px, env(safe-area-inset-bottom)); box-sizing: border-box; overflow: auto; background: radial-gradient(ellipse at center, #03190b35, #020e0bc9); color: #ffe49b; font-family: var(--game-font), sans-serif; text-align: center; }
+.welcome-logo { width: min(340px, 34vw); max-height: 19vh; object-fit: contain; filter: drop-shadow(0 6px 12px #0008); }
+.welcome-features { display: grid; grid-template-columns: 1fr 1.15fr 1fr; align-items: center; gap: clamp(16px, 4vw, 70px); width: min(1100px, 100%); }
+.welcome-feature { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.welcome-feature h2 { margin: 0 0 8px; font-size: clamp(14px, 2vw, 26px); line-height: 1.15; text-shadow: 0 3px 3px #071708; }
+.welcome-feature p { margin: 0; font-size: clamp(12px, 1.5vw, 20px); font-weight: 700; }
+.welcome-feature > img, .welcome-feature > svg { width: 100%; height: clamp(120px, 31vh, 310px); object-fit: contain; filter: drop-shadow(0 5px 15px #071508); }
+.welcome-feature .welcome-max { font-size: clamp(32px, 5vw, 62px); line-height: 1.1; color: #ffe45c; text-shadow: 0 3px 0 #623918, 0 0 24px #d3a54155; }
+.welcome-caption { font-size: clamp(11px, 1.25vw, 16px); font-weight: 700; }
+.welcome-continue { border: 0; background: transparent; color: #fff1c7; font: 700 clamp(16px, 2vw, 24px) var(--game-font), sans-serif; padding: 14px 24px; cursor: pointer; letter-spacing: .06em; text-shadow: 0 2px 5px #000; animation: welcome-pulse 2s ease-in-out infinite; }
+.welcome-continue:focus-visible { outline: 2px solid #e8cf87; outline-offset: 3px; border-radius: 6px; }
+.welcome-touch { display: none; }
+@media (pointer: coarse) { .welcome-keyboard { display: none; } .welcome-touch { display: inline; } }
+@media (orientation: portrait) {
+ .welcome-screen { gap: 16px; padding-inline: 16px; }
+ .welcome-logo { width: min(270px, 65vw); max-height: 13dvh; }
+ .welcome-features { grid-template-columns: 1fr 1fr; gap: 12px; }
+ .welcome-feature--hero { grid-column: 1 / -1; grid-row: 1; }
+ .welcome-feature--hero > svg { height: 24dvh; }
+ .welcome-feature > img { height: 16dvh; }
+ .welcome-feature h2 { font-size: 14px; }
+ .welcome-feature p { font-size: 11px; }
+ .welcome-feature .welcome-max { font-size: 36px; }
+ .welcome-continue { font-size: 14px; }
+}
+@media (max-height: 380px) and (orientation: landscape) {
+ .welcome-screen { gap: 5px; padding: 8px 16px; }
+ .welcome-logo { max-height: 15vh; }
+ .welcome-feature > img, .welcome-feature > svg { height: 30vh; }
+ .welcome-feature h2 { font-size: 11px; margin-bottom: 3px; }
+ .welcome-feature p, .welcome-caption { font-size: 9px; }
+ .welcome-feature .welcome-max { font-size: 25px; }
+ .welcome-continue { padding: 6px; font-size: 12px; }
+}
+@keyframes welcome-pulse { 50% { opacity: .65; } }
+@media (prefers-reduced-motion: reduce) { .welcome-continue { animation: none; } }
+.welcome-art-text { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .2em .4em; max-width: 100%; }
+.welcome-word { display: inline-flex; height: 1em; align-items: center; gap: .025em; }
+.welcome-word svg { height: 100%; width: auto; overflow: hidden; }
+.welcome-unique { margin: 0; font-size: clamp(11px, 1.4vw, 18px); }
+.welcome-feature > svg { overflow: hidden; }
+
+.welcome-continue {
+  flex-shrink: 0;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 12px 28px;
+  border: 1px solid #d9bd73;
+  border-radius: 6px;
+  background: #0b291ee8;
+  color: #ffe8a8;
+  font-size: clamp(12px, 1.2vw, 16px);
+  line-height: 1.3;
+  letter-spacing: .08em;
+  text-shadow: none;
+  animation: none;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.welcome-continue:hover { background: #204a31; border-color: #ffe49b; }
+.welcome-continue:active { background: #082017; }
+@media (max-height: 380px) and (orientation: landscape) {
+  .welcome-continue { min-height: 32px; padding: 7px 20px; font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) { .welcome-continue { transition: none; } }
+
+/* Hero hierarchy: the monkey leads, feature props remain secondary. */
+.welcome-screen {
+  background: radial-gradient(ellipse at 50% 48%, #15330a08 10%, #02181055 65%, #020e0b99);
+}
+.welcome-features { grid-template-columns: 1fr 1.4fr 1fr; }
+.welcome-feature > img {
+  width: 78%;
+  height: clamp(100px, 23vh, 230px);
+  filter: drop-shadow(0 5px 12px #041508aa) drop-shadow(0 0 14px #d2aa3528);
+}
+.welcome-feature:last-child > img { width: 66%; height: clamp(90px, 20vh, 200px); }
+.welcome-feature--hero > svg {
+  width: 100%;
+  height: clamp(170px, 39vh, 390px);
+  filter: drop-shadow(0 7px 12px #031607aa) drop-shadow(0 0 22px #ffc94445);
+}
+@media (orientation: portrait) {
+  .welcome-features { grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+  .welcome-feature--hero > svg { height: 29dvh; }
+  .welcome-feature > img { width: 74%; height: 12dvh; }
+  .welcome-feature:last-child > img { width: 62%; height: 10dvh; }
+}
+@media (max-height: 380px) and (orientation: landscape) {
+  .welcome-feature--hero > svg { height: 34vh; }
+  .welcome-feature > img { height: 23vh; }
+  .welcome-feature:last-child > img { height: 20vh; }
+}
+
+.welcome-feature--hero > .welcome-monkey {
+  width: 100%; height: clamp(220px, 42vh, 440px);
+  object-fit: contain;
+  filter: drop-shadow(0 7px 12px #031607aa) drop-shadow(0 0 22px #ffc94445);
+}
+.welcome-feature:not(.welcome-feature--hero) > img { height: clamp(90px, 19vh, 190px); }
+@media (orientation: portrait) {
+  .welcome-feature--hero > .welcome-monkey { height: 30dvh; }
+  .welcome-feature:not(.welcome-feature--hero) > img { height: 10dvh; }
+}
+@media (max-height: 380px) and (orientation: landscape) {
+  .welcome-feature--hero > .welcome-monkey { height: 34vh; }
+  .welcome-feature:not(.welcome-feature--hero) > img { height: 19vh; }
+}
+
+/* Broad atmospheric shading keeps the composition continuous. */
+.welcome-screen {
+  background: linear-gradient(180deg, #02120e55 0%, #02120e88 28%, #02120e22 53%, #02120ebd 83%, #02120ed9 100%), radial-gradient(ellipse at center, transparent 25%, #02120e99 100%);
+}
+.welcome-feature > h2 { filter: drop-shadow(0 2px 2px #000) drop-shadow(0 0 6px #00180c); }
+.welcome-feature > p:not(.welcome-max), .welcome-caption {
+  color: #fff1cd; font-weight: 600;
+  text-shadow: 0 2px 3px #00130d, 0 0 8px #00130d;
+  letter-spacing: .025em; line-height: 1.45;
+}
+.welcome-caption { margin-top: 8px; }
+@media (orientation: portrait) {
+  .welcome-feature > p:not(.welcome-max) { font-size: 12px; }
+  .welcome-caption { font-size: 12px; }
+  .welcome-feature h2 { font-size: 13px; }
+}
+
+/* Text-only entry prompt, like the reference splash screen. */
+.welcome-continue {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff4dc;
+  font-size: clamp(18px, 2.5vw, 32px);
+  font-weight: 800;
+  letter-spacing: .035em;
+  text-shadow: 0 2px 0 #152016, 0 4px 8px #000;
+  animation: welcome-pulse 2.4s ease-in-out infinite;
+}
+.welcome-continue:hover, .welcome-continue:active { background: transparent; color: #fff; }
+.welcome-continue:focus-visible { outline: 1px dashed #ffe49b80; outline-offset: 4px; border-radius: 0; }
+@media (orientation: portrait) { .welcome-continue { font-size: clamp(15px, 4vw, 22px); padding: 12px 4px; } }
+@media (max-height: 380px) and (orientation: landscape) { .welcome-continue { font-size: 14px; padding: 6px; } }
+@media (prefers-reduced-motion: reduce) { .welcome-continue { animation: none; } }

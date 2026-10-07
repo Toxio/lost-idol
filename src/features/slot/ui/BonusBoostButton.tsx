@@ -1,3 +1,4 @@
+import { ArrowRight, Check } from 'lucide-react';
 import { BonusButtonLabel } from './BonusButtonLabel';
 import artwork from '@/assets/buttons/buy-bonus-jade.webp';
 import { formatMoney } from '@/utils/currency';
@@ -10,6 +11,6 @@ export function BonusBoostButton({enabled, disabled, onToggle, cost, currency, p
   const description = t('boost_rules');
   return <button type="button" className={`smp-buy-bonus-button smp-boost-button${desktop ? ' smp-boost-button--desktop' : ''}`} disabled={disabled} role="switch" aria-checked={enabled} aria-label={`${label}. ${description}`} title={description} onClick={() => { play('ui_button'); onToggle(); }}>
     <img className="smp-buy-bonus-artwork" src={artwork} alt="" />
-    <span className="smp-buy-bonus-label"><span className="smp-boost-title"><BonusButtonLabel text={label} stacked={desktop} /></span><span className="smp-boost-details"><small>{formatMoney(cost, currency, precision)}</small><span className="smp-boost-switch" aria-hidden="true"><span className="smp-boost-switch-track"><span /></span>{enabled ? 'ON' : 'OFF'}</span></span></span>
+    <span className="smp-buy-bonus-label"><span className="smp-boost-title"><BonusButtonLabel text={label} stacked={desktop} /></span><span className="smp-boost-details"><small>{formatMoney(cost, currency, precision)}</small><span className="smp-boost-rocker" aria-hidden="true"><span className="smp-boost-rocker__label">{enabled ? 'ON' : 'OFF'}</span><span className="smp-boost-rocker__thumb">{enabled ? <Check /> : <ArrowRight />}</span></span></span></span>
   </button>;
 }

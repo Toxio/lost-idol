@@ -7,7 +7,7 @@ export function BonusButtonLabel({ text, stacked = false }: { text: string; stac
   const lines = stacked ? text.split(/\s+/) : [text];
   return <span className="smp-bonus-title">
     {lines.map((line, index) => <span className={stacked ? 'smp-desktop-button-line' : undefined} key={index}>
-      {useGlyphs ? <GameNumberGlyphs text={line.toUpperCase().replace('×', 'X')} className="smp-bonus-title-glyphs" label={line} /> : line}
+      {useGlyphs ? <><span className="smp-bonus-title-art"><GameNumberGlyphs text={line.toUpperCase().replace('×', 'X')} className="smp-bonus-title-glyphs" label={line} /></span><span className="smp-bonus-title-plain">{line.toUpperCase()}</span></> : line}
     </span>)}
   </span>;
 }

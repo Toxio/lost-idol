@@ -60,7 +60,8 @@ export function symbolAlias(serverIdx: number): string {
 
 const OUTER_REEL_ALIASES = SYMBOL_ALIASES.filter(alias => alias !== 'sym-lips');
 
-export function randomAlias(reelIndex: number): string {
-  const aliases = reelIndex >= 1 && reelIndex <= 3 ? SYMBOL_ALIASES : OUTER_REEL_ALIASES;
+export function randomAlias(reelIndex: number, freeSpins = false): string {
+  const pool = reelIndex >= 1 && reelIndex <= 3 ? SYMBOL_ALIASES : OUTER_REEL_ALIASES;
+  const aliases = freeSpins ? pool.filter(alias => alias !== 'sym-bonus-door') : pool;
   return aliases[Math.floor(Math.random() * aliases.length)];
 }

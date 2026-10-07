@@ -51,18 +51,14 @@ export function Modal({
         onMouseDown={stopDialogPropagation}
         onClick={stopDialogPropagation}
       >
-        <button type="button" className="smp-modal-close" onClick={() => { playSound('ui_button'); onClose(); }} aria-label="Close">
-          <X size={20} />
-        </button>
-
+        <header className="smp-modal-header">
+          {title && <h2 id="smp-modal-title" className="smp-modal-title">{title}</h2>}
+          <button type="button" className="smp-modal-close" onClick={() => { playSound('ui_button'); onClose(); }} aria-label="Close">
+            <X size={20} />
+          </button>
+        </header>
         {icon && <div className="smp-modal-icon">{icon}</div>}
         {badge && <span className="smp-modal-badge">{badge}</span>}
-
-        {title && (
-          <h2 id="smp-modal-title" className="smp-modal-title">
-            {title}
-          </h2>
-        )}
 
         {subtitle && <p className="smp-modal-subtitle">{subtitle}</p>}
 

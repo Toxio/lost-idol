@@ -82,6 +82,7 @@ import type {
 } from "../types";
 
 interface UseReelsSceneOptions {
+  freeSpinsRef: RefObject<boolean>;
   app: Application | null;
   isInitialised: boolean;
   onAssetsLoaded?: () => void;
@@ -153,6 +154,7 @@ interface UseReelsSceneOptions {
  * the same shared mutable scene.
  */
 export function useReelsScene({
+  freeSpinsRef,
   collectorOverlayVisibleRef,
   app,
   isInitialised,
@@ -305,7 +307,7 @@ export function useReelsScene({
 
         const symbols: SlotSymbol[] = [];
         for (let j = 0; j < REEL_SIZE; j++) {
-          const sym = createSymbolSprite(randomAlias(i), cellW, cellH);
+          const sym = createSymbolSprite(randomAlias(i, freeSpinsRef.current), cellW, cellH);
           sym.container.y = j * cellH;
           stripCont.addChild(sym.container);
           symbols.push(sym);
@@ -840,7 +842,7 @@ export function useReelsScene({
           sym.container.y = baseY;
 
           if (sym.container.y < 0 && prevY > cellH && !reel.stopping) {
-            updateSymbol(sym, randomAlias(reels.indexOf(reel)), cellW, cellH);
+            updateSymbol(sym, randomAlias(reels.indexOf(reel), freeSpinsRef.current), cellW, cellH);
           }
           // Buffer cells outside a landed reel must not bleed into the grid,
           // especially the enlarged wild above the first visible row.

@@ -6,13 +6,11 @@ import { indexOfBetLevel } from '@/api/rgs';
 import { play as playSound } from '@/audio/soundManager';
 import plans from '@/config/bonusBuys.json';
 import treasuryImg from '@/assets/symbols/lost-idol/gold-satchel/symbol.webp';
-import wildImg from '@/assets/bonus-buy/leaping-monkey.webp';
-import fs1 from '@/assets/bonus-buy/portal-5.webp';
-import fs2 from '@/assets/bonus-buy/portal-10.webp';
-import fs3 from '@/assets/bonus-buy/portal-15.webp';
+import { WildArtwork } from './WildArtwork';
+import { BonusDoorArtwork } from './BonusDoorArtwork';
 import './BuyBonusModal.css';
+import './BuyBonusPurchase.css';
 
-const freeSpinArt: Record<number, string> = { 5: fs1, 10: fs2, 15: fs3 };
 
 export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose, onBuy, onBetChange }: {
   bet: number; bets: number[]; balance: number; currency: string; precision: number;
@@ -63,13 +61,14 @@ export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose
       && bets.includes(confirmation.stake) && confirmedTotal <= balance;
     return <Modal title={t('buy_bonus_confirm')} className="buy-bonus-modal buy-bonus-confirmation" size="narrow" onClose={closeDialog}>
       <div className="buy-bonus-confirmation__summary">
+        <div className="buy-bonus-confirmation__art">{confirmedPlan?.kind === 'wild_spin' ? <WildArtwork /> : confirmedPlan?.kind === 'free_spins' ? <BonusDoorArtwork spins={confirmedPlan.spins} /> : <img src={treasuryImg} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}</div>
         <strong>{confirmedPlan?.kind === 'treasury' ? t('paytable_treasury_title') : confirmedPlan?.kind === 'wild_spin' ? t('wild_spin_title') : `${confirmedPlan?.spins} ${t('bonus_title')}`}</strong>
         <div>{t('bet_title')}: {money(confirmation.stake)} × {confirmation.cost}</div>
         <div>{t('buy_bonus_cost')}: <strong>{money(confirmedTotal)}</strong></div>
       </div>
       {!valid && <p role="status">{t('insufficient_title')}</p>}
       <div className="buy-bonus-confirmation__actions">
-        <button type="button" className="smp-modal-action" onClick={closeDialog}>{t('autoplay_stopped_cancel')}</button>
+        <button type="button" className="smp-modal-action smp-modal-action--secondary" onClick={() => { playSound('ui_button'); closeDialog(); }}>{t('autoplay_stopped_cancel')}</button>
         <button type="button" className="smp-modal-action" disabled={!valid} onClick={() => {
           if (!valid || submitted.current) return;
           submitted.current = true;
@@ -86,7 +85,7 @@ export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose
         {plans.map((item, i) => <button type="button" key={item.mode} className="buy-bonus-card"
           aria-pressed={i === selected} onClick={() => { playSound('ui_button'); setSelected(i); }}>
           <div className={`buy-bonus-art${item.kind === 'free_spins' ? ' buy-bonus-art--portal' : ''}`}>
-            <img src={item.kind === 'free_spins' ? freeSpinArt[item.spins] : item.kind === 'treasury' ? treasuryImg : wildImg} alt="" draggable={false} />
+            {item.kind === 'wild_spin' ? <WildArtwork /> : item.kind === 'free_spins' ? <BonusDoorArtwork spins={item.spins} /> : <img src={treasuryImg} alt="" draggable={false} />}
           </div>
           <div className="buy-bonus-card-copy">
             <strong>{item.kind === 'treasury' ? '3 / 6' : item.kind === 'wild_spin' ? 'WILD' : item.spins}</strong>
@@ -97,6 +96,7 @@ export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose
       </div>
       <p className="buy-bonus-rules">{t(plan.kind === 'treasury' ? 'treasury_buy_rules' : plan.kind === 'wild_spin' ? 'wild_spin_rules' : 'buy_bonus_rules')}</p>
     </div>
+    <div className="buy-bonus-purchase-footer">
     <div className="buy-bonus-stake">
       <button type="button" disabled={index <= 0} onClick={() => step(-1)} aria-label={`${t('bet_title')} −`}><span className="buy-bonus-step-icon" aria-hidden="true" /></button>
       <div><span>{t('bet_title')}</span><strong>{money(stake)}</strong></div>
@@ -114,6 +114,7 @@ export function BuyBonusModal({ bet, bets, balance, currency, precision, onClose
           }
           submitted.current = true; onBuy(plan.mode, stake);
         }}>{t('buy_bonus_action')} · {money(total)}</button>
+    </div>
     </div>
   </Modal>;
 }

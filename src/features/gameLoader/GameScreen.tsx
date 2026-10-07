@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'react';
+import { WelcomeScreen } from '../welcome/WelcomeScreen';
 import { BonusBackground } from '@/features/appBg/BonusBackground';
 import type { SlotSessionState } from '@/hooks/useRgsSession';
 import { SlotMachinePixi } from '@/features/slot/SlotMachinePixi';
@@ -19,10 +21,12 @@ export function GameScreen({
   onAssetsLoaded,
   onRegisterInsufficientFunds,
 }: GameScreenProps) {
+  const [entered, setEntered] = useState(false);
+  const enter = useCallback(() => setEntered(true), []);
   return (
     <div className={`app-page${hidden ? ' app-page--loading' : ''}`}>
       <BonusBackground active={hub.bonus.phase !== 'idle'}>
-        {(transitionComplete) => <main className="main-screen">
+        {(transitionComplete) => <main className="main-screen" inert={!entered} style={!entered ? { visibility: 'hidden', pointerEvents: 'none' } : undefined}>
         <SlotMachinePixi
           hub={hub}
           bonusIntroReady={transitionComplete}
@@ -33,6 +37,7 @@ export function GameScreen({
         />
       </main>}
       </BonusBackground>
+      {!hidden && !entered && <WelcomeScreen onContinue={enter} />}
     </div>
   );
 }

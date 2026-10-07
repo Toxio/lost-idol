@@ -64,7 +64,7 @@ export function AutoplayMenu({ id, anchor, onClose, onStart }: Props) {
   return createPortal(<div ref={panel} id={id} className="smp-autoplay-menu" role="group" aria-labelledby={`${id}-title`} style={position}>
     <span id={`${id}-title`} className="smp-autoplay-menu__title">{t('autospin_title')}</span>
     <div className="smp-autoplay-menu__counts smp-autoplay-menu__rounds">
-      {[10, 25, 50, 100, 250, 500, 1000, 0].map(value => <button key={value} type="button" aria-pressed={count === value} onClick={() => { play('ui_button'); setCount(value); }}>{value || '∞'}</button>)}
+      {[10, 25, 50, 100, 250, 500].map(value => <button key={value} type="button" aria-pressed={count === value} onClick={() => { play('ui_button'); setCount(value); }}>{value}</button>)}
     </div>
     {toggle(t('autospin_rules'), rules, setRules)}
     {rules && <div>

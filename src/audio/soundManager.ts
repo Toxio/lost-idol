@@ -322,7 +322,13 @@ export function playBigWin(): void {
   play('big_win_in');
 }
 
+export function resetWildSoundSequence(): void {
+  stop('wild_win');
+  stop('monkey_jump');
+}
+
 export function playWildWin(): void {
+  stop('monkey_jump');
   if (howls.get('wild_win')?.playing()) return;
   play('wild_win');
 }
@@ -361,12 +367,10 @@ export function continueBonusDoorSound(): void {
   howl.seek(1.26);
 }
 
-let monkeyJumpCount = 0;
-
-/** Accent every second jump; keep the appearance call independent. */
-export function playMonkeyJump(): void {
-  monkeyJumpCount += 1;
-  if (monkeyJumpCount % 2 !== 0) return;
-  stop('monkey_jump');
+/** Use the current sequence's one-based jump number, never a session-wide counter. */
+export function playMonkeyJump(jumpNumber: number): void {
+  if (!Number.isInteger(jumpNumber) || jumpNumber < 2 || jumpNumber % 2 !== 0) return;
+  // Skip rather than queue a late call over the appearance or previous jump.
+  if (howls.get('wild_win')?.playing() || howls.get('monkey_jump')?.playing()) return;
   play('monkey_jump');
 }

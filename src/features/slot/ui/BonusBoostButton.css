@@ -1,4 +1,4 @@
-.smp-boost-button .smp-buy-bonus-label small { display: block; font-size: .8em; margin-top: 3px; }
+.smp-boost-button .smp-buy-bonus-label small { display: block; font-size: 1.1em; font-weight: 700; line-height: 1.15; color: #fff1c4; text-shadow: 0 1px 2px #00180d; font-variant-numeric: tabular-nums; margin-top: 3px; }
 .smp-boost-button[aria-checked='true'] { filter: brightness(1.2) drop-shadow(0 0 5px #76cc58) !important; }
 .smp-boost-button--desktop { display: none; }
 @media (min-width: 901px) {
@@ -124,20 +124,20 @@
  }
 }
 
-/* Desktop buttons share the reel artwork: intact corner gems and vines. */
+/* Desktop controls use the jade button rim with a central emerald crest. */
 @media (min-width: 901px) {
   :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button {
     border: 0;
     border-image: none;
     border-radius: 0;
     background: none;
-    padding: 20px 22px 18px;
+    padding: 29px 25px 22px;
     box-shadow: none;
     filter: drop-shadow(0 5px 6px #0009);
   }
   :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button::before {
     content: '';
-    inset: 12px 14px;
+    inset: 19px 21px 14px;
     border: 0;
     border-image: none;
     border-radius: 0;
@@ -155,7 +155,7 @@
     height: auto;
     border: 0 solid transparent;
     border-radius: 0;
-    border-image: url('../../../assets/reel/lost-idol-frame.webp') 110 170 100 170 / 20px 30px 18px / 0 stretch;
+    border-image: url('../../../assets/buttons/buy-bonus-jade.webp') 80 150 70 150 / 26px 30px 22px / 0 stretch;
     background: none;
     transform: none;
     box-shadow: none;
@@ -166,7 +166,7 @@
   }
   :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-details small {
     font-family: var(--game-font), sans-serif;
-    font-weight: 500;
+    font-weight: 700;
     font-variant-numeric: tabular-nums;
     color: #ffebad;
   }
@@ -175,4 +175,204 @@
 @media (min-width: 901px) {
   :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop { min-height: 90px; }
   :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button--desktop { min-height: 146px; }
+}
+
+/* Raised jade controls distinguish actions from the flat score plaque. */
+@media (min-width: 901px) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button {
+    cursor: pointer;
+    transform: none;
+    filter: drop-shadow(0 6px 0 #39260f) drop-shadow(0 10px 7px #0009);
+    transition: filter 140ms ease;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button::before {
+    border-radius: 12px;
+    background:
+      linear-gradient(165deg, #bcf48e55 0%, #ffffff08 42%, #001e18aa 100%),
+      #16582d url('../../../assets/reel/lost-idol-feature-plaque-desktop.webp') 50% 30% / 500% 500% no-repeat;
+    box-shadow: inset 0 3px 2px #e6ffbd88, inset 0 -6px 3px #00190ed9, inset 3px 0 4px #95cf6766, inset -3px 0 4px #001c15aa;
+    transition: box-shadow 140ms ease;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button:not(:disabled):hover {
+    transform: none;
+    filter: brightness(1.16) drop-shadow(0 8px 0 #39260f) drop-shadow(0 12px 9px #0009);
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button:not(:disabled):active {
+    transform: none;
+    filter: brightness(.96) drop-shadow(0 1px 0 #39260f) drop-shadow(0 3px 3px #0008);
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button:focus-visible {
+    outline: 2px solid #ffe8a2;
+    outline-offset: 5px;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button:disabled {
+    cursor: default;
+    transform: none;
+    filter: saturate(.35) brightness(.65) drop-shadow(0 2px 3px #0008);
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button[aria-checked="true"]::before {
+    box-shadow: inset 0 2px 3px #caffae99, inset 0 -4px 4px #001e16cc, inset 0 0 18px #63ed8d66;
+  }
+}
+@media (min-width: 901px) and (prefers-reduced-motion: reduce) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button,
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button::before { transition: none; }
+}
+
+/* Dedicated complete artwork: scale uniformly, never stretch frame segments. */
+@media (min-width: 901px) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    aspect-ratio: 640 / 306;
+    background: url('../../../assets/buttons/buy-bonus-desktop.webp') center / contain no-repeat;
+    filter: drop-shadow(0 4px 4px #0008);
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button--desktop {
+    aspect-ratio: 640 / 617;
+    background-image: url('../../../assets/buttons/bonus-chance-desktop.webp');
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button::before,
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button::after {
+    content: none;
+    display: none;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-label {
+    position: absolute;
+    inset: 27% 15% 18%;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    padding: 0;
+    transform: none;
+    font-size: clamp(9px, 1.05vw, 14px);
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button--desktop .smp-buy-bonus-label {
+    inset: 24% 17% 19%;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button:not(:disabled):hover {
+    filter: brightness(1.12) drop-shadow(0 6px 5px #0009);
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button:not(:disabled):active {
+    filter: brightness(.96) drop-shadow(0 1px 2px #0008);
+  }
+}
+
+/* Compact landscape: keep bonus labels inside the narrow side buttons. */
+@media (max-width: 500px) and (max-height: 320px) and (orientation: landscape) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-label {
+    font-size: 5.5px;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button .smp-buy-bonus-label {
+    font-size: 5px;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-details small,
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-switch {
+    font-size: 4.5px;
+    gap: 2px;
+  }
+}
+
+.smp-bonus-title-plain { display: none; }
+@media (max-width: 500px) and (max-height: 320px) and (orientation: landscape) {
+  .smp-logo-col .smp-bonus-title-art { display: none; }
+  .smp-logo-col .smp-bonus-title-plain { display: inline; }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button {
+    padding: 12px 10px 10px;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-label,
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button .smp-buy-bonus-label {
+    position: relative; inset: auto; width: 100%; max-width: 100%; min-width: 0;
+    font-family: var(--game-font), sans-serif; font-size: 5.5px;
+    font-weight: 700; line-height: 1.2; letter-spacing: 0;
+    transform: none; overflow-wrap: anywhere;
+  }
+  .smp-logo-col .smp-desktop-button-line { white-space: normal; }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-details {
+    width: 100%; min-width: 0; gap: 3px; margin-top: 3px;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-details small,
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-switch {
+    font-size: 5px; margin-top: 0; gap: 2px; max-width: 100%;
+  }
+  .smp-logo-col .smp-boost-switch-track {
+    width: 16px; height: 9px; padding: 1px; flex-shrink: 0;
+  }
+  .smp-logo-col .smp-boost-switch-track > span { width: 7px; height: 7px; }
+  .smp-logo-col [aria-checked='true'] .smp-boost-switch-track > span { transform: translateX(7px); }
+}
+
+/* Tiny landscape uses a clean, compact control face instead of the ornate rim. */
+@media (max-width: 500px) and (max-height: 320px) and (orientation: landscape) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px 3px;
+    border: 1px solid #b99b43;
+    border-radius: 5px;
+    background: linear-gradient(155deg, #286343, #103723 65%, #082619);
+    box-shadow: inset 0 1px 0 #f4df9766, inset 0 -2px 0 #061e16, 0 2px 2px #0008;
+    filter: none;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button::before,
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button::after { display: none; content: none; }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop { min-height: 30px; }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button--desktop { min-height: 65px; }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-label,
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-button .smp-buy-bonus-label {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box;
+    font-size: 5.5px; line-height: 1.2;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-switch {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    width: 100%; min-width: 0; font-size: 5px;
+  }
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-switch-track { width: 16px; height: 9px; }
+}
+
+/* Gold-rimmed two-position rocker, shared by both button layouts. */
+.smp-boost-rocker {
+  position: relative; display: block; flex: 0 1 auto;
+  width: 66px; max-width: 100%; height: 23px; box-sizing: border-box;
+  margin-top: 5px; border: 1px solid #d7b75c; border-radius: 5px;
+  background: linear-gradient(#163a28, #071f16);
+  box-shadow: inset 0 1px 3px #000b, 0 1px 0 #efd88c66;
+  color: #fff1be;
+}
+.smp-boost-rocker__label {
+  position: absolute; inset: 0 0 0 50%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--game-font), sans-serif; font-size: 9px; font-weight: 800; line-height: 1;
+}
+.smp-boost-rocker__thumb {
+  position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 3px);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 3px; background: linear-gradient(#83c75c, #347d36 52%, #245a29);
+  box-shadow: inset 0 1px 0 #dcf8aa, inset 0 -1px 1px #123818, 0 1px 2px #0008;
+  transition: left 150ms ease;
+}
+.smp-boost-rocker__thumb svg { width: 17px; height: 17px; stroke-width: 3; color: #fff9d7; }
+[aria-checked='true'] .smp-boost-rocker__label { inset: 0 50% 0 0; }
+[aria-checked='true'] .smp-boost-rocker__thumb { left: calc(50% + 1px); }
+.smp-stage-footer .smp-boost-rocker { margin-top: 0; width: 52px; height: 19px; }
+.smp-stage-footer .smp-boost-rocker__label { font-size: 7px; }
+@media (max-width: 500px) and (max-height: 320px) and (orientation: landscape) {
+  .smp-logo-col .smp-boost-rocker { width: 30px; height: 12px; margin-top: 2px; border-radius: 3px; }
+  .smp-logo-col .smp-boost-rocker__label { font-size: 4.5px; }
+  .smp-logo-col .smp-boost-rocker__thumb { top: 1px; bottom: 1px; left: 1px; width: calc(50% - 2px); border-radius: 2px; }
+  .smp-logo-col [aria-checked='true'] .smp-boost-rocker__thumb { left: calc(50% + 1px); }
+  .smp-logo-col .smp-boost-rocker__thumb svg { width: 8px; height: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .smp-boost-rocker__thumb { transition: none; } }
+
+@media (max-width: 500px) and (max-height: 320px) and (orientation: landscape) {
+  :root .main-screen .smp-wrapper .smp-logo-col .smp-boost-details small { font-size: 6px; }
 }

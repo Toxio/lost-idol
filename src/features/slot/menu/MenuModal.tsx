@@ -77,9 +77,6 @@ export function MenuModal({
 
         <div className="smp-menu-content">
           <div className="smp-menu-content-header">
-            <h2 className="smp-menu-content-title">
-              {t(TAB_LABEL_KEYS[activeTab])}
-            </h2>
             <button
               type="button"
               className="smp-menu-close"

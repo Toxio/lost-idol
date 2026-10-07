@@ -256,7 +256,7 @@ export function SlotMachinePixi({
               onSpeedCycle={handleSpeedCycle}
               buyBonusDisabled={boostEnabled}
               boostControl={!bonusActive && !jurisdiction.disabledBuyFeature ? <BonusBoostButton enabled={boostEnabled} cost={betAmount * bonusBoost.cost} currency={currency} precision={precision} disabled={controlsDisabled || spinning || autoplay.autoSpinEnabled} onToggle={() => setBoostEnabled(!boostEnabled)} /> : undefined}
-              onBuyBonus={bonusActive || jurisdiction.disabledBuyFeature ? undefined : () => setBuyBonusOpen(true)}
+              onBuyBonus={bonusActive || jurisdiction.disabledBuyFeature ? undefined : () => { playSound("ui_button"); setBuyBonusOpen(true); }}
             />
   );
 
@@ -310,6 +310,7 @@ export function SlotMachinePixi({
                 }}
               >
                 <SlotReels
+                  freeSpins={bonus.current > 0}
                   collectorOverlayVisible={Boolean(collector && (collectorMoving || (spinning && (collector.respin > 0 || bonus.current > 1))))}
                   spinSpeed={bonusActive ? bonusSpeed : spinSpeed}
                   spinning={spinning}
@@ -332,7 +333,7 @@ export function SlotMachinePixi({
                   autoAdvance={autoplay.autoSpinEnabled || roundBusy}
                 />
               </Application>
-              {collector && (!spinning || collector.respin > 0 || bonus.current > 1) && <CollectorOverlay action={collector} moving={collectorMoving} spinning={spinning} />}
+              {collector && (!spinning || collector.respin > 0 || bonus.current > 1) && <CollectorOverlay action={collector} moving={collectorMoving} spinning={spinning} jumpNumber={bonus.current > 0 ? bonus.current : collector.respin} />}
               {!collector && !spinning && matrix.flatMap((reel, col) => reel.map((symbol, row) => symbol === 9 ? (
                 <div key={`${col}-${row}`} className="smp-collector-layer">
                   <div className="smp-collector-monkey" style={{

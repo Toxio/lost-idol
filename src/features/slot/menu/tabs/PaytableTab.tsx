@@ -1,3 +1,4 @@
+import { WildArtwork } from '../../bonus/WildArtwork';
 import { formatMoney } from "@/utils/currency";
 import { t } from "@/utils/i18n";
 import {
@@ -8,7 +9,6 @@ import {
   ROSE_ID,
   SEVEN_ID,
   STAR_SCATTER_ID,
-  WILD_ID,
   payoutsForSymbol,
   SCATTER_FREE_SPINS,
 } from "@/config/paytable";
@@ -119,12 +119,7 @@ export function PaytableTab({
 
         <div className="smp-pt-special-card smp-pt-special-card--wild">
           <div className="smp-pt-wild-body">
-            <img
-              src={SYMBOL_IMAGE[WILD_ID]}
-              alt="Wild"
-              className="smp-pt-wild-img"
-              draggable={false}
-            />
+            <WildArtwork className="smp-pt-wild-img" />
             <div
               className="smp-pt-wild-multipliers"
               aria-label={t("bonus_wild_multipliers")}

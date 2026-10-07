@@ -1,5 +1,4 @@
 import bonusBuys from "@/config/bonusBuys.json";
-import { bonusText } from "../../bonus/bonusText";
 import { RotateCw, Zap, Menu, Volume2, Coins } from 'lucide-react';
 import { getPaylineForLineId } from '@/config/paylines';
 import { t } from "@/utils/i18n";
@@ -47,23 +46,10 @@ export function InfoTab({ minBet, maxBet, currency, precision }: InfoTabProps) {
         <p className="smp-info-body">{t("info_intro_body")}</p>
       </section>
 
-      <section className="smp-info-section">
-        <h3 className="smp-info-section-title">WILD</h3>
-        <p className="smp-info-body">{t('paytable_wild_note')}</p>
-      </section>
-      <section className="smp-info-section">
-        <h3 className="smp-info-section-title">{bonusText.title}</h3>
-        <p className="smp-info-body">{bonusText.rules}</p>
-      </section>
-      <section className="smp-info-section">
-        <h3 className="smp-info-section-title">{t('paytable_scatter')}</h3>
-        <p className="smp-info-body">{t('paytable_star_note')}</p>
-      </section>
-      <section className="smp-info-section">
-        <h3 className="smp-info-section-title">{t('paytable_treasury_title')}</h3>
-        <p className="smp-info-body">{t('paytable_treasury_note')}</p>
-        <p className="smp-info-body">{t('treasury_buy_rules')}</p>
-      </section>
+
+
+
+
       <section className="smp-info-section">
         <h3 className="smp-info-section-title">{t("boost_title")}</h3>
         <p className="smp-info-body">{t("boost_rules")}</p>
@@ -73,14 +59,9 @@ export function InfoTab({ minBet, maxBet, currency, precision }: InfoTabProps) {
         {bonusBuys.map((plan) => <p className="smp-info-body" key={plan.mode}>
           {plan.kind === "wild_spin" ? t("wild_spin_title") : `${plan.spins} · ${t("bonus_title")}`} — {t("buy_bonus_cost")}: {plan.cost}× {t("bet_title")}
         </p>)}
-        <p className="smp-info-body">{t("buy_bonus_rules")}</p>
-        <p className="smp-info-body">{t("wild_spin_rules")}</p>
       </section>
 
-      <section className="smp-info-section">
-        <h3 className="smp-info-section-title">{t("info_howtobet_title")}</h3>
-        <p className="smp-info-body">{t("info_howtobet_1")}</p>
-      </section>
+
 
       <section className="smp-info-section">
         <h3 className="smp-info-section-title">{t("info_paylines_title")}</h3>
@@ -89,7 +70,6 @@ export function InfoTab({ minBet, maxBet, currency, precision }: InfoTabProps) {
         </div>
         <p className="smp-info-body">{t("info_paylines_body_1")}</p>
         <p className="smp-info-body">{t("info_paylines_body_2")}</p>
-        <p className="smp-info-body">{t("info_paylines_body_3")}</p>
       </section>
 
       <section className="smp-info-section">
@@ -100,23 +80,16 @@ export function InfoTab({ minBet, maxBet, currency, precision }: InfoTabProps) {
               <span className="smp-info-control-glyph" aria-hidden="true">
                 <Icon />{id === 'autospin' && <small>A</small>}
               </span>
-              <p className="smp-info-body"><strong>{t(labelKey)}</strong><br />{t(descKey)}</p>
-            </div>
+              <p className="smp-info-body"><strong>{t(labelKey)}</strong> — {t(descKey)}</p>
+                  </div>
           ))}
         </div>
-        <p className="smp-info-body"><strong>{t("info_balance_label")}</strong> – {t("info_balance_desc")}</p>
-        <p className="smp-info-body"><strong>{t("buy_bonus_title")}</strong> – {t("info_ctrl_bonus_desc")}</p>
-        <p className="smp-info-body"><strong>{t("bonus_title")}</strong> – {t("info_ctrl_feature_desc")}</p>
-        <p className="smp-info-body"><strong>{t("menu_info")}</strong> – {t("info_ctrl_windows_desc")}</p>
-        <p className="smp-info-body"><strong>{t("replay_play")} / {t("replay_play_again")}</strong> – {t("info_ctrl_replay_desc")}</p>
       </section>
 
       <section className="smp-info-section">
         <h3 className="smp-info-section-title">{t("info_rules_title")}</h3>
         <ul className="smp-info-rules">
-          <li>{t("info_rule_1")}</li>
           <li>{t("info_rule_2")}</li>
-          <li>{t("info_rule_3")}</li>
           <li>{t("info_rule_4")}</li>
           <li>
             <strong>
@@ -133,32 +106,9 @@ export function InfoTab({ minBet, maxBet, currency, precision }: InfoTabProps) {
 
 
 
-      <section className="smp-info-section">
-        <h3 className="smp-info-section-title">
-          {t("info_interruptions_title")}
-        </h3>
-        <p className="smp-info-body">
-          <strong>{t("info_recovery_label")}</strong>
-          <br />
-          {t("info_recovery_desc")}
-        </p>
-        <p className="smp-info-body">
-          <strong>{t("info_cancellation_label")}</strong>
-          <br />
-          {t("info_cancellation_desc")}
-        </p>
-      </section>
 
-      <section className="smp-info-section">
-        <h3 className="smp-info-section-title">
-          {t("info_responsible_title")}
-        </h3>
-        <p className="smp-info-body">
-          <strong>{t("info_responsible_autoplay_label")}</strong>
-          <br />
-          {t("info_responsible_autoplay_desc")}
-        </p>
-      </section>
+
+
 
       <section className="smp-info-section">
         <h3 className="smp-info-section-title">{t("info_rtp_title")}</h3>

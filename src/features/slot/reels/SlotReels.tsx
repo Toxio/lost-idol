@@ -25,6 +25,7 @@ import { useWinLinesSetup } from "./winCycle/useWinLinesSetup";
 
 export function SlotReels({
   collectorOverlayVisible = false,
+  freeSpins = false,
   spinSpeed,
   spinning,
   targetMatrix,
@@ -45,6 +46,8 @@ export function SlotReels({
   const { app, isInitialised } = useApplication();
 
   // ── Sync refs (mirror props for use inside imperative ticker / async callbacks) ──
+  const freeSpinsRef = useRef(freeSpins);
+  useLayoutEffect(() => { freeSpinsRef.current = freeSpins; }, [freeSpins]);
   const spinRef = useRef(spinning);
   const completeRef = useRef(onSpinComplete);
   const winCycleDoneRef = useRef(onWinCycleDone);
@@ -274,6 +277,7 @@ export function SlotReels({
   });
 
   useReelsScene({
+    freeSpinsRef,
     collectorOverlayVisibleRef,
     app,
     isInitialised,

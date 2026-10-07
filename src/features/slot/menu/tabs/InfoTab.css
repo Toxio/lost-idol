@@ -212,9 +212,9 @@
 .smp-info .smp-info-lines { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .smp-info-payline { margin: 0; padding: 8px; border: 1px solid #6b947044; border-radius: 10px; background: #0a1e18; }
 .smp-info-payline figcaption { color: #f2d482; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
-.smp-info-payline svg { display: block; width: 100%; height: auto; }
+.smp-info-payline svg { display: block; width: 100%; max-width: 120px; height: auto; }
 .smp-info-control-glyph { position: relative; display: grid; place-items: center; flex: 0 0 40px; width: 40px; height: 40px; border-radius: 9px; background: #244735; color: #c3deba; }
 .smp-info-control-glyph svg { width: 24px; height: 24px; }
 .smp-info-control-glyph small { position: absolute; font-size: 9px; line-height: 1; }
-.smp-info .smp-info-control-row { align-items: flex-start; gap: 12px; }
+.smp-info .smp-info-control-row { align-items: center; gap: 12px; }
 @media (max-width: 500px) { .smp-info .smp-info-lines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

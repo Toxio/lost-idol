@@ -1,3 +1,4 @@
+import { resetWildSoundSequence } from '@/audio/soundManager';
 import bonusBoost from '@/config/bonusBoost.json';
 import type { TreasurySession } from '@/features/slot/treasury/treasuryModel';
 import bonusBuys from "@/config/bonusBuys.json";
@@ -280,6 +281,7 @@ export function useRgsSession({
   );
 
   const clearPreviousSpinResult = useCallback(() => {
+    resetWildSoundSequence();
     setCollector(null);
     setCollectorMoving(false);
     setCollectorWinAmount(null);

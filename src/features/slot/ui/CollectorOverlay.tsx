@@ -13,14 +13,14 @@ import { collectorJumps } from '../player/collectorTransition';
 const x = (reel: number) => `${(REEL_GRID.x + (reel + 0.5) * REEL_GRID.w / 5) * 100}%`;
 const y = (row: number) => `${(REEL_GRID.y + (row + 0.5) * REEL_GRID.h / 3) * 100}%`;
 
-export function CollectorOverlay({ action, moving, spinning }: { action: CollectorAction; moving: boolean; spinning: boolean }) {
+export function CollectorOverlay({ action, moving, spinning, jumpNumber = action.respin }: { action: CollectorAction; moving: boolean; spinning: boolean; jumpNumber?: number }) {
   const position = action.wild;
   const jumping = moving && collectorJumps(action);
   const wasJumping = useRef(false);
   useEffect(() => {
-    if (jumping && !wasJumping.current) playMonkeyJump();
+    if (jumping && !wasJumping.current) playMonkeyJump(jumpNumber);
     wasJumping.current = jumping;
-  }, [jumping]);
+  }, [jumping, jumpNumber]);
   const collecting = Boolean(action.stone && action.wild.multiplier > action.from.multiplier);
   const collected = !moving && collecting;
   const smokeStyle = (cell: { reel: number; row: number }): CSSProperties => ({

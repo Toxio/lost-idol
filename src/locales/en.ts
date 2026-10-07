@@ -93,34 +93,34 @@ export const en = {
 
   info_intro_title: 'Introduction',
   info_intro_body:
-    "Explore Lost Idol on a 5 × 3 grid with 10 fixed paylines. Match symbols, collect wins with the monkey WILD and enter the temple for Free Spins. All 10 lines are active on every spin.",
+    "5 reels, 10 fixed paylines. Choose your bet and press Spin. See Paytable for symbol payouts and bonus rules.",
   info_howtobet_title: 'How to Place a Bet',
   info_howtobet_1:
     "Choose a bet from the amount menu, then press Spin. Selecting a bet does not start a round. The displayed bet is the total for all 10 paylines.",
   info_paylines_title: 'Paylines and Rules',
   info_paylines_body_1:
-    "Follow each numbered path from the leftmost reel. Matching symbols must occupy consecutive reels on that path. The idol pays from 2 matching symbols; other regular symbols pay from 3. WILD substitutes for regular symbols, not Treasury chests, BONUS doors or Scatter scarabs.",
+    "Match symbols on consecutive reels from the left: 2+ idols or 3+ regular symbols. WILD replaces regular symbols only.",
   info_paylines_body_2:
-    "Only the highest matching combination on each line pays. Wins on different lines are added. Paytable displays amounts for the selected total bet. The monkey multiplier affects only winning lines through its final position.",
+    "The best combination per line pays; line wins add up. The monkey multiplier applies only to lines through its final position.",
   info_paylines_body_3:
     "The diagrams show all 10 fixed paylines. Highlighted cells belong to that line. Scatter payouts do not follow these paths; BONUS doors trigger Free Spins instead of a direct payout.",
   info_controls_title: 'Game Controls',
   info_ctrl_spin_label: 'Spin',
   info_ctrl_spin_desc:
-    "Press Spin or the Space bar to start a round when enabled. During a manual spin, press Stop or tap the game area to shorten the animation when allowed. This does not change the result. Space is inactive while a window is open and may be unavailable under platform settings.",
+    "Start a round. Press Stop to shorten the animation without changing the result.",
   info_ctrl_autospin_label: 'Autoplay',
-  info_ctrl_autospin_desc: "Opens a sliding menu with 10, 20, 50, 100 or 250 spins. Selecting a number starts Autoplay immediately at fast speed. The counter shows spins remaining to start. Press the same button to stop future spins; the current round finishes. No optional win or loss stop conditions are used.",
+  info_ctrl_autospin_desc: "Choose a spin count and optional stop rules, then start. Press Autoplay again to stop after the current round.",
   info_ctrl_speed_label: 'Speed',
   info_ctrl_speed_desc:
-    "Toggles between normal and fast animation. A lit lightning bolt means fast speed. Speed changes presentation only, never the result. Available when permitted by platform settings.",
+    "Switch between normal and fast animations.",
   info_ctrl_bet_label: 'Bet Options',
   info_ctrl_bet_desc:
-    "Press the bet amount to open a sliding list of available bets. Tap an amount to apply it and close the list. The − / + buttons on the main panel step through the same list. Bet changes are unavailable during a round or Autoplay.",
+    "Choose an amount or use − / +. Unavailable during a round or Autoplay.",
   info_ctrl_menu_label: 'Menu',
-  info_ctrl_menu_desc: "Opens Paytable, Info and Sound. Paytable shows symbol payouts for the selected bet; Info explains the rules and controls.",
+  info_ctrl_menu_desc: "Open payouts and game rules.",
   info_ctrl_sound_label: 'Sound Control',
   info_ctrl_sound_desc:
-    "Press the speaker to mute or unmute and open the volume slider. The quick slider adjusts music and effects together. The Sound tab has separate sliders for music and effects. Only one music track plays at a time.",
+    "Mute sound or adjust music and effects volume.",
   info_balance_label: 'Balance',
   info_balance_desc: "Balance shows the available balance. Win shows the displayed round win. The Free Spins counter and feature total track bonus progress. These displays are not buttons.",
   info_betvalue_label: 'Bet Options',

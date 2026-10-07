@@ -1,0 +1,111 @@
+/* Purchase layout: artwork, clear selection, and one persistent checkout row. */
+:root .buy-bonus-modal .buy-bonus-content { flex: 1 1 auto; min-height: 0; }
+:root .buy-bonus-modal .buy-bonus-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; padding: 3px; }
+:root .buy-bonus-modal .buy-bonus-card {
+  display: flex; flex-direction: column; position: relative;
+  padding: 10px 6px; border: 1px solid #b69b5040; border-radius: 8px;
+  background: #061c16cc; box-shadow: none; color: #eee4c5;
+  transition: background 150ms, border-color 150ms;
+}
+:root .buy-bonus-modal .buy-bonus-card:hover { background: #183c29; border-color: #cfb56b; }
+:root .buy-bonus-modal .buy-bonus-card[aria-pressed="true"] {
+  background: linear-gradient(#24492e, #102c20); border-color: #e6c678;
+  box-shadow: inset 0 0 0 1px #e6c67855;
+}
+:root .buy-bonus-modal .buy-bonus-art { width: 100%; height: 110px; aspect-ratio: auto; background: none; flex-shrink: 0; }
+:root .buy-bonus-modal .buy-bonus-art img { width: 100%; height: 100%; object-fit: contain; }
+:root .buy-bonus-modal .buy-bonus-card-copy {
+  width: 100%; padding: 10px 0 0; background: none; gap: 6px; flex: 1;
+}
+:root .buy-bonus-modal .buy-bonus-card-copy strong { font-size: 23px; line-height: 1.1; color: #f4e2ae; }
+:root .buy-bonus-modal .buy-bonus-card-copy span { font-size: 11px; line-height: 1.35; min-height: 30px; }
+:root .buy-bonus-modal .buy-bonus-card-copy b { margin-top: auto; padding-top: 8px; border-top: 1px solid #d3b77130; font-size: 17px; color: #fff2cf; }
+:root .buy-bonus-modal .buy-bonus-rules { margin: 14px 3px; font-size: 12px; line-height: 1.6; color: #c4d0be; }
+:root .buy-bonus-modal .buy-bonus-purchase-footer {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px; padding-top: 14px; margin-top: 8px; border-top: 1px solid #d8b65d38; flex-shrink: 0;
+}
+:root .buy-bonus-modal .buy-bonus-stake { width: 190px; margin: 0; gap: 6px; }
+:root .buy-bonus-modal .buy-bonus-stake > button { flex: 0 0 36px; min-height: 42px; border-radius: 6px; background: #244735; }
+:root .buy-bonus-modal .buy-bonus-stake > div { padding: 3px 8px; background: transparent; }
+:root .buy-bonus-modal .buy-bonus-stake strong { font-size: 17px; }
+:root .buy-bonus-modal .buy-bonus-actions { width: auto; flex: 0 1 230px; }
+:root .buy-bonus-modal .buy-bonus-submit { width: 100%; min-height: 42px; border-radius: 6px; font-size: 13px; background: linear-gradient(#e6cc86, #c6a45a); color: #172719; }
+:root .buy-bonus-modal .buy-bonus-error { flex-basis: 100%; order: 2; }
+:root .buy-bonus-confirmation .smp-modal-dialog { width: min(480px, 100%); }
+:root .buy-bonus-confirmation .buy-bonus-confirmation__summary { justify-items: center; gap: 8px; font-size: 14px; }
+.buy-bonus-confirmation__art { width: 110px; height: 100px; object-fit: contain; }
+:root .buy-bonus-confirmation .buy-bonus-confirmation__actions { margin-top: 12px; }
+:root .buy-bonus-confirmation .smp-modal-action--secondary { background: #ffffff0d; color: #ebdfbf; }
+@media (max-width: 600px) {
+  :root .buy-bonus-modal .buy-bonus-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  :root .buy-bonus-modal .buy-bonus-art { height: 76px; }
+  :root .buy-bonus-modal .buy-bonus-card-copy strong { font-size: 19px; }
+  :root .buy-bonus-modal .buy-bonus-purchase-footer { gap: 8px; }
+  :root .buy-bonus-modal .buy-bonus-stake { width: 100%; }
+  :root .buy-bonus-modal .buy-bonus-actions { flex-basis: 100%; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  :root .buy-bonus-modal .buy-bonus-cards { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+  :root .buy-bonus-modal .buy-bonus-art { height: 48px; }
+  :root .buy-bonus-modal .buy-bonus-card-copy strong { font-size: 15px; }
+  :root .buy-bonus-modal .buy-bonus-card-copy b { font-size: 12px; }
+  :root .buy-bonus-modal .buy-bonus-card-copy span { font-size: 9px; }
+  :root .buy-bonus-modal .buy-bonus-stake { width: 150px; }
+  :root .buy-bonus-modal .buy-bonus-actions { flex: 1; }
+  :root .buy-bonus-modal .buy-bonus-purchase-footer { padding-top: 6px; margin-top: 4px; }
+  .buy-bonus-confirmation__art { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { :root .buy-bonus-modal .buy-bonus-card { transition: none; } }
+
+/* Keep selection continuous across artwork, description and price. */
+:root .buy-bonus-modal .buy-bonus-card[aria-pressed="true"] {
+  background: #09271c;
+  border-color: #d6b86c;
+  box-shadow: inset 0 0 22px #6aab4920, 0 0 9px #dfbf6020;
+}
+:root .buy-bonus-modal .buy-bonus-card[aria-pressed="true"] .buy-bonus-card-copy {
+  background: transparent;
+}
+
+/* Match the gold used by the balance display. */
+:root .buy-bonus-modal .buy-bonus-card-copy strong,
+:root .buy-bonus-modal .buy-bonus-card-copy b,
+:root .buy-bonus-modal .buy-bonus-stake strong {
+  color: #ffe45c;
+  background: linear-gradient(180deg, #fff6d4 0%, #ffe45c 32%, #e8c040 68%, #d4a028 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root .buy-bonus-modal .buy-bonus-card[aria-pressed="true"] {
+  border-color: #ffe45c;
+  box-shadow: inset 0 0 22px #ffe45c12, 0 0 9px #ffe45c20;
+}
+
+/* Quiet checkout action complements the illustrated bonus cards. */
+:root .buy-bonus-modal .buy-bonus-actions { justify-content: center; }
+:root .buy-bonus-modal .buy-bonus-actions .buy-bonus-submit {
+  flex: 0 1 180px;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 18px;
+  border: 1px solid #ffe45c;
+  border-radius: 6px;
+  background: #163b29;
+  color: #ffe45c;
+  font-size: 13px;
+  line-height: 1.3;
+  text-shadow: none;
+  box-shadow: none;
+  transition: background-color 140ms ease;
+}
+:root .buy-bonus-modal .buy-bonus-actions .buy-bonus-submit:hover:not(:disabled) {
+  background: #245037;
+}
+:root .buy-bonus-modal .buy-bonus-actions .buy-bonus-submit:active:not(:disabled) {
+  background: #102d20;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root .buy-bonus-modal .buy-bonus-actions .buy-bonus-submit { transition: none; }
+}
