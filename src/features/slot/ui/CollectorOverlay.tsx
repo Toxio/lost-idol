@@ -1,4 +1,5 @@
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
+import { playMonkeyJump } from '@/audio/soundManager';
 import stoneSheet from '@/assets/symbols/lost-idol/multiplier-stone/sheet.webp';
 import type { CollectorAction } from '../player/bookEvents';
 import { REEL_GRID } from '../reels/constants';
@@ -15,6 +16,11 @@ const y = (row: number) => `${(REEL_GRID.y + (row + 0.5) * REEL_GRID.h / 3) * 10
 export function CollectorOverlay({ action, moving, spinning }: { action: CollectorAction; moving: boolean; spinning: boolean }) {
   const position = action.wild;
   const jumping = moving && collectorJumps(action);
+  const wasJumping = useRef(false);
+  useEffect(() => {
+    if (jumping && !wasJumping.current) playMonkeyJump();
+    wasJumping.current = jumping;
+  }, [jumping]);
   const collecting = Boolean(action.stone && action.wild.multiplier > action.from.multiplier);
   const collected = !moving && collecting;
   const smokeStyle = (cell: { reel: number; row: number }): CSSProperties => ({

@@ -1,4 +1,4 @@
-sheet.webp
+treasure-map-sheet.webp
 size: 1024,1024
 filter: Linear,Linear
 pma: false

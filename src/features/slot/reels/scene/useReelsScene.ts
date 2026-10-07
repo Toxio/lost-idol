@@ -10,7 +10,7 @@ import {
 } from "pixi.js";
 import { type RefObject, useEffect } from "react";
 
-import { play as playSound } from "@/audio/soundManager";
+import { play as playSound, playWildWin } from "@/audio/soundManager";
 import {
   createReelFrame,
   ensureReelFrameLoaded,
@@ -305,7 +305,7 @@ export function useReelsScene({
 
         const symbols: SlotSymbol[] = [];
         for (let j = 0; j < REEL_SIZE; j++) {
-          const sym = createSymbolSprite(randomAlias(), cellW, cellH);
+          const sym = createSymbolSprite(randomAlias(i), cellW, cellH);
           sym.container.y = j * cellH;
           stripCont.addChild(sym.container);
           symbols.push(sym);
@@ -481,14 +481,17 @@ export function useReelsScene({
       const hasScatterSymbol = highlight.cells.some(({ animIdx }) =>
         isScatterSymbol(animIdx),
       );
+      const lineSound = highlight.cells.some(({ animIdx }) => animIdx === 10)
+        ? "bonus_door"
+        : hasScatterSymbol || !paylineAnim ? "scatter_win" : "winning_line";
       if (paylineAnim) {
         if (!bigWinActiveRef.current && !winCycleFiredRef.current)
-          playSound(hasScatterSymbol ? "scatter_win" : "winning_line");
+          playSound(lineSound);
         paylineAnim.restart();
         layer.addChild(paylineAnim.container);
       } else {
         if (!bigWinActiveRef.current && !winCycleFiredRef.current)
-          playSound("scatter_win");
+          playSound(lineSound);
       }
 
       const activeCells = new Set(
@@ -568,7 +571,13 @@ export function useReelsScene({
       });
     }
 
+    let wildSoundSpin: number | null = null;
     function attachColumnOverlays(col: number) {
+      if (spinRef.current && !collectorOverlayVisibleRef.current && targetMatrixRef.current?.[col]?.includes(9)
+        && wildSoundSpin !== spinStartRef.current) {
+        wildSoundSpin = spinStartRef.current;
+        playWildWin();
+      }
       attachSettledColumn(col);
       attachWildIdleColumn(col);
     }
@@ -831,7 +840,7 @@ export function useReelsScene({
           sym.container.y = baseY;
 
           if (sym.container.y < 0 && prevY > cellH && !reel.stopping) {
-            updateSymbol(sym, randomAlias(), cellW, cellH);
+            updateSymbol(sym, randomAlias(reels.indexOf(reel)), cellW, cellH);
           }
           // Buffer cells outside a landed reel must not bleed into the grid,
           // especially the enlarged wild above the first visible row.

@@ -8,7 +8,7 @@ const symbol = defineSymbolSpine({
   name: 'lost-idol-treasure-map-v2',
   jsonUrl,
   atlasUrl,
-  images: { 'sheet.webp': sheetUrl },
+  images: { 'treasure-map-sheet.webp': sheetUrl },
 });
 
 export const ensureHeelsSpineLoaded = symbol.ensureLoaded;

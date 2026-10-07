@@ -4,7 +4,6 @@ import { type RefObject, useEffect, useRef } from "react";
 import {
   play as playSound,
   playBigWin,
-  playWildWin,
   stopBigWinSounds,
 } from "@/audio/soundManager";
 import {
@@ -143,8 +142,7 @@ export function useBigWinOverlay({
     if (!tier) {
       if (winLinesCount > 0) {
         const hasWild = expandingWild.some((x) => x !== 0);
-        if (hasWild) playWildWin();
-        else playSound("win_simple");
+        if (!hasWild) playSound("win_simple");
       }
       return cleanup;
     }

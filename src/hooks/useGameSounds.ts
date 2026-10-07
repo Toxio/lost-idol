@@ -5,7 +5,6 @@ import { setBackgroundMusic, stopBackgroundMusic } from '@/audio/soundManager';
 export function useGameSounds(bonusActive: boolean): void {
   useEffect(() => {
     setBackgroundMusic(bonusActive ? 'bonus_game' : 'main');
+    return () => stopBackgroundMusic();
   }, [bonusActive]);
-
-  useEffect(() => () => stopBackgroundMusic(), []);
 }

@@ -8,7 +8,7 @@ const symbol = defineSymbolSpine({
   name: 'lost-idol-banana-chest-v2',
   jsonUrl,
   atlasUrl,
-  images: { 'sheet.webp': sheetUrl },
+  images: { 'banana-chest-sheet.webp': sheetUrl },
 });
 
 export const ensureLipsSpineLoaded = symbol.ensureLoaded;

@@ -1,29 +1,26 @@
 import { Howl, Howler } from 'howler';
 
 import bigWinInSrc from '@/audio/sounds/big_win_in.mp3';
-import bigWinLoopSrc from '@/audio/sounds/big_win_loop.mp3';
 import errorDialogSrc from '@/audio/sounds/error_dialog_appear.mp3';
 import mainSrc from '@/audio/sounds/main.mp3';
+import bonusPortalShineSrc from '@/audio/sounds/bonus_portal_shine.mp3';
+import bonusDoorSrc from '@/audio/sounds/bonus_door.mp3';
 import bonusGameSrc from '@/audio/sounds/bonus_game.mp3';
-import megaWinLoopSrc from '@/audio/sounds/mega_win_loop.mp3';
 import reelStopSrc from '@/audio/sounds/reel_stop.mp3';
 import scatterWinSrc from '@/audio/sounds/scatter_win.mp3';
 import spinButtonSrc from '@/audio/sounds/spin_button.mp3';
-import superWinLoopSrc from '@/audio/sounds/super_win_loop.mp3';
 import uiButtonSrc from '@/audio/sounds/ui_button.mp3';
+import monkeyJumpSrc from '@/audio/sounds/monkey_jump.mp3';
 import wildWinSrc from '@/audio/sounds/wild_win.mp3';
-import wildWin2Src from '@/audio/sounds/wild_win2.mp3';
-import wildWin3Src from '@/audio/sounds/wild_win3.mp3';
 import winSimpleSrc from '@/audio/sounds/win_simple.mp3';
 import winningLineSrc from '@/audio/sounds/winning_line.mp3';
 
 export type SoundKey =
   | 'main'
   | 'bonus_game'
+  | 'bonus_door'
+  | 'bonus_portal_shine'
   | 'big_win_in'
-  | 'big_win_loop'
-  | 'mega_win_loop'
-  | 'super_win_loop'
   | 'error_dialog'
   | 'reel_stop'
   | 'scatter_win'
@@ -31,8 +28,7 @@ export type SoundKey =
   | 'spin_button'
   | 'win_simple'
   | 'wild_win'
-  | 'wild_win2'
-  | 'wild_win3'
+  | 'monkey_jump'
   | 'winning_line';
 
 export type SoundKind = 'music' | 'effect';
@@ -54,19 +50,17 @@ const CONFIGS: Record<SoundKey, SoundConfig> = {
   main: { src: [mainSrc], loop: true, volume: 0.2, kind: 'music' },
   bonus_game: { src: [bonusGameSrc], loop: true, volume: 0.2, kind: 'music' },
   big_win_in: { src: [bigWinInSrc], loop: false, volume: 0.8, kind: 'music' },
-  big_win_loop: { src: [bigWinLoopSrc], loop: true, volume: 0.8, kind: 'music' },
-  mega_win_loop: { src: [megaWinLoopSrc], loop: true, volume: 0.8, kind: 'music' },
-  super_win_loop: { src: [superWinLoopSrc], loop: true, volume: 0.8, kind: 'music' },
   error_dialog: { src: [errorDialogSrc], loop: false, volume: 0.8, kind: 'effect' },
   reel_stop: { src: [reelStopSrc], loop: false, volume: 0.7, kind: 'effect' },
+  bonus_door: { src: [bonusDoorSrc], loop: false, volume: 0.8, kind: 'music' },
+  bonus_portal_shine: { src: [bonusPortalShineSrc], loop: false, volume: 0.8, kind: 'effect' },
   scatter_win: { src: [scatterWinSrc], loop: false, volume: 0.8, kind: 'effect' },
   ui_button: { src: [uiButtonSrc], loop: false, volume: 0.8, kind: 'effect' },
   spin_button: { src: [spinButtonSrc], loop: false, volume: 1, kind: 'effect' },
   win_simple: { src: [winSimpleSrc], loop: false, volume: 0.8, kind: 'effect' },
+  monkey_jump: { src: [monkeyJumpSrc], loop: false, volume: 0.4, kind: 'effect' },
   wild_win: { src: [wildWinSrc], loop: false, volume: 0.8, kind: 'effect' },
-  wild_win2: { src: [wildWin2Src], loop: false, volume: 0.8, kind: 'effect' },
-  wild_win3: { src: [wildWin3Src], loop: false, volume: 0.8, kind: 'effect' },
-  winning_line: { src: [winningLineSrc], loop: false, volume: 0.2, kind: 'effect' },
+  winning_line: { src: [winningLineSrc], loop: false, volume: 0.5, kind: 'effect' },
 };
 
 // Vite can replace this module while its previous audio objects are still playing.
@@ -167,6 +161,8 @@ let muted = readStoredBoolean(MUTE_KEY, false);
 /** Background theme to restore after a big-win presentation. */
 let backgroundTrack: 'main' | 'bonus_game' = 'main';
 let backgroundPausedForBigWin = false;
+let bonusDoorActive = false;
+let backgroundRequested = false;
 Howler.mute(muted);
 
 const listeners = new Set<() => void>();
@@ -238,7 +234,37 @@ export function setMuted(value: boolean): void {
   notify();
 }
 
+const LINE_WIN_KEYS = ['win_simple', 'winning_line'] as const;
+const LINE_WIN_TAIL_SECONDS = 0.15;
+
 export function play(key: SoundKey): void {
+  if (key === 'win_simple' || key === 'winning_line') {
+    for (const previousKey of LINE_WIN_KEYS) {
+      const previous = howls.get(previousKey);
+      if (!previous) continue;
+      const position = previous.seek();
+      const remaining = previous.duration() - (typeof position === 'number' ? position : 0);
+      // Keep the new sound in sync with its highlight. Only a short ending may overlap.
+      // Stop queued, not-yet-loaded playback too, so it cannot start late over this line.
+      if (previousKey === key || previous.state() !== 'loaded' || remaining > LINE_WIN_TAIL_SECONDS) {
+        previous.stop();
+      }
+    }
+  }
+  if ((key === 'main' || key === 'bonus_game') && bonusDoorActive) return;
+  if (key === 'bonus_door') {
+    if (bonusDoorActive) return;
+    bonusDoorActive = true;
+    const door = getHowl(key);
+    const finish = () => {
+      door.off('end', finish);
+      door.off('loaderror', finish);
+      bonusDoorActive = false;
+      if (backgroundRequested && !backgroundPausedForBigWin) play(backgroundTrack);
+    };
+    door.once('end', finish);
+    door.once('loaderror', finish);
+  }
   // Music is exclusive: stop the previous track before starting another one.
   // Effects remain independent so reel and interface sounds can play over music.
   if (CONFIGS[key].kind === 'music') {
@@ -287,30 +313,23 @@ function clearBigWinIntroHandler(): void {
   howls.get('big_win_in')?.off('end');
 }
 
-/** Shared, one-shot celebration for every win tier; no repeated opening fanfare. */
+/** All win tiers repeat the shared celebration until the overlay is dismissed. */
 export function playBigWin(): void {
   pauseBackgroundForBigWin();
   clearBigWinIntroHandler();
   stop('big_win_in');
-  stop('big_win_loop');
-  stop('mega_win_loop');
-  stop('super_win_loop');
+  getHowl('big_win_in').loop(true);
   play('big_win_in');
 }
 
-const WILD_WIN_KEYS: SoundKey[] = ['wild_win', 'wild_win2', 'wild_win3'];
-
 export function playWildWin(): void {
-  const key = WILD_WIN_KEYS[Math.floor(Math.random() * WILD_WIN_KEYS.length)];
-  play(key);
+  if (howls.get('wild_win')?.playing()) return;
+  play('wild_win');
 }
 
 export function stopBigWinSounds(): void {
   clearBigWinIntroHandler();
   stop('big_win_in');
-  stop('big_win_loop');
-  stop('mega_win_loop');
-  stop('super_win_loop');
   resumeBackgroundAfterBigWin();
 }
 
@@ -320,16 +339,34 @@ export function setBackgroundMusic(track: 'main' | 'bonus_game'): void {
     stopBackgroundMusic();
     backgroundTrack = track;
   }
+  backgroundRequested = true;
   if (!backgroundPausedForBigWin) play(backgroundTrack);
 }
 
 export function stopBackgroundMusic(): void {
+  backgroundRequested = false;
   backgroundPausedForBigWin = false;
   clearBigWinIntroHandler();
   stop('main');
   stop('bonus_game');
   stop('big_win_in');
-  stop('big_win_loop');
-  stop('mega_win_loop');
-  stop('super_win_loop');
+}
+
+/** Continue the reel reveal into the portal without restarting its soundtrack. */
+export function continueBonusDoorSound(): void {
+  if (bonusDoorActive) return;
+  play('bonus_door');
+  const howl = getHowl('bonus_door');
+  // Direct transitions (buy/exit) skip the 1.26-second reel introduction.
+  howl.seek(1.26);
+}
+
+let monkeyJumpCount = 0;
+
+/** Accent every second jump; keep the appearance call independent. */
+export function playMonkeyJump(): void {
+  monkeyJumpCount += 1;
+  if (monkeyJumpCount % 2 !== 0) return;
+  stop('monkey_jump');
+  play('monkey_jump');
 }

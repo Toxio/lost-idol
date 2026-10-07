@@ -246,10 +246,15 @@
 /* Give desktop reels the space reclaimed from the bonus action column. */
 @media (min-width: 901px) {
   :root .main-screen .smp-wrapper.smp-wrapper--feature {
-    --smp-logo-col-width: clamp(125px, 10vw, 160px);
+    --smp-logo-col-width: calc(clamp(125px, 10vw, 160px) + 16px);
     --smp-controls-col-width: clamp(145px, 12vw, 190px);
-    --smp-canvas-width: min(1800px,
+    --smp-desktop-base-width: min(1800px,
       calc(100vw - var(--smp-logo-col-width) - var(--smp-controls-col-width) - 32px),
       calc((100svh - var(--smp-extra-header) - 90px) * 1641 / 1022));
+    --smp-canvas-width: calc(var(--smp-desktop-base-width) + 20px);
+  }
+  :root .main-screen .smp-wrapper .smp-canvas {
+    height: calc(var(--smp-desktop-base-width) * 1022 / 1641 + 20px);
+    aspect-ratio: auto;
   }
 }

@@ -4,6 +4,7 @@ import portalUrl from '@/assets/transition/bonus-portal.webp';
 import portalVideoUrl from '@/assets/transition/bonus-portal.mp4';
 import portalReverseUrl from '@/assets/transition/bonus-portal-reverse.mp4';
 import portalReversePoster from '@/assets/transition/bonus-portal-reverse.webp';
+import { continueBonusDoorSound, play, stop } from '@/audio/soundManager';
 import './BonusTransition.css';
 
 type Props = { active: boolean; entering: boolean; transitionId: number; onCovered: () => void; onComplete: () => void };
@@ -16,6 +17,7 @@ export function BonusTransition(props: Props) {
   useEffect(() => { callbacks.current = props; }, [props]);
   useEffect(() => {
     if (!props.active) return;
+    continueBonusDoorSound();
     const previous = document.activeElement as HTMLElement | null;
     container.current?.focus();
     const blockKeys = (event: KeyboardEvent) => {
@@ -43,6 +45,15 @@ export function BonusTransition(props: Props) {
     // A media failure must never block access to the bonus intro.
     const fallbackTimer = window.setTimeout(finish, playVideo ? 15000 : 450);
     const media = video.current;
+    let shinePlayed = false;
+    const playPortalShine = () => {
+      // Follow video time so buffering cannot trigger the accent early.
+      if (!props.entering || complete || shinePlayed || !media || media.currentTime < 3.3) return;
+      shinePlayed = true;
+      stop('bonus_portal_shine');
+      play('bonus_portal_shine');
+    };
+    media?.addEventListener('timeupdate', playPortalShine);
     if (playVideo && media) {
       media.currentTime = 0;
       void media.play().catch(finish);
@@ -50,6 +61,7 @@ export function BonusTransition(props: Props) {
     return () => {
       complete = true;
       finishPlayback.current = () => {};
+      media?.removeEventListener('timeupdate', playPortalShine);
       media?.pause();
       window.clearTimeout(coverTimer);
       window.clearTimeout(fallbackTimer);

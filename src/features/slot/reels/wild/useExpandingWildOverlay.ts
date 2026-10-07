@@ -2,7 +2,6 @@ import { type Spine } from '@esotericsoftware/spine-pixi-v8';
 import type { Application, Container } from 'pixi.js';
 import { type RefObject, useEffect } from 'react';
 
-import { playWildWin } from '@/audio/soundManager';
 import { createWildSpineShowThenIdle } from '@/animation/wildSpine';
 import { DESIGN_HEIGHT, DESIGN_WIDTH, REEL_COUNT, VISIBLE_ROWS } from '../constants';
 import { getSlotGridMetrics } from '../lib/grid';
@@ -102,7 +101,6 @@ export function useExpandingWildOverlay({
     const { gridX, gridY, cellH, cellW } = getSlotGridMetrics(DESIGN_WIDTH, DESIGN_HEIGHT);
 
     hideWildStripColumnsRef.current?.(wildCols);
-    playWildWin();
 
     for (let col = 0; col < gridMatrix.length; col++) {
       if (!expandingWild[col]) continue;

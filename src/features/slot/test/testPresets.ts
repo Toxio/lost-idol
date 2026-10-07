@@ -169,6 +169,25 @@ const WIN_SPINE_ANIM_PRESETS: TestPreset[] = [
 
 export const TEST_PRESETS: TestPreset[] = [
   {
+    id: "two-winning-lines",
+    label: "2 выигрышные линии",
+    subtitle: "Чаша + компас · без BIG WIN",
+    badge: "2",
+    badgeColor: "#d8c18a",
+    preset: {
+      matrix: buildMatrix([
+        [5, 7, 4],
+        [5, 7, 3],
+        [5, 7, 6],
+        [3, 4, 8],
+        [6, 8, 3],
+      ]),
+      winLines: [wl(7, 1, 3, 6), wl(5, 2, 3, 4)],
+      winAmount: 10,
+      odd: 10,
+    },
+  },
+  {
     id: 'collector-wild', label: 'Collector Wild', subtitle: 'One monkey · 3 respins · collect ×',
     badge: '×+', badgeColor: '#8ee2ac',
     preset: { matrix: buildMatrix([]), winLines: [], winAmount: 0, book: collectorBooks.wild_spin[0] },
