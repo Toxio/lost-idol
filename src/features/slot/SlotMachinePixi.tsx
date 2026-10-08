@@ -17,7 +17,6 @@ import homeBtnUrl from "@/assets/buttons/home_btn.webp";
 import { play as playSound } from "@/audio/soundManager";
 import type { SlotSessionState } from "@/hooks/useRgsSession";
 import { useAutoplay } from "@/hooks/useAutoplay";
-import { useGameSounds } from "@/hooks/useGameSounds";
 import { useResponsiveCanvas } from "@/hooks/useResponsiveCanvas";
 import { useSpaceKeyForSpin } from "@/hooks/useSpaceKeyForSpin";
 import { CurrencyAmount } from "@/components/CurrencyAmount";
@@ -186,7 +185,6 @@ export function SlotMachinePixi({
 
   const maxSpeed: 1 | 2 = jurisdiction.disabledTurbo ? 1 : 2;
   const bonusActive = bonus.phase !== "idle";
-  useGameSounds(bonusActive);
   const bonusSpeed = Math.min(maxSpeed, spinSpeed) as 1 | 2;
 
   const handleSpeedCycle = useCallback(() => {

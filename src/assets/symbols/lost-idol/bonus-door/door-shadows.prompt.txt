@@ -1,1 +1,0 @@
-Built-in image_gen edit. Preserve 4x4 portal sprite layout and perimeter light progression. Add deep olive and warm brown ambient shadows beneath vines, cornice, stone joints and carved gold frame. Rich forest green foliage, warm lanterns and luminous emerald portal. Preserve transparent exterior, all objects and frame alignment. No text or opaque external shadow.

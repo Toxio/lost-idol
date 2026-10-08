@@ -1,1 +1,0 @@
-Source: map2.png. Remove only baked checkerboard; preserve all 16 maps, layout and artwork. Real alpha. Tool: image_gen.

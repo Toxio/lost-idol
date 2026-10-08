@@ -1,3 +1,4 @@
+import { useGameSounds } from '@/hooks/useGameSounds';
 import { usePreferences } from '../settings/preferences';
 import { useCallback, useEffect, useState } from 'react';
 import { WelcomeScreen } from '../welcome/WelcomeScreen';
@@ -33,6 +34,7 @@ export function GameScreen({
   const [entered, setEntered] = useState(false);
   const enter = useCallback(() => setEntered(true), []);
   const showGame = entered || skipWelcome || hub.replay;
+  useGameSounds(showGame && hub.bonus.phase !== 'idle', !hidden);
   return (
     <div className={`app-page${hidden ? ' app-page--loading' : ''}`}>
       <BonusBackground mediaReady={!hidden} active={hub.bonus.phase !== 'idle'}>

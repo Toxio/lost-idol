@@ -1,7 +1,7 @@
 import { Howl, Howler } from 'howler';
 
 import bigWinInSrc from '@/audio/sounds/big_win_in.mp3';
-import errorDialogSrc from '@/audio/sounds/error_dialog_appear.mp3';
+import errorDialogSrc from '@/audio/sounds/modal_notification.mp3';
 import mainSrc from '@/audio/sounds/main.mp3';
 import bonusPortalShineSrc from '@/audio/sounds/bonus_portal_shine.mp3';
 import bonusDoorSrc from '@/audio/sounds/bonus_door.mp3';
@@ -50,7 +50,7 @@ const CONFIGS: Record<SoundKey, SoundConfig> = {
   main: { src: [mainSrc], loop: true, volume: 0.2, kind: 'music' },
   bonus_game: { src: [bonusGameSrc], loop: true, volume: 0.2, kind: 'music' },
   big_win_in: { src: [bigWinInSrc], loop: false, volume: 0.8, kind: 'music' },
-  error_dialog: { src: [errorDialogSrc], loop: false, volume: 0.8, kind: 'effect' },
+  error_dialog: { src: [errorDialogSrc], loop: false, volume: 0.5, kind: 'effect' },
   reel_stop: { src: [reelStopSrc], loop: false, volume: 0.7, kind: 'effect' },
   bonus_door: { src: [bonusDoorSrc], loop: false, volume: 0.8, kind: 'music' },
   bonus_portal_shine: { src: [bonusPortalShineSrc], loop: false, volume: 0.8, kind: 'effect' },
@@ -70,7 +70,7 @@ if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     Howler.unload();
     document.removeEventListener('visibilitychange', onVisibilityChange);
-    (['touchstart', 'touchend', 'click'] as const).forEach(event => {
+    (['touchstart', 'touchend', 'click', 'keydown'] as const).forEach(event => {
       document.removeEventListener(event, resumeAudioContext);
     });
   });
@@ -150,7 +150,7 @@ function resumeAudioContext(): void {
   }
 }
 
-(['touchstart', 'touchend', 'click'] as const).forEach((event) => {
+(['touchstart', 'touchend', 'click', 'keydown'] as const).forEach((event) => {
   document.addEventListener(event, resumeAudioContext, { once: true, passive: true });
 });
 

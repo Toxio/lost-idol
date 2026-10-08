@@ -1,1 +1,0 @@
-16-frame 4x4 transparent sprite sheet. Fixed upright faceted emerald in ancient gold frame. Jungle temple hand-painted game style. Animate only interior green glow from dim to bright and back, tiny golden sparkles at peak. No motion, rotation, labels, numbers or background. +1 is rendered separately in game. Generated with imagegen.
