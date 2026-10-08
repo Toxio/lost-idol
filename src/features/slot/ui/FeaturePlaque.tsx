@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react';
 import type { TreasuryProgress } from '../treasury/TreasuryFeature';
 import { formatTrimmedAmount } from '@/utils/currency';
 import { t } from '@/utils/i18n';
@@ -20,6 +21,21 @@ export function FeaturePlaque({ bonus, collector, precision, pending, winLines, 
   const level = bonus.total >= 15 ? 3 : bonus.total >= 10 ? 2 : 1;
   const formula = collector && !pending ? wildRoundFormula(collector, winLines) : null;
   const format = (value: number) => Number(value.toFixed(Math.max(precision, 2))).toString();
+  const formulaRef = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const box = formulaRef.current;
+    const text = box?.firstElementChild as HTMLElement | null;
+    if (!box || !text) return;
+    const fit = () => {
+      const scale = Math.min(1, box.clientWidth / Math.max(1, text.scrollWidth));
+      text.style.transform = `scale(${scale})`;
+    };
+    const observer = new ResizeObserver(fit);
+    observer.observe(box);
+    observer.observe(text);
+    fit();
+    return () => observer.disconnect();
+  });
   return <div className="smp-feature-plaque" role="status" aria-live="polite">
     <img src={plaque} alt="" draggable={false} />
     {active && <div className="smp-feature-plaque__content">
@@ -32,7 +48,7 @@ export function FeaturePlaque({ bonus, collector, precision, pending, winLines, 
       </div>
       <div className="smp-feature-plaque__section">
         <span>{treasury ? (treasury.revealed > 0 && treasury.multiplier > 1 ? `${t('treasury_multiplier')} ×${treasury.multiplier}` : t('treasury_win').toLocaleUpperCase()) : inBonus ? 'ROUND WIN' : 'WILD ROUND WIN'}</span>
-        <strong className="smp-feature-plaque__formula">{treasury ? formatTrimmedAmount(treasury.amount, precision).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '') : formula && formula.total > 0 ? `${formula.multiplier} × ${format(formula.base)}${formula.other > 0 ? ` + ${format(formula.other)}` : ''} = ${format(formula.total)}` : '—'}</strong>
+        <strong ref={formulaRef} className="smp-feature-plaque__formula"><span>{treasury ? formatTrimmedAmount(treasury.amount, precision).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '') : formula && formula.total > 0 ? `${formula.multiplier} × ${format(formula.base)}${formula.other > 0 ? ` + ${format(formula.other)}` : ''} = ${format(formula.total)}` : '—'}</span></strong>
       </div>
     </div>}
   </div>;

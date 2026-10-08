@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { build } from 'esbuild';
-const result = await build({entryPoints:['src/features/slot/player/collectorTransition.ts'],bundle:true,write:false,platform:'node',format:'esm'});
+const result = await build({entryPoints:['src/features/slot/player/collectorTransition.ts'],alias:{'@':'./src'},bundle:true,write:false,platform:'node',format:'esm'});
 const {collectorTransitionMatrix: matrix, COLLECTOR_TRANSITION: timing} = await import(`data:text/javascript;base64,${Buffer.from(result.outputFiles[0].text).toString('base64')}`);
 const action = {from:{reel:0,row:1},wild:{reel:3,row:2},underlyingMatrix:[[1,2,3],[4,5,6],[7,8,1],[2,3,4],[5,6,7]]};
 const original = structuredClone(action);

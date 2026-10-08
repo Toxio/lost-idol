@@ -17,7 +17,7 @@ export function InsufficientFundsModal({
   if (!open) return null;
 
   return (
-    <Modal badge={t('insufficient_badge')} title={t('insufficient_title')} size="narrow" onClose={onClose}>
+    <Modal className="smp-status-modal" badge={t('insufficient_badge')} title={t('insufficient_title')} size="narrow" onClose={onClose}>
       <p className="smp-inf-text">{message}</p>
 
       <button type="button" className="smp-modal-action" onClick={() => { playSound('ui_button'); onClose(); }}>

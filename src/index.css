@@ -60,7 +60,8 @@ button {
 button:focus,
 button:focus-visible,
 button:active {
-  outline: none;
+  /* Keep component focus rules from adding rings to game buttons. */
+  outline: none !important;
   box-shadow: none;
 }
 

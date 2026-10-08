@@ -44,3 +44,17 @@
   .smp-feature-plaque__section > strong { font-size: 9px; }
   .smp-feature-plaque__section > .smp-feature-plaque__formula { font-size: 6px; }
 }
+
+/* Keep the complete equation inside its compartment at every viewport width. */
+.smp-feature-plaque__section > .smp-feature-plaque__formula {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.smp-feature-plaque__formula > span {
+  display: block;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transform-origin: center;
+}

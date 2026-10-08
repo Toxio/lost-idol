@@ -212,6 +212,11 @@ function getHowl(key: SoundKey): Howl {
   return howl;
 }
 
+export function preloadBonusMusic(): void {
+  const howl = getHowl('bonus_game');
+  if (howl.state() === 'unloaded') howl.load();
+}
+
 // ── Public API ───────────────────────────────────────────────────────────────
 export function setMusicVolume(value: number): void {
   musicVolume = clamp01(value);

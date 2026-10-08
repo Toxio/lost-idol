@@ -1,3 +1,4 @@
+import { recordRgsFailure } from '@/api/rgs/diagnostics';
 import { resetWildSoundSequence } from '@/audio/soundManager';
 import bonusBoost from '@/config/bonusBoost.json';
 import type { TreasurySession } from '@/features/slot/treasury/treasuryModel';
@@ -219,6 +220,7 @@ export function useRgsSession({
   const balanceRef = useRef(balance);
   const matrixRef = useRef(matrix);
   const pendingEndRoundRef = useRef(false);
+  const settlingRoundRef = useRef(false);
   const pendingRoundRef = useRef<RgsRound | null>(null);
   const replayLockedRef = useRef(replay);
   const [replayMode, setReplayMode] = useState<string>(DEFAULT_BET_MODE);
@@ -390,6 +392,7 @@ export function useRgsSession({
         setStatus("ready");
       } catch (error) {
         if (disposed) return;
+        recordRgsFailure("authenticate", error);
         if (isSessionError(error)) setStatus("session_expired");
         else setStatus("error");
       }
@@ -398,7 +401,10 @@ export function useRgsSession({
     void boot();
 
     const handleOffline = () => {
-      if (!disposed) setStatus("disconnected");
+      if (!disposed) {
+        recordRgsFailure("offline", new Error());
+        setStatus("disconnected");
+      }
     };
     const handleOnline = () => {
       if (disposed) return;
@@ -526,14 +532,17 @@ export function useRgsSession({
     clearPreviousSpinResult();
     pendingEndRoundRef.current = false;
 
+    let failureStage = "play";
     try {
       const response = await client.play({
         amount: displayAmountToApi(stake),
         mode,
       });
       setBalance(applyBalance(response.balance.amount));
+      failureStage = "playback";
       await beginRoundPlayback(response.round);
     } catch (error) {
+      recordRgsFailure(failureStage, error);
       roundBusyRef.current = false;
       setRoundBusy(false);
       spinningRef.current = false;
@@ -627,6 +636,10 @@ export function useRgsSession({
   );
 
   const finishRound = useCallback(async () => {
+    // Reels and win presentation can both finish while settlement is in flight.
+    // Only its owner may release roundBusy and allow the next autoplay request.
+    if (settlingRoundRef.current) return;
+    settlingRoundRef.current = true;
     if (replayLockedRef.current) {
       setReplayFinished(true);
       setReplayReady(false);
@@ -636,11 +649,13 @@ export function useRgsSession({
         const response = await clientRef.current!.endRound();
         setBalance(applyBalance(response.balance.amount));
       } catch (error) {
+        recordRgsFailure("end-round", error);
         setStatus(isSessionError(error) ? "session_expired" : "disconnected");
       }
     }
     frameRef.current = null;
     roundBusyRef.current = false;
+    settlingRoundRef.current = false;
     setRoundBusy(false);
   }, []);
 

@@ -22,7 +22,7 @@ export function SessionExpiredModal({
       title={t('session_expired_title')}
       subtitle={t('session_expired_subtitle')}
       size="narrow"
-      className={elevated ? 'smp-modal-backdrop--elevated' : undefined}
+      className={`smp-status-modal${elevated ? ' smp-modal-backdrop--elevated' : ''}`}
       onClose={onClose}
     >
       <div className="smp-modal-info-row">

@@ -69,9 +69,8 @@
   :root .main-screen .smp-feature-plaque__section > strong { font-size: 20px; }
   :root .main-screen .smp-feature-plaque__section > .smp-feature-plaque__formula {
     font-size: 13px;
-    white-space: normal;
+    white-space: nowrap;
     text-align: center;
-    overflow-wrap: anywhere;
   }
   :root .main-screen .smp-wrapper .smp-logo-col .smp-buy-bonus-button--desktop {
     width: 100%;

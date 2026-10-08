@@ -79,23 +79,66 @@ function assertOk(response: Response, body: unknown): void {
   throw RgsError.fromResponse(response.status, body);
 }
 
+// Share only in-flight authentication across StrictMode remounts/client instances.
+// Completed responses are not cached: reconnect must get fresh wallet state.
+const pendingAuthentications = new Map<string, Promise<unknown>>();
+
 export function createHttpRgsClient(options: HttpRgsClientOptions): RgsClient {
   const baseUrl = resolveRgsBaseUrl(options.rgsUrl, options.protocol);
   const sessionID = options.sessionID;
   const lang = options.lang ?? "en";
 
-  async function post<T>(
+  // Conservative client-side pacing, not an asserted engine rate limit.
+  // Keep settlement and the following play from arriving in a burst.
+  let requestTail: Promise<unknown> = Promise.resolve();
+  let lastRequestAt = -Infinity;
+  function post<T>(path: string, body: Record<string, unknown>): Promise<T> {
+    const authKey = path === '/wallet/authenticate'
+      ? JSON.stringify([baseUrl, sessionID, lang]) : null;
+    const pending = authKey ? pendingAuthentications.get(authKey) : undefined;
+    if (pending) return pending as Promise<T>;
+    const request = requestTail.then(async () => {
+      const delay = Math.max(0, 1000 - (performance.now() - lastRequestAt));
+      if (delay) await new Promise(resolve => setTimeout(resolve, delay));
+      lastRequestAt = performance.now();
+      return send<T>(path, body);
+    });
+    if (authKey) {
+      pendingAuthentications.set(authKey, request);
+      const clear = () => { pendingAuthentications.delete(authKey); };
+      void request.then(clear, clear);
+    }
+    requestTail = request.catch(() => undefined);
+    return request;
+  }
+
+  async function send<T>(
     path: string,
     body: Record<string, unknown>,
   ): Promise<T> {
-    const response = await fetch(`${baseUrl}${path}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(15000),
-    });
-    const data = await parseBody(response);
+    let response: Response;
+    try {
+      response = await fetch(`${baseUrl}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(15000),
+      });
+    } catch (error) {
+      // A failed play may already have been accepted: never retry a wager here.
+      const timeout = error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name);
+      throw new RgsError(timeout ? "REQUEST_TIMEOUT" : "NETWORK_REQUEST_FAILED", 0);
+    }
+    let data: unknown;
+    try {
+      data = await parseBody(response);
+    } catch {
+      throw new RgsError("RESPONSE_READ_FAILED", response.status);
+    }
     assertOk(response, data);
+    if (!data || typeof data !== "object" || Array.isArray(data)) {
+      throw new RgsError("INVALID_RESPONSE_BODY", response.status);
+    }
     return data as T;
   }
 

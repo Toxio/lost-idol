@@ -1,5 +1,5 @@
 import { usePreferences } from '../settings/preferences';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { WelcomeScreen } from '../welcome/WelcomeScreen';
 import { BonusBackground } from '@/features/appBg/BonusBackground';
 import type { SlotSessionState } from '@/hooks/useRgsSession';
@@ -22,6 +22,13 @@ export function GameScreen({
   onAssetsLoaded,
   onRegisterInsufficientFunds,
 }: GameScreenProps) {
+  useEffect(() => {
+    if (hidden) return;
+    const timer = window.setTimeout(() => {
+      void import('./preloadBonusAssets').then(module => module.preloadBonusAssets()).catch(() => undefined);
+    }, 500);
+    return () => window.clearTimeout(timer);
+  }, [hidden]);
   const { skipWelcome } = usePreferences();
   const [entered, setEntered] = useState(false);
   const enter = useCallback(() => setEntered(true), []);

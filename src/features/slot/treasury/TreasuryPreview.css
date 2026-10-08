@@ -25,7 +25,7 @@
 .smp-canvas:has(.treasury-reel-surface) > .smp-wild-multiplier { visibility: hidden; }
 
 /* Extend to the same backing bounds as createReelFrame (100/65), beneath its carved edges. */
-.treasury-reel-surface::before { content: ""; position: absolute; inset: -5.542% -3.729% -4.311%; z-index: -1; background: #52634a url("../../../assets/treasury/temple-wall-selected.png") center / cover no-repeat; border-radius: 12px; }
+.treasury-reel-surface::before { content: ""; position: absolute; inset: -5.542% -3.729% -4.311%; z-index: -1; background: #52634a url("../../../assets/treasury/temple-wall-selected.webp") center / cover no-repeat; border-radius: 12px; }
 /* Match the Pixi frame's nine-slice dimensions at the 1641 × 1022 design size. */
 .treasury-frame { position: absolute; inset: 0; z-index: 9; pointer-events: none; border: 0 solid transparent; border-image-slice: 110 170 100 170 fill; border-image-width: 10.763209% 10.359537% 9.784736% 10.359537%; border-image-repeat: stretch; }
 .treasury-transition { overflow: hidden; }

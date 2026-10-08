@@ -3,7 +3,7 @@ import { locale } from '@/utils/i18n';
 import logo from '@/assets/logo/lost-idol.webp';
 import portal from '@/assets/symbols/lost-idol/bonus-door/symbol.webp';
 import chest from '@/assets/symbols/lost-idol/gold-satchel/symbol.webp';
-import monkeyHero from '@/assets/bonus-buy/monkey-welcome-hd.png';
+import monkeyHero from '@/assets/bonus-buy/monkey-welcome-hd.webp';
 import './WelcomeScreen.css';
 import { GameNumberGlyphs } from '../slot/ui/WildMultiplier';
 

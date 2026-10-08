@@ -228,3 +228,9 @@
     transition: none;
   }
 }
+
+:root .smp-modal-backdrop .bonus-dialog .smp-modal-title,
+:root .smp-modal-backdrop .bonus-dialog .bonus-dialog__description {
+  text-align: center;
+  padding-inline: 0;
+}

@@ -1,7 +1,8 @@
 import { BonusButtonLabel } from './ui/BonusButtonLabel';
 import bonusBoost from '@/config/bonusBoost.json';
 import { BonusBoostButton } from './ui/BonusBoostButton';
-import { TreasuryFeature, type TreasuryProgress } from './treasury/TreasuryFeature';
+import type { TreasuryProgress } from './treasury/TreasuryFeature';
+const TreasuryFeature = lazy(() => import('./treasury/TreasuryFeature').then(module => ({ default: module.TreasuryFeature })));
 import { FlaskConical } from "lucide-react";
 import { REEL_GRID, REEL_COUNT } from "./reels/constants";
 import { t } from "@/utils/i18n";
@@ -10,7 +11,7 @@ import { BonusFeature } from "./bonus/BonusFeature";
 import { FeaturePlaque } from './ui/FeaturePlaque';
 import { Application } from "@pixi/react";
 import type { Application as PixiApplication } from "pixi.js";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 
 import homeBtnUrl from "@/assets/buttons/home_btn.webp";
 import { play as playSound } from "@/audio/soundManager";
@@ -352,7 +353,7 @@ export function SlotMachinePixi({
                   ×{multiplier}
                 </span>;
               })}
-              {treasury && <TreasuryFeature autoPick={autoplay.autoPickBonus} key={treasury.id} award={treasury} currency={currency} precision={precision} onProgress={setTreasuryProgress} onClose={continueTreasury} />}
+              {treasury && <Suspense fallback={null}><TreasuryFeature autoPick={autoplay.autoPickBonus} key={treasury.id} award={treasury} currency={currency} precision={precision} onProgress={setTreasuryProgress} onClose={continueTreasury} /></Suspense>}
             </div>
             <div
               className={`smp-mobile-win${hasWin ? " smp-mobile-win--active" : ""}`}
