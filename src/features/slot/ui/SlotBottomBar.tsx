@@ -1,5 +1,7 @@
-import { Menu, Minus, Plus } from "lucide-react";
-import { lazy, Suspense, useCallback, useId, useRef, useState, type ReactNode } from "react";
+import { SettingsModal } from '@/features/settings/SettingsModal';
+import { locale } from '@/utils/i18n';
+import { Menu, Minus, Plus, Info, Settings } from "lucide-react";
+import { lazy, Suspense, useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { useTime } from "react-timer-hook";
 import balanceIcon from "@/assets/buttons/balance.webp";
 import betBackImg from "@/assets/buttons/bet/bet_back.webp";
@@ -47,6 +49,17 @@ export function SlotBottomBar({
   const betMenuId = useId();
   const closeBetMenu = useCallback(() => setBetMenuOpen(false), []);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const menuRoot = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const outside = (event: PointerEvent) => { if (!menuRoot.current?.contains(event.target as Node)) setDropdownOpen(false); };
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') { setDropdownOpen(false); menuRoot.current?.querySelector('button')?.focus(); } };
+    document.addEventListener('pointerdown', outside);
+    document.addEventListener('keydown', escape);
+    return () => { document.removeEventListener('pointerdown', outside); document.removeEventListener('keydown', escape); };
+  }, [dropdownOpen]);
 
   const betIndex = indexOfBetLevel(quickBets, betAmount);
   const canDecrease = betIndex > 0;
@@ -63,18 +76,23 @@ export function SlotBottomBar({
   return (
     <>
       <div className="smp-bottom-bar">
-        <div className="smp-bottom-bar-left">
+        <div className="smp-bottom-bar-left" ref={menuRoot} style={{ position: 'relative' }}>
           <button
             type="button"
             className="smp-bottom-menu"
             aria-label="Menu"
+            aria-expanded={dropdownOpen}
             onClick={() => {
               playSound("ui_button");
-              setMenuOpen(true);
+              setDropdownOpen(open => !open);
             }}
           >
             <img src={menuIcon} alt="" draggable={false} /><Menu className="smp-desktop-icon" aria-hidden="true" />
           </button>
+          {dropdownOpen && <div className="game-menu-popover">
+            <button type="button" onClick={() => { playSound('ui_button'); setDropdownOpen(false); setMenuOpen(true); }}><Info size={22} />{locale === 'ru' ? 'Инфо' : 'Info'}</button>
+            <button type="button" onClick={() => { playSound('ui_button'); setDropdownOpen(false); setSettingsOpen(true); }}><Settings size={22} />{locale === 'ru' ? 'Настройки' : 'Settings'}</button>
+          </div>}
         </div>
 
         <div className="smp-bottom-bar-right">
@@ -198,6 +216,7 @@ export function SlotBottomBar({
         {controls}
       </div>
 
+      {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)} />}
       {menuOpen && (
         <Suspense fallback={null}>
           <MenuModal

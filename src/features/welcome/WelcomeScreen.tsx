@@ -26,7 +26,7 @@ export function WelcomeScreen({ onContinue }: { onContinue: () => void }) {
     window.addEventListener('keydown', proceed, true);
     return () => window.removeEventListener('keydown', proceed, true);
   }, [onContinue]);
-  return <section className="welcome-screen" aria-label="Lost Idol">
+  return <section className="welcome-screen" aria-label="Lost Idol" onClick={(event) => { event.stopPropagation(); onContinue(); }}>
     <img className="welcome-logo" src={logo} alt="Lost Idol" />
     <div className="welcome-features">
       <article className="welcome-feature">
@@ -46,7 +46,7 @@ export function WelcomeScreen({ onContinue }: { onContinue: () => void }) {
         <img src={chest} alt="" />
       </article>
     </div>
-    <button ref={button} className="welcome-continue" onClick={onContinue}>
+    <button ref={button} className="welcome-continue" onClick={(event) => { event.stopPropagation(); onContinue(); }}>
       <span className="welcome-keyboard"><PromoText text={ru ? 'НАЖМИ, ЧТОБЫ ПРОДОЛЖИТЬ' : 'PRESS TO CONTINUE'} /></span>
       <span className="welcome-touch"><PromoText text={ru ? 'КОСНИСЬ, ЧТОБЫ ПРОДОЛЖИТЬ' : 'TAP TO CONTINUE'} /></span>
     </button>

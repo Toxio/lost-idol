@@ -1,4 +1,5 @@
-import { RefreshCw } from 'lucide-react';
+import { AutoplayIcon } from '../ui/AutoplayIcon';
+import './AutoplayStoppedModal.css';
 
 import { Modal } from '@/components/modal';
 import { play as playSound } from '@/audio/soundManager';
@@ -16,7 +17,8 @@ export function AutoplayStoppedModal({ open, count, onClose, onRepeat }: Autopla
 
   return (
     <Modal
-      icon={<RefreshCw size={28} />}
+      className="autoplay-stopped-modal"
+      icon={<AutoplayIcon />}
       title={t('autoplay_stopped_title')}
       subtitle={t('autoplay_stopped_subtitle')}
       size="narrow"

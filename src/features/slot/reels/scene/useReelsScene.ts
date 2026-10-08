@@ -562,10 +562,11 @@ export function useReelsScene({
       });
     }
 
-    function attachWildIdleColumn(col: number) {
+    function attachWildIdleColumn(col: number, playAppearance = false) {
       if (!spineReadyRef.current || !app) return;
       attachWildIdleColumnOverlays(col, targetMatrixRef.current, {
         app,
+        playAppearance,
         winOverlayRef,
         wildIdleSpinesRef,
         reelsRef,
@@ -581,7 +582,7 @@ export function useReelsScene({
         playWildWin();
       }
       attachSettledColumn(col);
-      attachWildIdleColumn(col);
+      attachWildIdleColumn(col, spinRef.current && !collectorOverlayVisibleRef.current);
     }
 
     hideWildStripColumnsRef.current = (cols: number[]) => {

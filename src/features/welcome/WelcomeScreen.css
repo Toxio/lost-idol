@@ -8,7 +8,7 @@
 .welcome-feature .welcome-max { font-size: clamp(32px, 5vw, 62px); line-height: 1.1; color: #ffe45c; text-shadow: 0 3px 0 #623918, 0 0 24px #d3a54155; }
 .welcome-caption { font-size: clamp(11px, 1.25vw, 16px); font-weight: 700; }
 .welcome-continue { border: 0; background: transparent; color: #fff1c7; font: 700 clamp(16px, 2vw, 24px) var(--game-font), sans-serif; padding: 14px 24px; cursor: pointer; letter-spacing: .06em; text-shadow: 0 2px 5px #000; animation: welcome-pulse 2s ease-in-out infinite; }
-.welcome-continue:focus-visible { outline: 2px solid #e8cf87; outline-offset: 3px; border-radius: 6px; }
+.welcome-continue:focus-visible { outline: none; }
 .welcome-touch { display: none; }
 @media (pointer: coarse) { .welcome-keyboard { display: none; } .welcome-touch { display: inline; } }
 @media (orientation: portrait) {
@@ -136,7 +136,9 @@
   animation: welcome-pulse 2.4s ease-in-out infinite;
 }
 .welcome-continue:hover, .welcome-continue:active { background: transparent; color: #fff; }
-.welcome-continue:focus-visible { outline: 1px dashed #ffe49b80; outline-offset: 4px; border-radius: 0; }
+.welcome-continue:focus-visible { outline: none; filter: brightness(1.15); }
 @media (orientation: portrait) { .welcome-continue { font-size: clamp(15px, 4vw, 22px); padding: 12px 4px; } }
 @media (max-height: 380px) and (orientation: landscape) { .welcome-continue { font-size: 14px; padding: 6px; } }
 @media (prefers-reduced-motion: reduce) { .welcome-continue { animation: none; } }
+
+.welcome-screen { cursor: pointer; }

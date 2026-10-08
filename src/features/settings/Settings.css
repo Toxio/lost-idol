@@ -1,0 +1,11 @@
+.game-settings { display: grid; gap: 12px; }
+.game-setting { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 14px 0; border: 0; background: transparent; color: #f1e8cf; text-align: left; font: inherit; cursor: pointer; }
+.game-setting strong { display: block; font-size: 14px; }
+.game-setting small { display: block; margin-top: 6px; color: #b8c8bc; font-size: 12px; line-height: 1.5; }
+.game-setting-switch { flex: 0 0 42px; height: 24px; border-radius: 20px; background: #43574b; padding: 3px; box-sizing: border-box; }
+.game-setting-switch i { display: block; width: 18px; height: 18px; border-radius: 50%; background: #f1e8cf; transition: transform 150ms; }
+.game-setting[aria-checked=true] .game-setting-switch { background: #59894e; }
+.game-setting[aria-checked=true] .game-setting-switch i { transform: translateX(18px); }
+.game-menu-popover { position: absolute; bottom: calc(100% + 12px); left: 0; z-index: 120; width: 190px; padding: 8px; border-radius: 10px; background: #0b201af5; box-shadow: 0 8px 24px #0008; }
+.game-menu-popover button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 10px; border: 0; border-radius: 5px; background: transparent; color: #f4e6bc; font: 600 14px var(--game-font); cursor: pointer; }
+.game-menu-popover button:hover { background: #ffffff10; }

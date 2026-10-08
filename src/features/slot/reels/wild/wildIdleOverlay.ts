@@ -22,6 +22,7 @@ export interface WildIdleOverlayContext {
   wildIdleSpinesRef: RefObject<WildIdleEntry[]>;
   reelsRef: RefObject<Reel[]>;
   skipCols?: readonly number[];
+  playAppearance?: boolean;
 }
 
 function settledStripIndexForRow(row: number): number {
@@ -57,7 +58,7 @@ export function attachWildIdleColumnOverlays(
     const idle = spine.state.setAnimation(0, 'idle', true);
     // Restoring the standing monkey after a win must start with the rest,
     // not immediately repeat the chest beat that just finished.
-    idle.trackTime = 2.25;
+    idle.trackTime = ctx.playAppearance ? 0 : 2.25;
     spine.update(0);
     overlay.addChild(spine);
     ctx.wildIdleSpinesRef.current.push({ spine, col, row });

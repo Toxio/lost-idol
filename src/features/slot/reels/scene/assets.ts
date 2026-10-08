@@ -1,5 +1,5 @@
 import heelsImg from '@/assets/symbols/lost-idol/treasure-map/reel-static.webp';
-import { Texture } from 'pixi.js';
+import { Rectangle, Texture } from 'pixi.js';
 
 import {
   glassImg,
@@ -13,10 +13,23 @@ import {
   starImg,
   wildImg,
 } from '@/assets/symbols/images';
+const doorTextures = new WeakMap<Texture, Texture>();
+
 /** Moving and resting symbols use the same Lost Idol artwork. */
 export function resolveSymbolTexture(alias: string): Texture {
   if (alias === 'collector-empty') return Texture.EMPTY;
-  return Texture.from(alias);
+  const texture = Texture.from(alias);
+  if (alias === 'sym-bonus-door') {
+    // Match fixedFrame in the Spine atlas: the source has extra rows below
+    // its 256 × 256 region, which must not affect the moving symbol's fit.
+    let door = doorTextures.get(texture);
+    if (!door) {
+      door = new Texture({ source: texture.source, frame: new Rectangle(0, 0, 256, 256) });
+      doorTextures.set(texture, door);
+    }
+    return door;
+  }
+  return texture;
 }
 
 export const ALL_ASSETS = [

@@ -1,3 +1,4 @@
+import { usePreferences } from '../settings/preferences';
 import { useCallback, useState } from 'react';
 import { WelcomeScreen } from '../welcome/WelcomeScreen';
 import { BonusBackground } from '@/features/appBg/BonusBackground';
@@ -21,12 +22,14 @@ export function GameScreen({
   onAssetsLoaded,
   onRegisterInsufficientFunds,
 }: GameScreenProps) {
+  const { skipWelcome } = usePreferences();
   const [entered, setEntered] = useState(false);
   const enter = useCallback(() => setEntered(true), []);
+  const showGame = entered || skipWelcome || hub.replay;
   return (
     <div className={`app-page${hidden ? ' app-page--loading' : ''}`}>
-      <BonusBackground active={hub.bonus.phase !== 'idle'}>
-        {(transitionComplete) => <main className="main-screen" inert={!entered} style={!entered ? { visibility: 'hidden', pointerEvents: 'none' } : undefined}>
+      <BonusBackground mediaReady={!hidden} active={hub.bonus.phase !== 'idle'}>
+        {(transitionComplete) => <main className="main-screen" inert={!showGame} style={!showGame ? { visibility: 'hidden', pointerEvents: 'none' } : undefined}>
         <SlotMachinePixi
           hub={hub}
           bonusIntroReady={transitionComplete}
@@ -37,7 +40,7 @@ export function GameScreen({
         />
       </main>}
       </BonusBackground>
-      {!hidden && !entered && <WelcomeScreen onContinue={enter} />}
+      {!hidden && !showGame && <WelcomeScreen onContinue={enter} />}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { usePreferences } from '../settings/preferences';
 import { useEffect, useRef, useState } from 'react';
 
 import landscapePoster from '@/assets/background/landscape.webp';
@@ -17,7 +18,8 @@ const backgrounds = {
   portrait: { poster: portraitPoster, webm: portraitWebm, mp4: portraitMp4 },
 };
 
-export function AppBg({ bonus = false }: { bonus?: boolean }) {
+export function AppBg({ bonus = false, mediaReady = true }: { bonus?: boolean; mediaReady?: boolean }) {
+  const { powerSaving } = usePreferences();
   const [portrait, setPortrait] = useState(() => window.matchMedia(PORTRAIT_QUERY).matches);
   const videoRef = useRef<HTMLVideoElement>(null);
   const orientation = portrait ? 'portrait' : 'landscape';
@@ -51,12 +53,12 @@ export function AppBg({ bonus = false }: { bonus?: boolean }) {
       document.removeEventListener('pointerdown', resume);
       video.pause();
     };
-  }, [orientation, bonus]);
+  }, [orientation, bonus, powerSaving, mediaReady]);
 
   return (
     <div className="app-bg" aria-hidden="true">
       <img className="app-bg__poster" src={poster} alt="" />
-      <video
+      {(!bonus || mediaReady) && !powerSaving && <video
         key={`${bonus ? "bonus" : "base"}-${orientation}`}
         ref={videoRef}
         autoPlay
@@ -68,7 +70,7 @@ export function AppBg({ bonus = false }: { bonus?: boolean }) {
       >
         {!bonus && <source src={background.webm} type="video/webm" />}
         <source src={bonus ? bonusVideo : background.mp4} type="video/mp4" />
-      </video>
+      </video>}
     </div>
   );
 }
