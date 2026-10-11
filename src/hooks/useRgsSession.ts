@@ -93,6 +93,7 @@ const EMPTY_BONUS: BonusState = {
 };
 
 export interface SlotSessionState {
+  purchasedRound: boolean;
   boostEnabled: boolean;
   setBoostEnabled: (enabled: boolean) => void;
   treasury: TreasurySession | null;
@@ -189,6 +190,7 @@ export function useRgsSession({
   const presentedRef = useRef(false);
   const bonusBaseWinRef = useRef(0);
   const purchasedBonusRef = useRef(false);
+  const [purchasedRound, setPurchasedRound] = useState(false);
   const [status, setStatus] = useState<ConnStatus>("connecting");
   const [balance, setBalance] = useState(0);
   const [currency, setCurrency] = useState(() => resolveCurrencyCode());
@@ -457,6 +459,7 @@ export function useRgsSession({
   const beginRoundPlayback = useCallback(
     async (round: RgsRound) => {
       setBoostEnabled(round.mode === bonusBoost.mode);
+      setPurchasedRound(bonusBuys.some(plan => plan.mode === round.mode));
       treasuryRoundRef.current = String(round.betID ?? round.id ?? extractBook(round)?.id ?? "replay");
       setTreasury(null);
       treasuryPendingRef.current = false;
@@ -527,6 +530,7 @@ export function useRgsSession({
 
     roundBusyRef.current = true;
     setRoundBusy(true);
+    setPurchasedRound(bonusBuys.some(item => item.mode === mode));
     spinningRef.current = true;
     setSpinning(true);
     clearPreviousSpinResult();
@@ -777,6 +781,7 @@ export function useRgsSession({
   }, [clearPreviousSpinResult]);
 
   return {
+    purchasedRound,
     boostEnabled,
     setBoostEnabled,
     roundBusy,

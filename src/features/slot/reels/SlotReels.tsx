@@ -24,6 +24,7 @@ import { useWildIdleAnimation } from "./wild/useWildIdleAnimation";
 import { useWinLinesSetup } from "./winCycle/useWinLinesSetup";
 
 export function SlotReels({
+  purchasedRound = false,
   collectorOverlayVisible = false,
   freeSpins = false,
   spinSpeed,
@@ -46,6 +47,8 @@ export function SlotReels({
   const { app, isInitialised } = useApplication();
 
   // ── Sync refs (mirror props for use inside imperative ticker / async callbacks) ──
+  const purchasedRoundRef = useRef(purchasedRound);
+  useLayoutEffect(() => { purchasedRoundRef.current = purchasedRound; }, [purchasedRound]);
   const freeSpinsRef = useRef(freeSpins);
   useLayoutEffect(() => { freeSpinsRef.current = freeSpins; }, [freeSpins]);
   const spinRef = useRef(spinning);
@@ -277,6 +280,7 @@ export function SlotReels({
   });
 
   useReelsScene({
+    purchasedRoundRef,
     freeSpinsRef,
     collectorOverlayVisibleRef,
     app,

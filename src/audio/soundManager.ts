@@ -163,6 +163,9 @@ let backgroundTrack: 'main' | 'bonus_game' = 'main';
 let backgroundPausedForBigWin = false;
 let bonusDoorActive = false;
 let backgroundRequested = false;
+let anticipationMusicActive = false;
+let cancelAnticipationLoad: (() => void) | null = null;
+const ANTICIPATION_MUSIC_START = 12;
 Howler.mute(muted);
 
 const listeners = new Set<() => void>();
@@ -241,8 +244,23 @@ export function setMuted(value: boolean): void {
 
 const LINE_WIN_KEYS = ['win_simple', 'winning_line'] as const;
 const LINE_WIN_TAIL_SECONDS = 0.15;
+const lastEffectStart = new Map<SoundKey, number>();
+const EFFECT_DEDUP_MS = 30;
 
 export function play(key: SoundKey): void {
+  if (CONFIGS[key].kind === 'music' && key !== 'bonus_game' && anticipationMusicActive) {
+    anticipationMusicActive = false;
+    cancelAnticipationLoad?.();
+    cancelAnticipationLoad = null;
+  }
+
+  // Multiple reels/UI handlers can request the same sound within one rendered frame.
+  if (CONFIGS[key].kind === 'effect') {
+    const now = performance.now();
+    const previous = lastEffectStart.get(key);
+    if (previous !== undefined && now - previous < EFFECT_DEDUP_MS) return;
+    lastEffectStart.set(key, now);
+  }
   if (key === 'win_simple' || key === 'winning_line') {
     for (const previousKey of LINE_WIN_KEYS) {
       const previous = howls.get(previousKey);
@@ -301,6 +319,11 @@ export function stop(key: SoundKey): void {
   } else {
     howl?.stop();
   }
+  // An interrupted door track never emits 'end'. Release its music lock explicitly.
+  if (key === 'bonus_door') {
+    bonusDoorActive = false;
+    if (backgroundRequested && !backgroundPausedForBigWin) play(backgroundTrack);
+  }
 }
 
 function pauseBackgroundForBigWin(): void {
@@ -344,6 +367,34 @@ export function stopBigWinSounds(): void {
   resumeBackgroundAfterBigWin();
 }
 
+/** Reuse the bonus track after its opening; no additional audio asset. */
+export function startAnticipationMusic(): void {
+  if (anticipationMusicActive || !backgroundRequested || bonusDoorActive || backgroundPausedForBigWin) return;
+  anticipationMusicActive = true;
+  const howl = getHowl('bonus_game');
+  const start = () => {
+    cancelAnticipationLoad = null;
+    if (!anticipationMusicActive || !backgroundRequested || bonusDoorActive || backgroundPausedForBigWin) return;
+    play('bonus_game');
+    howl.seek(ANTICIPATION_MUSIC_START);
+  };
+  if (howl.state() === 'loaded') start();
+  else {
+    howl.once('load', start);
+    cancelAnticipationLoad = () => howl.off('load', start);
+    if (howl.state() === 'unloaded') howl.load();
+  }
+}
+
+export function stopAnticipationMusic(): void {
+  if (!anticipationMusicActive) return;
+  anticipationMusicActive = false;
+  cancelAnticipationLoad?.();
+  cancelAnticipationLoad = null;
+  stop('bonus_game');
+  if (backgroundRequested && !bonusDoorActive && !backgroundPausedForBigWin) play(backgroundTrack);
+}
+
 /** Switch game themes and discard any celebration belonging to the previous phase. */
 export function setBackgroundMusic(track: 'main' | 'bonus_game'): void {
   if (track !== backgroundTrack) {
@@ -355,6 +406,9 @@ export function setBackgroundMusic(track: 'main' | 'bonus_game'): void {
 }
 
 export function stopBackgroundMusic(): void {
+  anticipationMusicActive = false;
+  cancelAnticipationLoad?.();
+  cancelAnticipationLoad = null;
   backgroundRequested = false;
   backgroundPausedForBigWin = false;
   clearBigWinIntroHandler();

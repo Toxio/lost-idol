@@ -1,3 +1,4 @@
+import keyOpenImg from '@/assets/symbols/lost-idol/serpent-key/paytable-open.webp';
 import { WildArtwork } from '../../bonus/WildArtwork';
 import { formatMoney } from "@/utils/currency";
 import { t } from "@/utils/i18n";
@@ -18,7 +19,6 @@ import {
   heelsImg,
   lipsImg,
   lipstickImg,
-  parfumeImg,
   roseImg,
   scatterImg,
   sevenImg,
@@ -30,7 +30,7 @@ import "./PaytableTab.css";
 const SYMBOL_IMAGE: Record<number, string> = {
   1: sevenImg,
   2: lipsImg,
-  3: parfumeImg,
+  3: keyOpenImg,
   4: roseImg,
   5: glassImg,
   6: lipstickImg,

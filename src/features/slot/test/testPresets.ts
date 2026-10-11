@@ -147,12 +147,19 @@ const WIN_SPINE_ANIM_PRESETS: TestPreset[] = [
   },
   {
     id: "win-anim-scatter",
-    label: "Win anim · Bonus",
-    subtitle: "Spine · Line 1 · ×5",
+    label: "Bonus · Вход в Free Spins",
+    subtitle: "3 двери → портал → 5 Free Spins",
     iconSymbol: 10,
-    badge: "×5",
+    badge: "×3",
     badgeColor: "#d8c18a",
-    preset: winAnimMidRowFive(10, 150),
+    rewardLabel: "5 Free Spins",
+    preset: {
+      book: bonusFixture,
+      matrix: boardToMatrix(bonusFixture.events[0].board)!,
+      winLines: [],
+      winAmount: 0,
+      odd: 0,
+    },
   },
   {
     id: "win-anim-star",

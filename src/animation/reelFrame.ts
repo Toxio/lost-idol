@@ -11,7 +11,7 @@ export function createReelFrame(width: number, height: number): Container {
   const frame = new Container();
   const backing = new Graphics()
     .roundRect(100, 65, width - 200, height - 130, 24)
-    .fill({ color: 0x101c12, alpha: 0.94 });
+    .fill({ color: 0x101c12, alpha: 1 });
   const border = new NineSliceSprite({
     texture: Assets.get(frameUrl),
     leftWidth: 170,

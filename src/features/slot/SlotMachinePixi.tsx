@@ -309,6 +309,7 @@ export function SlotMachinePixi({
                 }}
               >
                 <SlotReels
+                  purchasedRound={hub.purchasedRound}
                   freeSpins={bonus.current > 0}
                   collectorOverlayVisible={Boolean(collector && (collectorMoving || (spinning && (collector.respin > 0 || bonus.current > 1))))}
                   spinSpeed={bonusActive ? bonusSpeed : spinSpeed}

@@ -3,7 +3,8 @@ import { AppBg } from './AppBg';
 import { BonusTransition } from './BonusTransition';
 import { usePreferences } from '../settings/preferences';
 
-import bonusVideo from '@/assets/background/bonus.mp4?url';
+import bonusWebm from '@/assets/background/bonus-generated.webm?url';
+import bonusMp4 from '@/assets/background/bonus-generated.mp4?url';
 import portalVideo from '@/assets/transition/bonus-portal.mp4?url';
 import returnVideo from '@/assets/transition/bonus-portal-reverse.mp4?url';
 
@@ -16,7 +17,9 @@ export function BonusBackground({ active, children, mediaReady = true }: { activ
     // Optional media never participates in the game's loading progress.
     const timer = window.setTimeout(() => {
       void (async () => {
-        for (const url of powerSaving ? [portalVideo] : [bonusVideo, portalVideo, returnVideo]) {
+        const probe = document.createElement('video');
+        const bonusVideo = probe.canPlayType('video/webm; codecs="vp9"') ? bonusWebm : bonusMp4;
+        for (const url of powerSaving ? [portalVideo] : [portalVideo, returnVideo, bonusVideo]) {
           if (controller.signal.aborted) return;
           try {
             const response = await fetch(url, { signal: controller.signal, cache: 'force-cache' });

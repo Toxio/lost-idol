@@ -71,7 +71,17 @@ export function BonusTransition(props: Props) {
   }, [props.active, props.entering, props.transitionId]);
 
   return createPortal(
-    <div ref={container} className={`bonus-transition${props.active ? '' : ' bonus-transition--hidden'}`} tabIndex={-1} aria-label="Bonus transition">
+    <div ref={container} className={`bonus-transition${props.active ? '' : ' bonus-transition--hidden'}`} tabIndex={-1} aria-label="Bonus transition"
+      onPointerDown={event => event.stopPropagation()}
+      onClick={event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!props.active) return;
+        video.current?.pause();
+        stop('bonus_door');
+        stop('bonus_portal_shine');
+        finishPlayback.current();
+      }}>
       <div key={props.transitionId} className={`bonus-transition__scene${props.entering ? '' : ' bonus-transition__scene--return'}`}>
         <video ref={video} className="bonus-transition__portal" src={props.entering ? portalVideoUrl : portalReverseUrl} poster={props.entering ? portalUrl : portalReversePoster}
           muted playsInline preload="auto" onEnded={() => finishPlayback.current()} onError={() => finishPlayback.current()} />

@@ -1,3 +1,4 @@
+import { AnticipationSmoke } from './anticipationSmoke';
 import { ensureWinBackgroundLoaded, createWinBackground } from '@/animation/winBackground';
 import { type Spine } from "@esotericsoftware/spine-pixi-v8";
 import {
@@ -10,7 +11,7 @@ import {
 } from "pixi.js";
 import { type RefObject, useEffect } from "react";
 
-import { play as playSound, playWildWin } from "@/audio/soundManager";
+import { play as playSound, playWildWin, startAnticipationMusic, stopAnticipationMusic } from "@/audio/soundManager";
 import {
   createReelFrame,
   ensureReelFrameLoaded,
@@ -47,6 +48,7 @@ import {
   type SpinSpeedPreset,
   VISIBLE_ROWS,
 } from "../constants";
+import { anticipationLanding, anticipationSymbol } from "../lib/anticipation";
 import { decelStop, lerp } from "../lib/easing";
 import { getSlotGridMetrics } from "../lib/grid";
 import {
@@ -82,6 +84,7 @@ import type {
 } from "../types";
 
 interface UseReelsSceneOptions {
+  purchasedRoundRef: RefObject<boolean>;
   freeSpinsRef: RefObject<boolean>;
   app: Application | null;
   isInitialised: boolean;
@@ -154,6 +157,7 @@ interface UseReelsSceneOptions {
  * the same shared mutable scene.
  */
 export function useReelsScene({
+  purchasedRoundRef,
   freeSpinsRef,
   collectorOverlayVisibleRef,
   app,
@@ -238,6 +242,18 @@ export function useReelsScene({
     app.stage.addChild(wildOverlayCont);
     wildOverlayRef.current = wildOverlayCont;
 
+    let anticipationSmoke: AnticipationSmoke | null = null;
+
+    const settledReels = new Set<number>();
+    const landedReels = new Set<number>();
+    let anticipationType: number | null = null;
+    let anticipationAllowed = false;
+    let anticipationTime = 0;
+    const anticipationAccent = new Graphics();
+    anticipationAccent.eventMode = 'none';
+    anticipationAccent.blendMode = 'add';
+    app.stage.addChild(anticipationAccent);
+
     const paylineLayer = new Container();
     app.stage.addChild(paylineLayer);
     paylineLayerRef.current = paylineLayer;
@@ -275,6 +291,9 @@ export function useReelsScene({
       await Promise.all([Assets.load(ALL_ASSETS), spinePromise, preloadHtmlImages()]);
       if (cancelled) return;
 
+      anticipationSmoke = new AnticipationSmoke(REEL_COUNT, cellW, maskH);
+      anticipationSmoke.position.set(gridX, gridY);
+      app!.stage.addChildAt(anticipationSmoke, app!.stage.getChildIndex(paylineLayer));
       spineReadyRef.current = true;
       loadedRef.current = true;
       onAssetsLoaded?.();
@@ -410,6 +429,31 @@ export function useReelsScene({
       );
     }
 
+    function updateAnticipationAccent(active: boolean) {
+      anticipationAccent.clear();
+      if (!active) { stopAnticipationMusic(); return; }
+      const pulse = 0.5 + 0.5 * Math.sin(anticipationTime / 330);
+      for (const col of settledReels) {
+        targetMatrixRef.current?.[col]?.forEach((value, row) => {
+          if (value !== anticipationType) return;
+          const x = gridX + (col + 0.5) * cellW;
+          const y = gridY + (row + 0.5) * cellH;
+          // Light on the artwork itself: no cell border or win-background animation.
+          for (let layer = 10; layer > 0; layer--) {
+            anticipationAccent.ellipse(x, y, cellW * 0.35 * layer / 10, cellH * 0.38 * layer / 10)
+              .fill({ color: 0x6fffa5, alpha: 0.012 + pulse * 0.012 });
+          }
+          for (let i = 0; i < 3; i++) {
+            const phase = anticipationTime / 1500 + i * Math.PI * 2 / 3;
+            const sx = x + Math.cos(phase) * cellW * 0.28;
+            const sy = y + Math.sin(phase) * cellH * 0.3;
+            anticipationAccent.circle(sx, sy, 5.5).fill({ color: 0x61ed9c, alpha: 0.26 + pulse * 0.18 });
+            anticipationAccent.circle(sx, sy, 2.2).fill({ color: 0xd3ffe0, alpha: 0.65 });
+          }
+        });
+      }
+    }
+
     function restoreWildIdle() {
       for (const { spine, col, row } of wildIdleSpinesRef.current) {
         spine.visible = !expandingWildColsRef.current.includes(col);
@@ -531,7 +575,10 @@ export function useReelsScene({
           const animation = animated.state.getCurrent(0)?.animation;
           if (animation) {
             const entry = animated.state.setAnimation(0, animation.name, false);
-            entry.timeScale = animation.duration / (highlight.showMs / 1000);
+            // Monkey chest beats keep their authored rhythm at every spin/line speed.
+            entry.timeScale = animated === spine && effectiveAnimIdx === WILD_SERVER_IDX
+              ? 1
+              : animation.duration / (highlight.showMs / 1000);
             animated.update(0);
           }
         }
@@ -652,12 +699,43 @@ export function useReelsScene({
     }
 
     function onReelLanded(reel: Reel, colIndex: number) {
+      if (landedReels.has(colIndex)) return;
+      landedReels.add(colIndex);
       const col = reelsRef.current.indexOf(reel);
       if (col >= 0) attachColumnOverlays(col);
-      if (colIndex === REEL_COUNT - 1) {
+      if (landedReels.size === REEL_COUNT) {
         commitSettledGrid(targetMatrixRef.current);
         completeRef.current();
       }
+    }
+
+    function revealAnticipation(col: number) {
+      settledReels.add(col);
+      if (!anticipationAllowed || anticipationType !== null || !targetMatrixRef.current) return;
+      const symbol = anticipationSymbol(targetMatrixRef.current, settledReels);
+      const remaining = tweensRef.current.filter(t => !settledReels.has(reelsRef.current.indexOf(t.reel))
+        && t.elapsedMs < t.duration
+        && (symbol !== 2 || reelsRef.current.indexOf(t.reel) === 3));
+      if (symbol === null || !remaining.length) return;
+      anticipationType = symbol;
+      startAnticipationMusic();
+      anticipationTime = 0;
+      remaining.forEach((tw, order) => {
+        const phase = Math.min(1, tw.elapsedMs / tw.duration);
+        const previousPhase = Math.max(0, phase - 0.001);
+        const velocity = phase > previousPhase
+          ? (tw.to - tw.from) * (tw.ease(phase) - tw.ease(previousPhase)) / ((phase - previousPhase) * tw.duration)
+          : activePresetRef.current.reelVelocity / 1000;
+        const from = tw.reel.position;
+        const landing = anticipationLanding(from, velocity, 12 / 1000, order, REEL_SIZE);
+        tw.from = from;
+        tw.to = landing.to;
+        tw.duration = landing.duration;
+        tw.elapsedMs = 0;
+        tw.ease = landing.ease;
+        tw.soundAtMs = landing.duration - REEL_STOP_SOUND_LEAD_MS;
+        tw.soundFired = false;
+      });
     }
 
     function beginReelStop(fast = false) {
@@ -669,6 +747,10 @@ export function useReelsScene({
 
       stopFiredRef.current = true;
       tweensRef.current = [];
+      settledReels.clear();
+      landedReels.clear();
+      anticipationType = null;
+      anticipationAllowed = !fast && !freeSpinsRef.current && !purchasedRoundRef.current;
 
       const spinVelocity = preset.reelVelocity / 60;
 
@@ -702,6 +784,7 @@ export function useReelsScene({
             reel.blur.strengthY = 0;
             reel.rc.filters = null;
             attachSettledColumn(i);
+            revealAnticipation(i);
             if (preset.settleBounce) {
               startReelSettleBounce(reel, () => {
                 reel.stripCont.y = 0;
@@ -720,6 +803,10 @@ export function useReelsScene({
       if (!spinRef.current || reels.length === 0) return;
       if (!targetMatrixRef.current) return;
 
+      anticipationAllowed = false;
+      updateAnticipationAccent(false);
+      anticipationType = null;
+      anticipationSmoke?.update(0, new Set());
       const tweens = tweensRef.current;
       reels.forEach((reel, i) => {
         reel.stopping = true;
@@ -779,6 +866,17 @@ export function useReelsScene({
         beginReelStop();
       }
 
+      const smokeColumns = new Set<number>();
+      if (spinRef.current && stopFiredRef.current && anticipationType !== null && tweensRef.current.length) {
+        anticipationTime += stepMs;
+        for (let col = 0; col < REEL_COUNT; col++) {
+          if (!settledReels.has(col)) {
+            // Treasury chests can complete only on reel 4; reel 5 is never eligible.
+            if (anticipationType !== 2 || col === 3) smokeColumns.add(col);
+          }
+        }
+      }
+      anticipationSmoke?.update(anticipationTime, smokeColumns);
       const done: ReelTween[] = [];
       for (const tw of tweensRef.current) {
         tw.elapsedMs += stepMs;
@@ -830,10 +928,20 @@ export function useReelsScene({
           stepMs > 0
             ? (Math.abs(reel.position - reel.prevPos) * FRAME_MS) / stepMs
             : 0;
-        reel.blur.strengthY = perFrameDelta * 8;
-        // Attach the blur filter only while the reel actually moves — see construction note.
-        if (perFrameDelta > 0 && !reel.rc.filters)
-          reel.rc.filters = [reel.blur];
+        const reelMoving = (spinRef.current && !reel.stopping)
+          || tweensRef.current.some(tween => tween.reel === reel);
+        // Keep anticipation symbols readable, including the speed handoff.
+        const anticipating = anticipationType !== null && stopFiredRef.current
+          && !settledReels.has(reels.indexOf(reel));
+        reel.blur.strengthY = reelMoving
+          ? anticipating ? Math.min(perFrameDelta * 2, 0.65) : perFrameDelta * 8
+          : 0;
+        // A final tween step must not reattach blur after onDone removed it.
+        if (reelMoving && perFrameDelta > 0) {
+          if (!reel.rc.filters) reel.rc.filters = [reel.blur];
+        } else {
+          reel.rc.filters = null;
+        }
         reel.prevPos = reel.position;
 
         for (let j = 0; j < reel.symbols.length; j++) {
@@ -847,8 +955,6 @@ export function useReelsScene({
           }
           // Buffer cells outside a landed reel must not bleed into the grid,
           // especially the enlarged wild above the first visible row.
-          const reelMoving = (spinRef.current && !reel.stopping)
-            || tweensRef.current.some(tween => tween.reel === reel);
           const outsideSettledGrid = !reelMoving
             && (baseY < -0.01 || baseY >= VISIBLE_ROWS * cellH - 0.01);
           sym.sprite.renderable = !outsideSettledGrid
@@ -859,6 +965,8 @@ export function useReelsScene({
       for (const { spine } of wildIdleSpinesRef.current) {
         spine.renderable = !collectorOverlayVisibleRef.current;
       }
+      updateAnticipationAccent(Boolean(spinRef.current && stopFiredRef.current
+        && anticipationType !== null && tweensRef.current.length));
       const highlights = winHighlightsRef.current;
       // The bonus-entry reveal is one-shot; keep it from restarting under the transition.
       const bonusRevealFinished = winCycleFiredRef.current && highlights.some(highlight =>
@@ -959,6 +1067,9 @@ export function useReelsScene({
       wildOverlayCont.destroy({ children: true });
       winOverlayCont.destroy({ children: true });
       settledOverlayCont.destroy({ children: true });
+      stopAnticipationMusic();
+      anticipationAccent.destroy();
+      anticipationSmoke?.dispose();
       paylineLayer.destroy({ children: true });
       bigWinLayer.destroy({ children: true });
       reelFrameContainer?.destroy({ children: true });

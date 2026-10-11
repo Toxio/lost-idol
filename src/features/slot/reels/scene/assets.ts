@@ -1,4 +1,4 @@
-import heelsImg from '@/assets/symbols/lost-idol/treasure-map/reel-static.webp';
+import heelsImg from '@/assets/symbols/lost-idol/treasure-map/symbol-v3.webp';
 import { Rectangle, Texture } from 'pixi.js';
 
 import {

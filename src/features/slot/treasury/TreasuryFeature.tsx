@@ -2,7 +2,7 @@ import type { TreasurySession } from './treasuryModel';
 import { GameNumberGlyphs, GameMoneyGlyphs } from '../ui/WildMultiplier';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import frameUrl from '@/assets/reel/lost-idol-frame.webp';
-import chestSheet from '@/assets/symbols/lost-idol/gold-satchel/sheet.webp';
+import { TreasuryChestArt, TREASURY_CHEST_OPEN_MS } from './TreasuryChestArt';
 import { getGameUrlParams } from '@/utils/getGameUrlParams';
 import { formatMoney } from '@/utils/currency';
 import { t, locale } from '@/utils/i18n';
@@ -52,7 +52,7 @@ export function TreasuryFeature({ onClose, award, onProgress, currency, precisio
   }, [phase, onClose]);
   useEffect(() => {
     if (opening === null) return;
-    const timer = window.setTimeout(() => { setOpening(null); lock.current = false; }, 1100);
+    const timer = window.setTimeout(() => { setOpening(null); lock.current = false; }, TREASURY_CHEST_OPEN_MS);
     return () => window.clearTimeout(timer);
   }, [opening]);
   useEffect(() => {
@@ -97,7 +97,7 @@ export function TreasuryFeature({ onClose, award, onProgress, currency, precisio
           return <button key={index} className={`treasury-chest${open ? ' is-open' : ''}${opening === index ? ' is-opening' : ''}`}
             disabled={phase !== 'choose' || open || opening !== null || done} onClick={() => choose(index)}
             aria-label={`${ru ? 'Сундук' : 'Chest'} ${index + 1}${visible && reward ? `: ${reward.kind === 'cash' ? formatMoney(reward.value * award.bet, currency, precision) : `×${reward.value}`}` : ''}`}>
-            <span className="treasury-chest-art" style={{ backgroundImage: `url(${chestSheet})` }} />
+            <TreasuryChestArt open={open} opening={opening === index} />
             <span className={`treasury-reward${visible ? ' is-visible' : ''}`}>
               {reward && (reward.kind === 'cash'
                 ? <GameMoneyGlyphs value={reward.value * award.bet} currency={currency} precision={precision} />

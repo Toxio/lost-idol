@@ -67,6 +67,7 @@ export interface ReelTween {
 }
 
 export interface SlotReelsProps {
+  purchasedRound?: boolean;
   collectorOverlayVisible?: boolean;
   freeSpins?: boolean;
   spinSpeed: SpinSpeedLevel;

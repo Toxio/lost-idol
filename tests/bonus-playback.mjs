@@ -86,5 +86,9 @@ for (const bet of [0.01, 1, 2.5, 100]) {
   assert.equal(frames.at(-1).freeSpin, 5);
   assert.equal(frames.at(-1).totalWin, bet * fixture.payoutMultiplier / 100);
 }
-assert.equal(TEST_PRESETS.find(p => p.id === "win-anim-scatter").preset.book, undefined);
-console.log("Scatter test preset: full bonus at current stake; animation-only preset preserved.");
+const doorPreset = TEST_PRESETS.find(p => p.id === "win-anim-scatter");
+assert.ok(doorPreset.preset.book);
+const doorFrames = await buildRoundFrames(doorPreset.preset.book, 1, []);
+assert.equal(doorFrames[0].awardedFreeSpins, 5);
+assert.equal(doorFrames.length, 6);
+console.log("Scatter test preset: full bonus at current stake; door entry preset also starts the full bonus.");

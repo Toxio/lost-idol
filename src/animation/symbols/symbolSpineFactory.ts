@@ -1,6 +1,17 @@
 import { SetupPoseBoundsProvider, Spine } from '@esotericsoftware/spine-pixi-v8';
 import { Assets, type Ticker } from 'pixi.js';
 
+const symbolFrameSizes = new WeakMap<Spine, { width: number; height: number }>();
+
+/** Original frame dimensions exclude lights, masks and animated attachment bounds. */
+export const getSymbolFrameSize = (spine: Spine) => symbolFrameSizes.get(spine);
+
+function rememberFrameSize(spine: Spine): Spine {
+  const { width, height } = spine.skeleton.data;
+  if (width > 0 && height > 0) symbolFrameSizes.set(spine, { width, height });
+  return spine;
+}
+
 export type CreateSymbolSpineOptions = {
   ticker?: Ticker;
   loop?: boolean;
@@ -59,7 +70,7 @@ export function defineSymbolSpine(config: SymbolSpineConfig): SymbolSpineModule 
     });
     spine.state.setAnimation(0, options?.animation ?? 'win', options?.loop ?? true);
     spine.update(0);
-    return spine;
+    return rememberFrameSize(spine);
   };
 
   const createSetupPose = (): Spine => {
@@ -70,7 +81,7 @@ export function defineSymbolSpine(config: SymbolSpineConfig): SymbolSpineModule 
     });
     spine.skeleton.setToSetupPose();
     spine.update(0);
-    return spine;
+    return rememberFrameSize(spine);
   };
 
   return { skelAlias, atlasAlias, ensureLoaded, create, createSetupPose };

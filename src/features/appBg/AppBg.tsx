@@ -8,9 +8,9 @@ import portraitPoster from '@/assets/background/portrait.webp';
 import portraitWebm from '@/assets/background/portrait.webm?url';
 import portraitMp4 from '@/assets/background/portrait.mp4?url';
 
-import bonusVideo from '@/assets/background/bonus.mp4?url';
-import bonusDesktopPoster from '@/assets/background/bonus-desktop.webp';
-import bonusMobilePoster from '@/assets/background/bonus-mobile.webp';
+import bonusWebm from '@/assets/background/bonus-generated.webm?url';
+import bonusMp4 from '@/assets/background/bonus-generated.mp4?url';
+import bonusPoster from '@/assets/background/bonus-generated-poster.webp';
 
 const PORTRAIT_QUERY = '(orientation: portrait)';
 const backgrounds = {
@@ -23,8 +23,8 @@ export function AppBg({ bonus = false, mediaReady = true }: { bonus?: boolean; m
   const [portrait, setPortrait] = useState(() => window.matchMedia(PORTRAIT_QUERY).matches);
   const videoRef = useRef<HTMLVideoElement>(null);
   const orientation = portrait ? 'portrait' : 'landscape';
-  const background = backgrounds[orientation];
-  const poster = bonus ? (portrait ? bonusMobilePoster : bonusDesktopPoster) : background.poster;
+  const background = bonus ? { poster: bonusPoster, webm: bonusWebm, mp4: bonusMp4 } : backgrounds[orientation];
+  const poster = background.poster;
 
   useEffect(() => {
     const media = window.matchMedia(PORTRAIT_QUERY);
@@ -68,8 +68,8 @@ export function AppBg({ bonus = false, mediaReady = true }: { bonus?: boolean; m
         preload="auto"
         poster={poster}
       >
-        {!bonus && <source src={background.webm} type="video/webm" />}
-        <source src={bonus ? bonusVideo : background.mp4} type="video/mp4" />
+        <source src={background.webm} type="video/webm" />
+        <source src={background.mp4} type="video/mp4" />
       </video>}
     </div>
   );

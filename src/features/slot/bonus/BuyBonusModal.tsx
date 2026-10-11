@@ -5,7 +5,7 @@ import { formatMoney } from '@/utils/currency';
 import { indexOfBetLevel } from '@/api/rgs';
 import { play as playSound } from '@/audio/soundManager';
 import plans from '@/config/bonusBuys.json';
-import treasuryImg from '@/assets/symbols/lost-idol/gold-satchel/symbol.webp';
+import treasuryImg from '@/assets/symbols/lost-idol/gold-satchel/symbol-v2.webp';
 import { WildArtwork } from './WildArtwork';
 import { BonusDoorArtwork } from './BonusDoorArtwork';
 import './BuyBonusModal.css';

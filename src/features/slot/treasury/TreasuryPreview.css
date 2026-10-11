@@ -3,21 +3,18 @@
 .treasury-instruction { flex: 0 0 8%; margin: 0; display: grid; place-items: center; font-size: clamp(9px, 4cqh, 22px); text-align: center; }
 .treasury-chests { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 1% 5%; padding: 0 8% 2%; }
 .treasury-chest { position: relative; min-height: 0; min-width: 0; border: 0; padding: 0; background: transparent; cursor: pointer; color: #ffebac; display: flex; flex-direction: column; align-items: center; }
-.treasury-chest-art { display: block; height: 80%; max-width: 100%; aspect-ratio: 1; background-size: 400% 400%; background-position: 0 0; background-repeat: no-repeat; filter: drop-shadow(0 4px 4px #0008); }
+.treasury-chest-art { position: relative; display: block; height: 80%; max-width: 100%; aspect-ratio: 1; background-size: 400% 400%; background-position: 0 0; background-repeat: no-repeat; filter: drop-shadow(0 4px 4px #0008); }
 .treasury-chest:not(:disabled):hover .treasury-chest-art,
 .treasury-chest:not(:disabled):focus-visible .treasury-chest-art {
   filter: brightness(1.15) drop-shadow(0 0 7px #c4ff9be6) drop-shadow(0 0 18px #66e982b3) drop-shadow(0 4px 4px #0008);
 }
 .treasury-chest:focus-visible { outline: 2px solid #b6ff92; outline-offset: -2px; border-radius: 8px; }
 .treasury-chest:disabled { cursor: default; }
-.treasury-chest.is-open .treasury-chest-art { background-position: 66.6667% 66.6667%; }
-.treasury-chest.is-opening .treasury-chest-art { animation: treasury-open 1000ms steps(1, end) both; }
 .treasury-reward { display: flex; justify-content: center; align-items: center; height: 18%; opacity: 0; }
 .treasury-reward-glyphs { display: inline-flex; align-items: center; justify-content: center; gap: 2px; height: 100%; }
 .treasury-reward-glyphs svg { height: 100%; width: auto; overflow: hidden; }
 .treasury-reward.is-visible { opacity: 1; animation: treasury-reward 350ms ease-out; }
 .treasury-transition { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-@keyframes treasury-open { 0% { background-position: 0 0; } 10% { background-position: 33.3333% 0; } 20% { background-position: 66.6667% 0; } 30% { background-position: 100% 0; } 40% { background-position: 0 33.3333%; } 50% { background-position: 33.3333% 33.3333%; } 60% { background-position: 66.6667% 33.3333%; } 70% { background-position: 100% 33.3333%; } 80% { background-position: 0 66.6667%; } 90% { background-position: 33.3333% 66.6667%; } 100% { background-position: 66.6667% 66.6667%; } }
 @keyframes treasury-reward { from { transform: translateY(10px); filter: brightness(1.8); } to { transform: translateY(0); filter: brightness(1); } }
 @media (prefers-reduced-motion: reduce) { .treasury-chest.is-opening .treasury-chest-art, .treasury-reward.is-visible { animation: none; } }
 /* Collector labels can extend beyond their cells; hide them only while chests cover the grid. */
@@ -49,3 +46,6 @@
 .treasury-reward { position: relative; isolation: isolate; }
 .treasury-reward-glyphs { filter: drop-shadow(0 1px 1px #071d0e); }
 .treasury-money-symbol { text-shadow: 0 1px 1px #071d0e; }
+
+.treasury-chest-clip, .treasury-chest-layer { position: absolute; inset: 0; display: block; }
+.treasury-chest-layer { background-size: 400% 400%; background-position: 0 0; background-repeat: no-repeat; }

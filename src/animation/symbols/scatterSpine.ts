@@ -27,8 +27,13 @@ export const createScatterSpine = (options?: CreateSymbolSpineOptions) => {
   const light = new Graphics();
   light.eventMode = 'none';
   spine.addChild(light);
-  const path = [[0, -82], [63, -82], [63, 81], [-63, 81], [-63, -82], [0, -82]];
-  const totalLength = 578;
+  // Two independent strokes meet at the header centre and end at the jamb feet.
+  // Neither branch includes the bottom threshold.
+  const paths = [
+    [[0, -82], [-63, -82], [-63, 81]],
+    [[0, -82], [63, -82], [63, 81]],
+  ];
+  const branchLength = 63 + 163;
   light.onRender = () => {
     const entry = spine.state.getCurrent(0);
     const time = entry?.getAnimationTime() ?? 0;
@@ -36,15 +41,17 @@ export const createScatterSpine = (options?: CreateSymbolSpineOptions) => {
     light.clear();
     if (progress === 0) return;
     for (const [width, alpha, color] of [[12, 0.12, 0x13ff6a], [7, 0.25, 0x32ff80], [3, 0.85, 0x76ffa0], [1, 1, 0xd7ffb2]]) {
-      let remaining = totalLength * progress;
-      light.moveTo(path[0][0], path[0][1]);
-      for (let i = 1; i < path.length && remaining > 0; i++) {
-        const [x, y] = path[i - 1];
-        const [nx, ny] = path[i];
-        const length = Math.hypot(nx - x, ny - y);
-        const t = Math.min(1, remaining / length);
-        light.lineTo(x + (nx - x) * t, y + (ny - y) * t);
-        remaining -= length;
+      for (const path of paths) {
+        let remaining = branchLength * progress;
+        light.moveTo(path[0][0], path[0][1]);
+        for (let i = 1; i < path.length && remaining > 0; i++) {
+          const [x, y] = path[i - 1];
+          const [nx, ny] = path[i];
+          const length = Math.hypot(nx - x, ny - y);
+          const t = Math.min(1, remaining / length);
+          light.lineTo(x + (nx - x) * t, y + (ny - y) * t);
+          remaining -= length;
+        }
       }
       light.stroke({ width, alpha, color, cap: 'round', join: 'round' });
     }

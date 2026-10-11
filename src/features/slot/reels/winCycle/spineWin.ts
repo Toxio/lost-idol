@@ -1,3 +1,4 @@
+import { getSymbolFrameSize } from '@/animation/symbols/symbolSpineFactory';
 import { Spine } from '@esotericsoftware/spine-pixi-v8';
 import type { Ticker } from 'pixi.js';
 import { isBonusDoorSpine } from '@/animation/symbols/scatterSpine';
@@ -86,6 +87,12 @@ export function layoutSpineInCell(
   // Clipping and perimeter graphics must not change the door's fit or centre.
   if (isBonusDoorSpine(spine)) {
     spine.scale.set(Math.min(cellW * SPINE_CELL_SCALE / 256, cellH * SPINE_CELL_SCALE / 256));
+    spine.position.set(absX, absY);
+    return;
+  }
+  const frame = getSymbolFrameSize(spine);
+  if (frame) {
+    spine.scale.set(Math.min(cellW * SPINE_CELL_SCALE / frame.width, cellH * SPINE_CELL_SCALE / frame.height));
     spine.position.set(absX, absY);
     return;
   }

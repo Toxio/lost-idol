@@ -40,13 +40,7 @@
   14.40000000% { background-position: 100.00000000% 33.33333333%; left: 0; top: 0.70312500%; }
   16.80000000% { background-position: 0 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
   19.20000000% { background-position: 33.33333333% 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
-  21.60000000% { background-position: 66.66666667% 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
-  24.00000000% { background-position: 100.00000000% 66.66666667%; left: -1.40625000%; top: 3.51562500%; }
-  26.40000000% { background-position: 0 100.00000000%; left: -2.10937500%; top: 7.03125000%; }
-  28.80000000% { background-position: 33.33333333% 100.00000000%; left: -0.70312500%; top: 7.73437500%; }
-  31.20000000% { background-position: 66.66666667% 100.00000000%; left: -0.70312500%; top: 7.03125000%; }
-  33.60000000% { background-position: 100.00000000% 100.00000000%; left: 0; top: 7.73437500%; }
-  36.00000000%, 100% { background-position: 0 0; left: 0; top: 0; }
+  21.60000000%, 100% { background-position: 0 0; left: 0; top: 0; }
 }
 
 /* The collectible is an overlay, not a paying reel symbol. */
